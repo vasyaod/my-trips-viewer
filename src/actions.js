@@ -11,9 +11,9 @@ export function loadFile(fileName) {
   return async(dispatch) => {
     
     console.log("Load file: " + fileName)
-    const res = await fetch(`data/${fileName}.gpx`)
-    if (res.status == 200) {
-      const text = await res.text()
+    const res1 = await fetch(`data/${fileName}/track.gpx`)
+    if (res1.status == 200) {
+      const text = await res1.text()
 
       gpxParse.parseGpx(text, (error, data) => {
         dispatch({
@@ -22,7 +22,19 @@ export function loadFile(fileName) {
         })
       });
     } else {
-      console.log("File " + fileName + "is not found")
+      console.log("GPX File " + fileName + "is not found")
+    }
+
+    const res2 = await fetch(`data/${fileName}/objects.json`)
+    if (res2.status == 200) {
+      const data = await res2.json()
+      
+      dispatch({
+        type: 'OBJECTS_CHANGED',
+        values: data
+      })
+    } else {
+      console.log("Object file " + fileName + "is not found")
     }
   }
-}
+} 

@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment, Header, Button, Container, Grid, Placeholder} from 'semantic-ui-react'
+import { Segment, Header, Statistic, Modal, Image, Container} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 const mapboxgl = require('mapbox-gl');
@@ -8,7 +8,14 @@ const mapboxgl = require('mapbox-gl');
 import { loadFile } from '../actions.js'
 
 class Map extends Component {
-  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      obj: null,
+    }
+  }
+
   componentDidMount() {
     const fileName = this.props.match.params.id == null ? "" : this.props.match.params.id
     this.props.loadFile(fileName)
@@ -32,13 +39,30 @@ class Map extends Component {
       
 //    const self = this
     map.once('load', () => {
-      this.loadData()
+      this.drawObjects()
+      this.drawTrackData()
     })
     
     map.getCanvas().style.cursor = 'default'
   }
-  
-  loadData() {
+
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      const fileName = this.props.match.params.id == null ? "" : this.props.match.params.id
+      this.props.loadFile(fileName)
+    }
+
+    if (this.props.points !== prevProps.points) {
+      this.drawTrackData()
+    }
+
+    if (this.props.objects !== prevProps.objects) {
+      this.drawObjects()
+    }
+    
+  }
+
+  drawTrackData() {
     if (!this.map.loaded())
       return
 
@@ -113,16 +137,85 @@ class Map extends Component {
     })
   }
 
+  drawObjects() {
+    if (!this.map.loaded())
+      return
+
+    const map = this.map
+
+    if (this.markers) {
+      this.markers.forEach(marker => marker.remove())
+    }
+
+    // add markers to map
+    this.markers = this.props.objects.map( (obj, index) => {
+      // create a DOM element for the marker
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundImage =`url(images/circle-thumb-32/${obj.thumb}.png)`;
+      el.style.width = '32px';
+      el.style.height = '32px';
+
+      el.addEventListener('click', () => {
+        this.setState({obj: obj, objIndex: index})
+      });
+
+      // add marker to map
+      return (new mapboxgl.Marker(el)
+        .setLngLat([obj.lng, obj.lat])
+        .addTo(map))
+    });
+  }
+
   render() {
     return (
-      <div
-        ref = {el => this.mapContainer = el}
-        style = {{
-          position: "relative",
-          height: "100%",
-          overflow: "hidden",
-          width: "100%",
-        }}>
+      <div className="fullHeight">
+        <div className="fullHeight">
+          <div
+            ref = {el => this.mapContainer = el}
+            style = {{
+              height: "100%",
+              overflow: "hidden",
+              width: "100%",
+            }}
+          />
+          <div
+            style = {{
+              top: "2em",
+              right: "2em",
+              position: "absolute",
+            }}
+          >
+            <Segment textAlign='center'>
+              {/* <Header as='h3' dividing>
+                Statistics
+              </Header> */}
+              <div>
+              <Statistic>
+                <Statistic.Value>{this.props.distance}</Statistic.Value>
+                <Statistic.Label>km</Statistic.Label>
+              </Statistic>
+              </div>
+              <div>
+              <Statistic>
+                <Statistic.Value>{this.props.time}</Statistic.Value>
+                <Statistic.Label>hh:mm</Statistic.Label>
+              </Statistic>
+              </div>
+            </Segment>
+          </div>
+        </div>
+        { this.state.obj &&
+          <Modal size="fullscreen" onClick={() => this.setState({obj: null})} basic open={true}>
+            <Modal.Content>
+              <Modal.Description>
+                <Container>
+                  <Image src={`images/original/${this.state.obj.img}.jpg`}/>
+                </Container>
+              </Modal.Description>
+            </Modal.Content>
+          </Modal>
+        }
       </div>
     );
   }
@@ -130,7 +223,10 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-   points: state.points
+    points: state.points,
+    distance: state.distance,
+    time: state.time,
+    objects: state.objects,
   };
 };
 
