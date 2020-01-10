@@ -1,0 +1,19 @@
+{
+  "name": "my-trips-etl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^4.0.0-rc.12",
+    "js-yaml": "^3.13.1",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
+}
