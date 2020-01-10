@@ -1,15 +1,15 @@
-const fs = require('fs');
-const yaml = require('js-yaml');
-const util = require('util');
+const fs = require('fs')
+const yaml = require('js-yaml')
+const util = require('util')
 
-const readdir = util.promisify(fs.readdir);
-const writeFile = util.promisify(fs.writeFile);
+const readdir = util.promisify(fs.readdir)
+const writeFile = util.promisify(fs.writeFile)
 
-const exec = util.promisify(require('child_process').exec);
+const exec = util.promisify(require('child_process').exec)
 //const spawn = require('child_process').spawn;
 
-const inputPath = "./input";
-const outputPath = "./output";
+const inputPath = process.env.INPUT_DATA_PATH || "./input"
+const outputPath = process.env.OUTPUT_DATA_PATH || "./output"
 
 if (!fs.existsSync(`${outputPath}/images`)){
   fs.mkdirSync(`${outputPath}/images`);
