@@ -152,7 +152,7 @@ class Map extends Component {
       // create a DOM element for the marker
       var el = document.createElement('div');
       el.className = 'marker';
-      el.style.backgroundImage =`url(images/circle-thumb-32/${obj.thumb}.png)`;
+      el.style.backgroundImage =`url(images/${obj.img}/circle-thumb-32.png)`;
       el.style.width = '32px';
       el.style.height = '32px';
 
@@ -210,7 +210,7 @@ class Map extends Component {
             <Modal.Content>
               <Modal.Description>
                 <Container>
-                  <Image src={`images/original/${this.state.obj.img}.jpg`}/>
+                  <Image src={`images/${this.state.obj.img}/original.jpg`}/>
                 </Container>
               </Modal.Description>
             </Modal.Content>
