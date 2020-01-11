@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node main.js"
+    "lets-do-this": "node main.js"
   },
   "author": "",
   "license": "ISC",
