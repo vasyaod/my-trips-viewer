@@ -30,7 +30,7 @@ const processImage = async (tripId, meta) => {
   }
  
   await Promise.all([
-    exec(`cp ${tripPath}/${meta.file} ${dir}/original.jpg`),
+    exec(`ln -sf ${tripPath}/${meta.file} ${dir}/original.jpg`),
     exec(`./circle-thumb.sh ${tripPath}/${meta.file} ${dir}/circle-thumb-32.png`)
   ])
 }
