@@ -40,6 +40,9 @@ const processVideo = async (tripId, meta) => {
 }
 
 const processTrip = async tripId => {
+
+  console.log("Process trip", tripId)
+
   const tripPath = `${inputPath}/${tripId}/`
   const tripOutputPath = `${outputPath}/data/${tripId}/`
 
@@ -84,10 +87,24 @@ const processTrip = async tripId => {
     writeFile(`${tripOutputPath}/objects.json`, JSON.stringify(objects, null, 2), 'utf8'),
     exec(`cp ${tripPath}/track.gpx ${tripOutputPath}/track.gpx`),
   ])
+
+  if (fs.existsSync(`${tripPath}/trip.yml`)) {
+    return yaml.safeLoad(fs.readFileSync(`${tripPath}/trip.yml`, 'utf8'))
+  } else {
+    return null
+  }
 }
 
 // Read list of trips.
 (async () => {
   const items = await readdir(inputPath)
-  Promise.all(items.map(item => processTrip(item)))
+
+  const trips = await Promise.all(items.map(item => processTrip(item)))
+
+  console.log("Creating index of trips")
+  writeFile(
+    `${outputPath}/index.json`, 
+    JSON.stringify(trips.filter(tripDesc => tripDesc != null), null, 2), 
+    'utf8'
+  )
 })()
