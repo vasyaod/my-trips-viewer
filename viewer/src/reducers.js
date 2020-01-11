@@ -6,6 +6,7 @@ import { List } from 'immutable'
 
 const initialState = {
   points: List([]),
+  objects: [],
   distance: 0,
   time: 0,
 }

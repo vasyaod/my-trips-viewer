@@ -30,7 +30,7 @@ const processImage = async (tripId, meta) => {
   }
  
   await Promise.all([
-    exec(`ln -s ${tripPath}/${meta.file} ${dir}/original.jpg`),
+    exec(`cp ${tripPath}/${meta.file} ${dir}/original.jpg`),
     exec(`./circle-thumb.sh ${tripPath}/${meta.file} ${dir}/circle-thumb-32.png`)
   ])
 }
@@ -64,16 +64,20 @@ const processTrip = async tripId => {
   )
   
   // Save objects file
-  const objects = images.map(meta => {
-    const fileName = meta.file.replace(/\.[^/.]+$/, "")
+  const objects = images
+    .filter(meta => {
+      meta.lat && meta.lng
+    })
+    .map(meta => {
+      const fileName = meta.file.replace(/\.[^/.]+$/, "")
 
-    return {
-      thumb: fileName,
-      img: fileName,
-      lat: meta.lat,
-      lng: meta.lat
-    }
-  })
+      return {
+        thumb: fileName,
+        img: fileName,
+        lat: meta.lat,
+        lng: meta.lng
+      }
+    })
 
   await Promise.all([
     imagePromises,
