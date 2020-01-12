@@ -39,7 +39,6 @@ class Map extends Component {
       
 //    const self = this
     map.once('load', () => {
-      console.log("Map loaded")
       this.drawTrackData()
       this.drawObjects()
     })
@@ -60,14 +59,11 @@ class Map extends Component {
     if (this.props.objects !== prevProps.objects) {
       this.drawObjects()
     }
-    
   }
 
   drawTrackData() {
     if (!this.map.loaded())
       return
-
-    console.log("DrawTrackData")
 
     const map = this.map
 
