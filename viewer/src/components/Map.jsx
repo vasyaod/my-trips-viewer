@@ -19,8 +19,6 @@ class Map extends Component {
   componentDidMount() {
     const fileName = this.props.match.params.id == null ? "" : this.props.match.params.id
     this.props.loadFile(fileName)
-    console.log("!", this.props.match.params.id)
-    console.log("!!", JSON.stringify(this.props.match, null, 2))
 
     mapboxgl.accessToken = 'pk.eyJ1IjoidnZhemhlc292IiwiYSI6ImNqdHBpdnUxcTA1NXk0MXBjMTl4OHJlOWgifQ.J262J1QTtrGIlylAXKTYSQ';
     
@@ -41,8 +39,9 @@ class Map extends Component {
       
 //    const self = this
     map.once('load', () => {
-      this.drawObjects()
+      console.log("Map loaded")
       this.drawTrackData()
+      this.drawObjects()
     })
     
     map.getCanvas().style.cursor = 'default'
@@ -67,6 +66,8 @@ class Map extends Component {
   drawTrackData() {
     if (!this.map.loaded())
       return
+
+    console.log("DrawTrackData")
 
     const map = this.map
 
