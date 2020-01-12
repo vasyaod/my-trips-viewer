@@ -34,7 +34,7 @@ const processTrip = async tripId => {
   page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
   
   await page.goto(`http://localhost:8080/#/maps/${tripId}`);
-  await sleep(4000)
+  await sleep(10000)
   await page.screenshot({path: `${outputPath}/data/${tripId}/preview.png`});
 
   await browser.close()
@@ -54,7 +54,7 @@ const processTrip = async tripId => {
 
 // Read list of trips.
 (async () => {
-  await sleep(5000)
+  await sleep(10000)
 
   const items = await readdir(inputPath)
   await Promise.all(items.map(item => processTrip(item)))
