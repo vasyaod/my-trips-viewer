@@ -8,14 +8,14 @@ const writeFile = util.promisify(fs.writeFile)
 const exec = util.promisify(require('child_process').exec)
 //const spawn = require('child_process').spawn;
 
-const inputPath = process.env.INPUT_DATA_PATH || "./input"
-const outputPath = process.env.OUTPUT_DATA_PATH || "./output"
+const inputPath = process.env.INPUT_DATA_PATH || "../test-data/input"
+const outputPath = process.env.OUTPUT_DATA_PATH || "../test-data/output"
 
-if (!fs.existsSync(`${outputPath}/images`)){
+if (!fs.existsSync(`${outputPath}/images`)) {
   fs.mkdirSync(`${outputPath}/images`);
 }
 
-if (!fs.existsSync(`${outputPath}/data`)){
+if (!fs.existsSync(`${outputPath}/data`)) {
   fs.mkdirSync(`${outputPath}/data`);
 }
 
@@ -25,7 +25,7 @@ const processImage = async (tripId, meta) => {
   const dir = `${outputPath}/images/${fileName}/`;
   const tripPath = `${inputPath}/${tripId}/`
   
-  if (!fs.existsSync(dir)){
+  if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
  
