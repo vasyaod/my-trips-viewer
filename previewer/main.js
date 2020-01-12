@@ -26,12 +26,14 @@ if (!fs.existsSync(`${outputPath}/data`)){
 const processTrip = async tripId => {
   console.log("Process trip", tripId)
 
-  const tripPath = `${inputPath}/${tripId}/`
+  const tripPath = `${inputPath}/${tripId}`
 
   const browser = await puppeteer.launch({
     defaultViewport: {width: 800, height: 600}
   });
   const page = await browser.newPage();
+  page.on('console', msg => console.log('PAGE LOG:', msg.text));
+  
   await page.goto(`http://localhost:8080/#/maps/${tripId}`);
   await sleep(4000)
   await page.screenshot({path: `${tripPath}/preview.png`});
