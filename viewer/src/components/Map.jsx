@@ -133,7 +133,8 @@ class Map extends Component {
     }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
        
     map.fitBounds(bounds, {
-      padding: 30
+      padding: 30,
+      linear: true
     })
   }
 
