@@ -32,7 +32,8 @@ const processTrip = async tripId => {
     defaultViewport: {width: 800, height: 600}
   });
   const page = await browser.newPage();
-  page.on('console', msg => console.log('PAGE LOG:', msg.text));
+  page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
+  page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
   
   await page.goto(`http://localhost:8080/#/maps/${tripId}`);
   await sleep(4000)
