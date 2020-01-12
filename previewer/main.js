@@ -24,29 +24,24 @@ if (!fs.existsSync(`${outputPath}/data`)){
 }
 
 const processTrip = async tripId => {
+  console.log("Process trip", tripId)
+
+  const tripPath = `${inputPath}/${tripId}/`
+
   const browser = await puppeteer.launch({
     defaultViewport: {width: 800, height: 600}
   });
   const page = await browser.newPage();
   await page.goto(`http://localhost:8080/#/maps/${tripId}`);
   await sleep(4000)
-  await page.screenshot({path: `${outputPath}/data/${tripId}/preview.png`});
+  await page.screenshot({path: `${tripPath}/preview.png`});
 
   await browser.close()
 
-  var view = {
-    title: "Joe",
-    calc: function () {
-      return 2 + 4;
-    }
-  };
-  
-  const tripPath = `${inputPath}/${tripId}/`
   const tripInfo = yaml.safeLoad(fs.readFileSync(`${tripPath}/trip.yml`, 'utf8'))
 
-  const template = await readFile(`template.mustache`, 'utf8')
   const output = mustache.to_html(
-    template,
+    await readFile(`template.mustache`, 'utf8'),
     {
       title: tripInfo.title,
       description: tripInfo.description,
