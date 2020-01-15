@@ -1,4 +1,4 @@
-# My-trips code base
+# Static page engine for GEO-data
 
 There are three parts here
 

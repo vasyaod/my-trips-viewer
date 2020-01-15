@@ -1,6 +1,7 @@
 const fs = require('fs')
 const yaml = require('js-yaml')
 const util = require('util')
+const UUID = require('uuid-js');
 
 const readdir = util.promisify(fs.readdir)
 const writeFile = util.promisify(fs.writeFile)
@@ -102,9 +103,13 @@ const processTrip = async tripId => {
   const trips = await Promise.all(items.map(item => processTrip(item)))
 
   console.log("Creating index of trips")
+  // Save trips indexes
   writeFile(
     `${outputPath}/index.json`, 
     JSON.stringify(trips.filter(tripDesc => tripDesc != null), null, 2), 
     'utf8'
   )
+
+  // Try to notify GitHub about changes and republish GitHub Pages
+  writeFile(`${outputPath}/.publish`, UUID.create().toString(), 'utf8')
 })()
