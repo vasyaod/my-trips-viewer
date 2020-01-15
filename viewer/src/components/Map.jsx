@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment, Header, Statistic, Modal, Image, Container} from 'semantic-ui-react'
+import { Segment, Header, Statistic, Modal, Image, Container, Embed} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 const mapboxgl = require('mapbox-gl');
@@ -39,6 +39,7 @@ class Map extends Component {
       
 //    const self = this
     map.once('load', () => {
+      console.log("!!!!++")
       this.drawTrackData()
       this.drawObjects()
     })
@@ -57,6 +58,7 @@ class Map extends Component {
     }
 
     if (this.props.objects !== prevProps.objects) {
+      console.log("!!!!+")
       this.drawObjects()
     }
   }
@@ -138,8 +140,9 @@ class Map extends Component {
   }
 
   drawObjects() {
-    if (!this.map.loaded())
-      return
+
+//    if (!this.map.loaded())
+      //return
 
     const map = this.map
 
@@ -206,11 +209,27 @@ class Map extends Component {
           </div>
         </div>
         { this.state.obj &&
-          <Modal size="fullscreen" onClick={() => this.setState({obj: null})} basic open={true}>
+          <Modal 
+            size="fullscreen" 
+            basic 
+            open={true} 
+            closeOnDimmerClick={true}
+            onClose={() => this.setState({obj: null})}
+            >
             <Modal.Content>
               <Modal.Description>
                 <Container>
-                  <Image src={`images/${this.state.obj.img}/original.jpg`}/>
+                  { this.state.obj.type == "video" &&
+                    <Embed
+                      active={true}
+                      id={this.state.obj.youtubeId}
+                      placeholder={`images/${this.state.obj.img}/original.jpg`}
+                      source='youtube'
+                    />
+                  }
+                  { this.state.obj.type == "image" &&
+                    <Image src={`images/${this.state.obj.img}/original.jpg`} onClick={() => this.setState({obj: null})}/>
+                  }
                 </Container>
               </Modal.Description>
             </Modal.Content>

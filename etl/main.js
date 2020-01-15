@@ -21,23 +21,31 @@ if (!fs.existsSync(`${outputPath}/data`)) {
 }
 
 const processImage = async (tripId, meta) => {
-  const fileName = meta.file.replace(/\.[^/.]+$/, "")
-
-  const dir = `${outputPath}/images/${fileName}/`;
+  const dir = `${outputPath}/images/${tripId}-${meta.name}`;
   const tripPath = `${inputPath}/${tripId}/`
-  
+
+  // Process image if it doesn't exists
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
+  
+    await exec(`cp ${tripPath}/${meta.file} ${dir}/original.jpg`)
+    await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+    console.log(`Image ${tripId}-${meta.name}/${meta.file} has been processed`)
   }
- 
-  await Promise.all([
-    exec(`cp ${tripPath}/${meta.file} ${dir}/original.jpg`),
-    exec(`./circle-thumb.sh ${tripPath}/${meta.file} ${dir}/circle-thumb-32.png`)
-  ])
 }
 
-const processVideo = async (tripId, meta) => {
+const processVideo = async (tripId, meta, metaName) => {
+  const dir = `${outputPath}/images/${tripId}-${meta.name}`;
 
+  // Process video if it doesn't exists and is not processed
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+ 
+    await exec(`./youtube-dl -o ${dir}/original.jpg --write-thumbnail --skip-download https://youtu.be/${meta.youtubeId}`)
+    await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+
+    console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
+  }
 }
 
 const processTrip = async tripId => {
@@ -55,11 +63,12 @@ const processTrip = async tripId => {
   
   const metas = items
     .filter(item => item.endsWith(".meta"))
-    .map(item => 
-      yaml.safeLoad(fs.readFileSync(`${tripPath}/${item}`, 'utf8'))
-    )
-
-  const images = metas.filter(meta => meta.type == "image")
+    .map(item => {
+      const meta = yaml.safeLoad(fs.readFileSync(`${tripPath}/${item}`, 'utf8'))
+      return { ...meta,
+        name: item.replace(".meta", "")
+      }
+    })
 
   const imagePromises = Promise.all(
     metas
@@ -67,17 +76,20 @@ const processTrip = async tripId => {
       .map(meta => processImage(tripId, meta))
   )
   
-  // Save objects file
-  const objects = images
-    .filter(meta => {
-      meta.lat && meta.lng
-    })
-    .map(meta => {
-      const fileName = meta.file.replace(/\.[^/.]+$/, "")
+  const videoPromises = Promise.all(
+    metas
+      .filter(meta => meta.type == "video")
+      .map(meta => processVideo(tripId, meta))
+  )
 
+  // Save objects file
+  const objects = metas
+    .filter(meta => meta.lat && meta.lng)
+    .map(meta => {
       return {
-        thumb: fileName,
-        img: fileName,
+        type: meta.type,
+        img: `${tripId}-${meta.name}`,
+        youtubeId: meta.youtubeId,
         lat: meta.lat,
         lng: meta.lng
       }
@@ -85,6 +97,7 @@ const processTrip = async tripId => {
 
   await Promise.all([
     imagePromises,
+    videoPromises,
     writeFile(`${tripOutputPath}/objects.json`, JSON.stringify(objects, null, 2), 'utf8'),
     exec(`cp ${tripPath}/track.gpx ${tripOutputPath}/track.gpx`),
   ])
