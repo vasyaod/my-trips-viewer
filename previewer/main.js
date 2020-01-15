@@ -37,7 +37,7 @@ const processTrip = async tripId => {
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
     
     await page.goto(`http://localhost:8080/#/maps/${tripId}`);
-    await sleep(5000)
+    await sleep(10000)
     await page.screenshot({path: out});
 
     await browser.close()
