@@ -39,7 +39,6 @@ class Map extends Component {
       
 //    const self = this
     map.once('load', () => {
-      console.log("!!!!++")
       this.drawTrackData()
       this.drawObjects()
     })
@@ -58,7 +57,6 @@ class Map extends Component {
     }
 
     if (this.props.objects !== prevProps.objects) {
-      console.log("!!!!+")
       this.drawObjects()
     }
   }
@@ -154,7 +152,7 @@ class Map extends Component {
     this.markers = this.props.objects.map( (obj, index) => {
       // create a DOM element for the marker
       var el = document.createElement('div');
-      el.className = 'marker';
+      el.className = 'marker play2 button';
       el.style.backgroundImage =`url(images/${obj.img}/circle-thumb-32.png)`;
       el.style.width = '32px';
       el.style.height = '32px';
