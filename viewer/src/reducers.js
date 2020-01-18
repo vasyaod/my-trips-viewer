@@ -9,6 +9,7 @@ const initialState = {
   objects: [],
   distance: 0,
   time: 0,
+  index: [],
 }
 
 function distanceBetweenPoints(latlng1, latlng2){
@@ -59,7 +60,13 @@ export function todoApp(state = initialState, action) {
       return {...state,
         objects: action.values
       }
-      
+
+    case 'INDEX_LOADED':
+      console.log(action.values)
+      return {...state,
+        index: action.values
+      }
+
     default:
       return state
   }

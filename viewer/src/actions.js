@@ -37,4 +37,17 @@ export function loadFile(fileName) {
       console.log("Object file " + fileName + "is not found")
     }
   }
+}
+
+export function loadIndex() {
+  return async(dispatch) => {
+    
+    const res = await fetch(`index.json`)
+    const data = await res.json()
+  
+    dispatch({
+      type: 'INDEX_LOADED',
+      values: data
+    })
+  }
 } 

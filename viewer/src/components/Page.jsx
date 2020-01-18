@@ -3,8 +3,12 @@
 import React, { Component } from 'react';
 //import 'style-loader!css-loader!../css/styles.css';
 import { Segment, Sidebar, Menu, Container } from 'semantic-ui-react'
-import Map from './Map.jsx'
 import { HashRouter as Router, Route, Link } from "react-router-dom";
+
+
+import Map from './Map.jsx'
+import Index from './Index.jsx'
+
 // import queryString from 'query-string';
 // import { loadProjectFromUrl } from '../actions/actions.js';
 import { connect } from 'react-redux'
@@ -25,7 +29,7 @@ class Page extends Component {
         <div className="fullHeight">
           <Sidebar.Pushable as={Segment}>
             <Sidebar.Pusher >
-              <Route exact path="/" component={Map}/>
+              <Route exact path="/" component={Index}/>
               <Route exact path="/maps/:id" component={Map} />
             </Sidebar.Pusher>
           </Sidebar.Pushable>
