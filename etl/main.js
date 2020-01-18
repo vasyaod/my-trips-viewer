@@ -112,6 +112,11 @@ const processTrip = async tripId => {
     }
   )
   await writeFile(`${outputPath}/trips/${tripId}.html`, output, 'utf8')
+  
+  if (!fs.existsSync(`${outputPath}/trips/${tripId}`)){
+    fs.mkdirSync(`${outputPath}/trips/${tripId}`);
+  }
+  await writeFile(`${outputPath}/trips/${tripId}/index.html`, output, 'utf8')
 
   await Promise.all([
     imagePromises,
