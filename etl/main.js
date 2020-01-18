@@ -2,9 +2,11 @@ const fs = require('fs')
 const yaml = require('js-yaml')
 const util = require('util')
 const UUID = require('uuid-js');
+const mustache = require('mustache');
 
 const readdir = util.promisify(fs.readdir)
 const writeFile = util.promisify(fs.writeFile)
+const readFile = util.promisify(fs.readFile)
 
 const exec = util.promisify(require('child_process').exec)
 //const spawn = require('child_process').spawn;
@@ -18,6 +20,10 @@ if (!fs.existsSync(`${outputPath}/images`)) {
 
 if (!fs.existsSync(`${outputPath}/data`)) {
   fs.mkdirSync(`${outputPath}/data`);
+}
+
+if (!fs.existsSync(`${outputPath}/trips`)){
+  fs.mkdirSync(`${outputPath}/trips`);
 }
 
 const processImage = async (tripId, meta) => {
@@ -95,6 +101,18 @@ const processTrip = async tripId => {
       }
     })
 
+  const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
+
+  const output = mustache.render(
+    await readFile(`template.mustache`, 'utf8'),
+    {
+      title: tripInfo.title,
+      description: tripInfo.description,
+      tripId: tripId
+    }
+  )
+  await writeFile(`${outputPath}/trips/${tripId}.html`, output, 'utf8')
+
   await Promise.all([
     imagePromises,
     videoPromises,
@@ -102,10 +120,8 @@ const processTrip = async tripId => {
     exec(`cp ${tripPath}/track.gpx ${tripOutputPath}/track.gpx`),
   ])
 
-  if (fs.existsSync(`${tripPath}/trip.yml`)) {
-    return yaml.safeLoad(fs.readFileSync(`${tripPath}/trip.yml`, 'utf8'))
-  } else {
-    return null
+  return { ...tripInfo,
+    id: tripId
   }
 }
 

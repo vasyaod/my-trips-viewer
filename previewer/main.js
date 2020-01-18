@@ -15,10 +15,6 @@ function sleep(t) {
   return new Promise((resolve) => setTimeout(resolve, t))
 }
 
-if (!fs.existsSync(`${outputPath}/trips`)){
-  fs.mkdirSync(`${outputPath}/trips`);
-}
-
 if (!fs.existsSync(`${outputPath}/data`)){
   fs.mkdirSync(`${outputPath}/data`);
 }
@@ -41,18 +37,6 @@ const processTrip = async tripId => {
     await page.screenshot({path: out});
 
     await browser.close()
-
-    const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
-
-    const output = mustache.to_html(
-      await readFile(`template.mustache`, 'utf8'),
-      {
-        title: tripInfo.title,
-        description: tripInfo.description,
-        tripId: tripId
-      }
-    )
-    await writeFile(`${outputPath}/trips/${tripId}.html`, output, 'utf8')
   }
 }
 
