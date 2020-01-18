@@ -64,7 +64,7 @@ export function todoApp(state = initialState, action) {
     case 'INDEX_LOADED':
       console.log(action.values)
       return {...state,
-        index: action.values
+        index: List(action.values).sortBy(item => item.date).reverse()
       }
 
     default:
