@@ -4,6 +4,7 @@ import { Segment, Card, Image, Container, Header} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { loadIndex } from '../actions.js'
+import * as config from '../config.js'
 
 const style = {
   h1: {
@@ -31,7 +32,7 @@ class Index extends Component {
                 key={trip.id}
                 href={`#/maps/${trip.id}`}
               >
-                <Image src={`data/${trip.id}/preview.png`} wrapped ui={false} />
+                <Image src={`${config.url}data/${trip.id}/preview.png`} wrapped ui={false} />
                 <Card.Content>
                   <Card.Header>{trip.title}</Card.Header>
                   <Card.Meta>

@@ -4,6 +4,7 @@
 //import { List } from 'immutable'
 //import * as utils from '../utils.js'
 //import * as equal from 'deep-equal'
+import * as config from './config.js'
 
 const gpxParse = require("./gpx/gpx-parse");
 
@@ -11,7 +12,7 @@ export function loadFile(fileName) {
   return async(dispatch) => {
     
     console.log("Load file: " + fileName)
-    const res1 = await fetch(`data/${fileName}/track.gpx`)
+    const res1 = await fetch(`${config.url}data/${fileName}/track.gpx`)
     if (res1.status == 200) {
       const text = await res1.text()
 
@@ -25,7 +26,7 @@ export function loadFile(fileName) {
       console.log("GPX File " + fileName + "is not found")
     }
 
-    const res2 = await fetch(`data/${fileName}/objects.json`)
+    const res2 = await fetch(`${config.url}data/${fileName}/objects.json`)
     if (res2.status == 200) {
       const data = await res2.json()
       
@@ -42,7 +43,7 @@ export function loadFile(fileName) {
 export function loadIndex() {
   return async(dispatch) => {
     
-    const res = await fetch(`index.json`)
+    const res = await fetch(`${config.url}index.json`)
     const data = await res.json()
   
     dispatch({

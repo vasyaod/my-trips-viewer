@@ -27,12 +27,12 @@ class Page extends Component {
     return (
       <Router>
         <div className="fullHeight">
-          <Sidebar.Pushable as={Segment}>
-            <Sidebar.Pusher >
+          {/* <Sidebar.Pushable as={Segment}>
+            <Sidebar.Pusher > */}
               <Route exact path="/" component={Index}/>
               <Route exact path="/maps/:id" component={Map} />
-            </Sidebar.Pusher>
-          </Sidebar.Pushable>
+            {/* </Sidebar.Pusher>
+          </Sidebar.Pushable> */}
         </div>
       </Router>
     );
