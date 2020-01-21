@@ -126,7 +126,8 @@ const processTrip = async tripId => {
   ])
 
   return { ...tripInfo,
-    id: tripId
+    id: tripId,
+    date: tripInfo.date.toISOString().split('T')[0]
   }
 }
 
