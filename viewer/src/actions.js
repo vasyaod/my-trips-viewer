@@ -51,4 +51,26 @@ export function loadIndex() {
       values: data
     })
   }
-} 
+}
+
+export function shareFacebook(tripId, title, description) {
+  const t = `${title}: ${description}`
+  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURI(url)}&t=${t}`
+  window.open(facebookShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
+}
+  
+export function shareTwitter(tripId, title, description) {
+  const text = `${title}: ${description}`
+//    const twitterHandle = "amazon-budget-control"
+  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const twitterShareUrl = `https://twitter.com/share?url=${encodeURI(url)}&text=${text}`
+  window.open(twitterShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
+}
+
+export function shareVk(tripId, title, description) {
+  const text = `${title}: ${description}`
+  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const twitterShareUrl = `https://vk.com/share.php?url=${encodeURI(url)}&title=${text}`
+  window.open(twitterShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
+}

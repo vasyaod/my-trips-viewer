@@ -1,9 +1,9 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import { Segment, Card, Image, Container, Header} from 'semantic-ui-react'
+import { Segment, Card, Image, Container, Header, Button} from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
-import { loadIndex } from '../actions.js'
+import { loadIndex, shareFacebook, shareTwitter, shareVk } from '../actions.js'
 import * as config from '../config.js'
 
 const style = {
@@ -30,10 +30,9 @@ class Index extends Component {
             this.props.index.map(trip =>
               <Card 
                 key={trip.id}
-                href={`#/maps/${trip.id}`}
               >
-                <Image src={`${config.url}data/${trip.id}/preview.png`} wrapped ui={false} />
-                <Card.Content>
+                <Image src={`${config.url}data/${trip.id}/preview.png`} wrapped ui={false} href={`#/maps/${trip.id}`} as='a'/>
+                <Card.Content href={`#/maps/${trip.id}`}>
                   <Card.Header>{trip.title}</Card.Header>
                   <Card.Meta>
                     <span className='date'>{trip.date}</span>
@@ -42,6 +41,11 @@ class Index extends Component {
                     {trip.description}
                   </Card.Description>
                 </Card.Content>
+                <Card.Content extra>
+                  <Button circular icon='facebook' onClick={() => shareFacebook(trip.id, trip.title, trip.description)}/>
+                  <Button circular icon='twitter' onClick={() => shareTwitter(trip.id, trip.title, trip.description)} />
+                  <Button circular icon='vk' onClick={() => shareVk(trip.id, trip.title, trip.description)}/>
+              </Card.Content>
               </Card>
             )
           }
