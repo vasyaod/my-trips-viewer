@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { Segment, Card, Image, Container, Header, Button} from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import GitHubForkRibbon from 'react-github-fork-ribbon';
 
 import { loadIndex, shareFacebook, shareTwitter, shareVk } from '../actions.js'
 import * as config from '../config.js'
@@ -22,7 +23,12 @@ class Index extends Component {
   render() {
     return (
       <Container>
-        
+        <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
+                          target="_blank"
+                          position="right">
+          Fork me on GitHub
+        </GitHubForkRibbon>
+
         <Header as='h1' content='My trips' style={style.h1} textAlign='center' />
 
         <Card.Group doubling itemsPerRow={3} stackable>
