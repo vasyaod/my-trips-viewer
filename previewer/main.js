@@ -44,7 +44,9 @@ const processTrip = async tripId => {
 (async () => {
   await sleep(10000)
 
-  const items = (await readdir(inputPath)).filter(item => !item.startsWith('.'))
-  
+  const items = (await readdir(inputPath))
+    .filter(item => !item.startsWith('.'))
+    .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
+    
   await Promise.all(items.map(item => processTrip(item)))
 })()
