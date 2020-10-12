@@ -133,7 +133,7 @@ const processTrip = async tripId => {
 
 // Read list of trips.
 (async () => {
-  const items = await readdir(inputPath)
+  const items = (await readdir(inputPath)).filter(item => !item.startsWith('.'))
 
   const trips = await Promise.all(items.map(item => processTrip(item)))
 
