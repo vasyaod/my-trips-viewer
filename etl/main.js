@@ -88,7 +88,7 @@ const processTrip = async tripId => {
       .map(meta => processVideo(tripId, meta))
   )
 
-  // Save objects file
+  // Convert objects file in JSON array
   const objects = metas
     .filter(meta => meta.lat && meta.lng)
     .map(meta => {
@@ -100,8 +100,12 @@ const processTrip = async tripId => {
         lng: meta.lng
       }
     })
-
+  
   const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
+
+  const desc = { ...tripInfo,
+    objects: objects
+  }
 
   const output = mustache.render(
     await readFile(`template.mustache`, 'utf8'),
@@ -121,8 +125,9 @@ const processTrip = async tripId => {
   await Promise.all([
     imagePromises,
     videoPromises,
-    writeFile(`${tripOutputPath}/objects.json`, JSON.stringify(objects, null, 2), 'utf8'),
-    exec(`cp ${tripPath}/track.gpx ${tripOutputPath}/track.gpx`),
+    writeFile(`${tripOutputPath}/objects.json`, JSON.stringify(desc, null, 2), 'utf8'),
+    writeFile(`${tripOutputPath}/trip.json`, JSON.stringify(desc, null, 2), 'utf8'),
+    exec(`cp ${tripPath}/*.gpx ${tripOutputPath}/`),
   ])
 
   return { ...tripInfo,
