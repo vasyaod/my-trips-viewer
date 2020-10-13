@@ -4,5 +4,5 @@ module.exports = {
    * 
    * For example: https://vasyaod.github.io/my-trips/
    */
-  url: "https://vasyaod.github.io/my-trips/"
+  url: "./"
 }
