@@ -12,8 +12,8 @@
     "immutable": "^4.0.0-rc.12",
     "js-yaml": "^3.13.1",
     "mustache": "^3.2.1",
-    "puppeteer": "^2.0.0",
-    "puppeteer-core": "^2.0.0",
+    "puppeteer": "^8.0.0",
+    "puppeteer-core": "^8.0.0",
     "uuid-js": "^0.7.5"
   },
   "devDependencies": {
