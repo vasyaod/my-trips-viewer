@@ -48,10 +48,10 @@ const processTrip = async (browser, tripId) => {
     .filter(item => !item.startsWith('.'))
     .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
     
-  items.forEach(item => 
-    await processTrip(browser, item)
-  )
-  
+  for (let i = 0; i < items.length; i++) {
+    await processTrip(browser, item[i])
+  }
+
   await browser.close()
   //await Promise.all(items.map(item => processTrip(item)))
 })()
