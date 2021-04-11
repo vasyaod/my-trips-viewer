@@ -49,7 +49,7 @@ const processTrip = async (browser, tripId) => {
     .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
     
   for (let i = 0; i < items.length; i++) {
-    await processTrip(browser, item[i])
+    await processTrip(browser, items[i])
   }
 
   await browser.close()
