@@ -19,15 +19,12 @@ if (!fs.existsSync(`${outputPath}/data`)){
   fs.mkdirSync(`${outputPath}/data`);
 }
 
-const processTrip = async tripId => {
+const processTrip = async (browser, tripId) => {
   console.log("Process trip", tripId)
 
   const out = `${outputPath}/data/${tripId}/preview.png`
   // If preview doesn't exist we create a new one.
   if (!fs.existsSync(out)){
-    const browser = await puppeteer.launch({
-      defaultViewport: {width: 800, height: 600}
-    });
     const page = await browser.newPage();
     page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
@@ -35,8 +32,7 @@ const processTrip = async tripId => {
     await page.goto(`http://localhost:8080/#/maps/${tripId}`);
     await sleep(10000)
     await page.screenshot({path: out});
-
-    await browser.close()
+    await page.close()
   }
 }
 
@@ -44,9 +40,18 @@ const processTrip = async tripId => {
 (async () => {
   await sleep(10000)
 
+  const browser = await puppeteer.launch({
+    defaultViewport: {width: 800, height: 600}
+  });
+
   const items = (await readdir(inputPath))
     .filter(item => !item.startsWith('.'))
     .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
     
-  await Promise.all(items.map(item => processTrip(item)))
+  items.forEach(item => 
+    await processTrip(browser, item)
+  )
+  
+  await browser.close()
+  //await Promise.all(items.map(item => processTrip(item)))
 })()
