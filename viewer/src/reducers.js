@@ -39,8 +39,28 @@ export function todoApp(state = initialState, action) {
           })
         })
 
+      //let time = points.get(points.size - 1).tm - points.get(0).tm
+
+      // Calculate time for each segment
+      let time = List(action.tracks)
+        .flatMap (track => {
+          return List(track.segments).flatMap (segment => {
+            const s = List(segment)
+            if(s.size > 1) {
+              return s
+                .pop()
+                .zip(s.shift())
+                .map((p) => {
+                  return (Date.parse(p[1].time) - Date.parse(p[0].time))
+                })
+            } else {
+              return List(0)
+            }
+          })
+        })
+        .reduce((total, value) => total + value)
+
       let distance = 0
-      let time = points.get(points.size - 1).tm - points.get(0).tm
       let i
       for(i = 0; i < points.size - 1; i++) {
         distance = distance + distanceBetweenPoints(points.get(i), points.get(i + 1))
