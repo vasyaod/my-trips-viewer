@@ -2,7 +2,8 @@ const fs = require('fs')
 const puppeteer = require('puppeteer');
 const util = require('util')
 const yaml = require('js-yaml')
-const mustache = require('mustache');
+const mustache = require('mustache')
+const crypto = require("crypto")
 
 const readdir = util.promisify(fs.readdir)
 const writeFile = util.promisify(fs.writeFile)
@@ -15,6 +16,10 @@ function sleep(t) {
   return new Promise((resolve) => setTimeout(resolve, t))
 }
 
+function sha1(data) {
+  return crypto.createHash("sha1").update(data).digest("hex");
+}
+
 if (!fs.existsSync(`${outputPath}/data`)){
   fs.mkdirSync(`${outputPath}/data`);
 }
@@ -22,9 +27,18 @@ if (!fs.existsSync(`${outputPath}/data`)){
 const processTrip = async (browser, tripId) => {
   console.log("Process trip", tripId)
 
-  const out = `${outputPath}/data/${tripId}/preview.png`
+  const previewHashFile = `${outputPath}/data/${tripId}/preview.hash`
+  const tripFile = `${outputPath}/data/${tripId}/trip.yml`
+
+  if (!fs.existsSync(previewHashFile)) {
+    fs.writeFileSync(previewHashFile, sha1(""));
+  }
+  
+  var tripData = fs.readFileSync(tripFile, 'utf8').toString();
+  var previewHash = fs.readFileSync(previewHashFile, 'utf8').toString();
+
   // If preview doesn't exist we create a new one.
-  if (!fs.existsSync(out)){
+  if (sha1(tripData) != previewHash){
     const page = await browser.newPage();
     page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
@@ -33,6 +47,9 @@ const processTrip = async (browser, tripId) => {
     await sleep(10000)
     await page.screenshot({path: out});
     await page.close()
+    
+    // save hash of current data
+    fs.writeFileSync(previewHashFile, sha1(tripData));
   }
 }
 
