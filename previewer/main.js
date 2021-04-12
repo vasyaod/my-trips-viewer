@@ -29,6 +29,7 @@ const processTrip = async (browser, tripId) => {
 
   const previewHashFile = `${outputPath}/data/${tripId}/preview.hash`
   const tripFile = `${inputPath}/${tripId}/trip.yml`
+  const out = `${outputPath}/data/${tripId}/preview.png`
 
   if (!fs.existsSync(previewHashFile)) {
     fs.writeFileSync(previewHashFile, sha1(""));
