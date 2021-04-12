@@ -24,7 +24,6 @@ function distanceBetweenPoints(latlng1, latlng2){
 export function todoApp(state = initialState, action) {
   switch (action.type) {
     case 'GPX_CHANGED':
-      console.log(action.tracks)
       const points = List(action.tracks)
         .flatMap (track => {
           return List(track.segments).flatMap (segment => {
@@ -54,7 +53,7 @@ export function todoApp(state = initialState, action) {
                   return (Date.parse(p[1].time) - Date.parse(p[0].time))
                 })
             } else {
-              return List(0)
+              return List.of(0)
             }
           })
         })
