@@ -1,13 +1,15 @@
 const fs = require('fs')
 const puppeteer = require('puppeteer');
 const util = require('util')
-const yaml = require('js-yaml')
-const mustache = require('mustache')
 const crypto = require("crypto")
 
 const readdir = util.promisify(fs.readdir)
 const writeFile = util.promisify(fs.writeFile)
 const readFile = util.promisify(fs.readFile)
+
+// This is important parameter which is needed for rebuild all thumbnails 
+// in case of interface changing.
+const previewerVersion = "1.0"
 
 const inputPath = process.env.INPUT_DATA_PATH || "../test-data/input"
 const outputPath = process.env.OUTPUT_DATA_PATH || "../test-data/output"
@@ -17,7 +19,7 @@ function sleep(t) {
 }
 
 function sha1(data) {
-  return crypto.createHash("sha1").update(data).digest("hex");
+  return crypto.createHash("sha1").update(data + previewerVersion).digest("hex");
 }
 
 if (!fs.existsSync(`${outputPath}/data`)){
