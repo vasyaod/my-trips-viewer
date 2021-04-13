@@ -2,23 +2,16 @@
 
 set -e
 
-export INPUT_DATA_PATH="../../data-repo"
-export OUTPUT_DATA_PATH="../../pages-repo"
-
-ls -l
-echo "--------------"
-ls -l pages-repo
-echo "--------------"
-ls -l pages-repo/data
-echo "--------------"
+export INPUT_DATA_PATH="$(pwd)/data-repo"
+export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
 
 # Compile code of site/viewer
 cd code-repo/viewer
 npm install
 npm run build
+cd ../..
 
 # Copy generated code and other resources...
-cd ../..
 cp -u code-repo/viewer/bundle.js pages-repo
 cp -u code-repo/viewer/index.html pages-repo
 cp -u code-repo/viewer/ol.min.js pages-repo
@@ -28,10 +21,8 @@ cd code-repo/etl
 curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
 chmod +x youtube-dl
 npm install
-
-pwd
-
 npm run lets-do-this
+cd ../..
 
 # Run site in dev mode
 cp -R pages-repo/data code-repo/viewer
