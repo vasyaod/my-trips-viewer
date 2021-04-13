@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -e
+
+# Compile code of site/viewer
+cd code-repo/viewer
+npm install
+npm run build
+
+# Copy generated code and other resources...
+cd ../..
+cp -u code-repo/viewer/bundle.js pages-repo
+cp -u code-repo/viewer/index.html pages-repo
+cp -u code-repo/viewer/ol.min.js pages-repo
+
+# Data processing
+cd code-repo/etl
+curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
+chmod +x youtube-dl
+npm install
+npm run lets-do-this
+
+# Run site in dev mode
+cp -R pages-repo/data code-repo/viewer
+cp -R pages-repo/images code-repo/viewer
+cd code-repo/viewer
+npm install
+npm run dev &
+cd ../..
+
+# Make preview/thumbnail for every trip
+cd code-repo/previewer
+npm install
+npm run lets-do-this
+cd ../..

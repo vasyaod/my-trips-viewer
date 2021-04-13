@@ -12,62 +12,29 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: vasyaod/my-trips-viewer
-        path: my-trips-code
+        path: code-repo
 
     - name: Clone repo of pages
       uses: actions/checkout@v2
       with:
-        repository: vasyaod/my-tracks                # <----- Define your GitHub Page repo here
-        path: my-trips
+        repository: vasyaod/my-tracks         # <- Please, set Github pages repo here
+        path: pages-repo
 
     - name: Clone data
       uses: actions/checkout@v2
       with:
-        path: my-trips-data
+        path: data-repo
 
-    - name: Compile site code
-      run: |
-        cd my-trips-code/viewer
-        npm install
-        npm run build
-        cd ../..
-        cp -u my-trips-code/viewer/bundle.js my-trips
-        cp -u my-trips-code/viewer/index.html my-trips
-        cp -u my-trips-code/viewer/ol.min.js my-trips
-
-    - name: Data processing
+    - name: Generate static pages
       env: 
-        INPUT_DATA_PATH: ../../my-trips-data
-        OUTPUT_DATA_PATH: ../../my-trips
+        INPUT_DATA_PATH: ../../data-repo
+        OUTPUT_DATA_PATH: ../../pages-repo
       run: |
-        cd my-trips-code/etl
-        curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
-        chmod +x youtube-dl
-        npm install
-        npm run lets-do-this
+        ./code-repo/generate
 
-    - name: Run site in dev mode
+    - name: Commit Github pages
       run: |
-        cp -R my-trips/data my-trips-code/viewer
-        cp -R my-trips/images my-trips-code/viewer
-        cd my-trips-code/viewer
-        npm install
-        npm run dev &
-        cd ../..
-
-    - name: Make preview for every trip
-      env: 
-        INPUT_DATA_PATH: ../../my-trips-data
-        OUTPUT_DATA_PATH: ../../my-trips
-      run: |
-        cd my-trips-code/previewer
-        npm install
-        npm run lets-do-this
-        cd ../..
-
-    - name: Commit my-trips page
-      run: |
-        cd my-trips
+        cd pages-repo
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .
@@ -80,5 +47,5 @@ jobs:
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
         external_repository: vasyaod/my-tracks
         publish_branch: main
-        publish_dir: ./my-trips
+        publish_dir: ./pages-repo
         force_orphan: true
