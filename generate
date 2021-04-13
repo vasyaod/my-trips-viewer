@@ -2,8 +2,8 @@
 
 set -e
 
-export INPUT_DATA_PATH=../../data-repo
-export OUTPUT_DATA_PATH=../../pages-repo
+export INPUT_DATA_PATH="../../data-repo"
+export OUTPUT_DATA_PATH="../../pages-repo"
 
 # Compile code of site/viewer
 cd code-repo/viewer
@@ -21,6 +21,9 @@ cd code-repo/etl
 curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
 chmod +x youtube-dl
 npm install
+
+pwd
+
 npm run lets-do-this
 
 # Run site in dev mode
