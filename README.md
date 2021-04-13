@@ -2,13 +2,14 @@
 
 ## Demo
 
-https://vasyaod.github.io/my-trips or https://github.com/vasyaod/my-tracks
+ * https://github.com/vasyaod/my-tracks (non moderated content which is working by [the next principals](./how-my-tracks-works.md))
+ * https://vasyaod.github.io/my-trips
 
 ## How to setup
 
  1. Create a repo for github page (for example https://github.com/vasyaod/my-tracks)
  2. Create a repo for data model (for example https://github.com/vasyaod/my-tracks-data), the repo can has absolutely any name.
- 3. Copy [the Github Action Workflow](./github-wf.yml) to data model repo as /.workflows/etl.yml (for example https://github.com/vasyaod/my-tracks-data/.workflows/etl.yml)
+ 3. Copy [the Github Action Workflow](./github-wf.yml) to data model repo as /.workflows/etl.yml (for example https://github.com/vasyaod/my-tracks-data/blob/main/.github/workflows/etl.yml)
  4. Replace the github page repo param in the workflow file to your
  5. Add ACTIONS_DEPLOY_KEY as a deploy key to the github page repo and as a secret to data model repo. More information https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-create-ssh-deploy-key
  6. Done. Now any changes of data model in the appropriate repo will trigger regeneration of github pages.
