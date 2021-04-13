@@ -2,6 +2,8 @@
 
 https://github.com/vasyaod/my-tracks
 
+_To a man with a hammer, everything looks like a nail._
+
 I think, people should control and easily manipulate their own data which they generated. Inspired 
 this idea I've collected all my movements for several years and shared them to GitHub. So here is 
 a explanation how entire workflow works.
@@ -10,10 +12,10 @@ a explanation how entire workflow works.
 
 I use [GPS Logger](https://f-droid.org/en/packages/com.mendhak.gpslogger/) that I strongly recommends.
 This app is absolutely amazing. For me, with proper setting, the app doesn't consume energy at all, 
-at least I can't see difference of battery live for working app and stopped. Plus, it able to save 
+at least I can't see difference of battery live for working app and stopped. Plus, it is able to save 
 all your tracks to a phone file system or remote storages like ftp or other cloud storages. For saving 
-energy 60 sec period was set up checking GPS location, moreover  the app doesn't try to enable GPS module 
-if device is not moving or connected to home Wi-fi network.
+energy 60 sec period of GPS location checking was set up, moreover the app doesn't try to enable GPS module 
+if device is not moving (I assume accelerator is using) or connected to home Wi-fi network.
 
 # Step 2. Data Synchronization
 
