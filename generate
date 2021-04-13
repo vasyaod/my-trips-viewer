@@ -5,6 +5,13 @@ set -e
 export INPUT_DATA_PATH="../../data-repo"
 export OUTPUT_DATA_PATH="../../pages-repo"
 
+ls -l
+echo "--------------"
+ls -l pages-repo
+echo "--------------"
+ls -l pages-repo/data
+echo "--------------"
+
 # Compile code of site/viewer
 cd code-repo/viewer
 npm install
