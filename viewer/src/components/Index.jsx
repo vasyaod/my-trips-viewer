@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react';
 import { Segment, Card, Image, Container, Header, Button} from 'semantic-ui-react'
+import ReactMarkdown from 'react-markdown'
 import { connect } from 'react-redux'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 
@@ -29,7 +30,9 @@ class Index extends Component {
           Fork me on GitHub
         </GitHubForkRibbon>
 
-        <Header as='h1' content='My trips' style={style.h1} textAlign='center' />
+        <Header as='h1' content={this.props.siteTitle} style={style.h1} textAlign='center' />
+
+        { this.props.siteDescription && <p><Container text><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Container></p> }
 
         <Card.Group doubling itemsPerRow={3} stackable>
           { 
@@ -63,7 +66,9 @@ class Index extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    index: state.index
+    index: state.index,
+    siteTitle: config.siteTitle,
+    siteDescription: config.siteDescription
   };
 };
 
