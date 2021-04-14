@@ -41,7 +41,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        external_repository: vasyaod/my-tracks
+        external_repository: vasyaod/my-tracks               # <- Please, set Github pages repo here
         publish_branch: main
         publish_dir: ./pages-repo
         force_orphan: true
