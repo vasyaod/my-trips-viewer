@@ -6,7 +6,7 @@ export INPUT_DATA_PATH="$(pwd)/data-repo"
 export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
 
 # Copy config file from data repo to viewer
-cp -u data-repo/config.js code-repo/viewer || true
+cp -u data-repo/config.js code-repo/viewer/src || true
 
 # Compile code of site/viewer
 cd code-repo/viewer
