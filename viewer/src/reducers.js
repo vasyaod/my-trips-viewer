@@ -5,7 +5,7 @@ import { List } from 'immutable'
 
 
 const initialState = {
-  points: List([]),
+  tracks: List(List([])),
   objects: [],
   distance: 0,
   time: 0,
@@ -24,22 +24,6 @@ function distanceBetweenPoints(latlng1, latlng2){
 export function todoApp(state = initialState, action) {
   switch (action.type) {
     case 'GPX_CHANGED':
-      const points = List(action.tracks)
-        .flatMap (track => {
-          return List(track.segments).flatMap (segment => {
-            return List(segment).map ( point =>{
-              return {
-                lng: point.lon,
-                lat: point.lat,
-                tm: Date.parse(point.time),
-                pathType: "line"
-              }
-            })
-          })
-        })
-
-      //let time = points.get(points.size - 1).tm - points.get(0).tm
-
       // Calculate time for each segment
       let time = List(action.tracks)
         .flatMap (track => {
@@ -58,6 +42,22 @@ export function todoApp(state = initialState, action) {
           })
         })
         .reduce((total, value) => total + value)
+      time = Math.round(time / 1000 / 60)
+      time = Math.round(time / 60) + ":" + (time % 60)
+
+      const points = List(action.tracks)
+        .flatMap (track => {
+          return List(track.segments).flatMap (segment => {
+            return List(segment).map ( point =>{
+              return {
+                lng: point.lon,
+                lat: point.lat,
+                tm: Date.parse(point.time),
+                pathType: "line"
+              }
+            })
+          })
+        })
 
       let distance = 0
       let i
@@ -66,11 +66,23 @@ export function todoApp(state = initialState, action) {
        // time = time + Math.abs(points.get(i+1).tm - points.get(i).tm)
       }
       distance = Math.round(distance / 100) / 10
-      time = Math.round(time / 1000 / 60)
-      time = Math.round(time / 60) + ":" + (time % 60)
 
+      const tracks = List(action.tracks)
+        .flatMap (track => {
+          return List(track.segments).map (segment => {
+            return List(segment).map ( point => {
+              return {
+                lng: point.lon,
+                lat: point.lat,
+                tm: Date.parse(point.time),
+                pathType: "line"
+              }
+            })
+          })
+        })
+      
       return {...state,
-        points: points, //.toArray()
+        tracks: tracks, //.toArray()
         distance: distance,
         time: time
       }
