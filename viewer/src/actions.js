@@ -24,7 +24,7 @@ export function loadFile(fileName) {
         gpxRes.text()
       ))
 
-      let tracks = await Promise.all(gpxData.map(text =>
+      let gpxes = await Promise.all(gpxData.map(text =>
         new Promise((resolve, reject) => {
           gpxParse.parseGpx(text, (error, data) => {
             if (error) {
@@ -35,15 +35,15 @@ export function loadFile(fileName) {
           })
         })
       ))
+      
       dispatch({
-        type: 'GPX_CHANGED',
-        tracks: tracks.flat()
+        type: 'TRACK_LOADED',
+        tracks: gpxes.flat(),
+        objects: data.objects,
+        time: data.time,
+        distance: data.distance
       })
 
-      dispatch({
-        type: 'OBJECTS_CHANGED',
-        values: data.objects
-      })
     } else {
       console.log("Object file " + fileName + "is not found")
     }
