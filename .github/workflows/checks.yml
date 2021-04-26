@@ -14,3 +14,4 @@ jobs:
     - name: Check ETL
       run: |
         cd etl
+        node main.js
