@@ -52,7 +52,7 @@ class Map extends Component {
       this.props.loadFile(fileName)
     }
 
-    if (this.props.points !== prevProps.points) {
+    if (this.props.tracks !== prevProps.tracks) {
       this.drawTrackData()
     }
 
@@ -67,21 +67,20 @@ class Map extends Component {
 
     const map = this.map
 
-    const coordinates = this.props.points.map(p => {
-      return [p.lng, p.lat]
-    }).toArray()
-
     const data = {
       "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          'geometry': {
-            'type': 'LineString',
-            'coordinates': coordinates
+      "features": this.props.tracks
+        .map( t => {
+          return {
+              "type": "Feature",
+              'geometry': {
+                'type': 'LineString',
+                'coordinates': t.map(p => [p.lng, p.lat]).toArray()
+              }
+            }
           }
-        }
-      ]
+        )
+        .toArray()
     }
     
     const polylineId = "polyLine"
@@ -127,9 +126,12 @@ class Map extends Component {
   
     map.getSource(polylineId).setData(data)
 
-    var bounds = coordinates.reduce(function(bounds, p) {
+    const allCoordinates = this.props.tracks.flatMap(t => 
+      t.map(p => [p.lng, p.lat])
+    ).toArray()
+    var bounds = allCoordinates.reduce(function(bounds, p) {
       return bounds.extend(p);
-    }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+    }, new mapboxgl.LngLatBounds(allCoordinates[0], allCoordinates[0]));
        
     map.fitBounds(bounds, {
       padding: 30,
@@ -240,7 +242,7 @@ class Map extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    points: state.points,
+    tracks: state.tracks,
     distance: state.distance,
     time: state.time,
     objects: state.objects,
