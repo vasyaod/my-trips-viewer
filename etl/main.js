@@ -14,6 +14,10 @@ const exec = util.promisify(require('child_process').exec)
 const inputPath = process.env.INPUT_DATA_PATH || "../test-data/input"
 const outputPath = process.env.OUTPUT_DATA_PATH || "../test-data/output"
 
+if (!fs.existsSync(`${outputPath}`)) {
+  fs.mkdirSync(`${outputPath}`);
+}
+
 if (!fs.existsSync(`${outputPath}/images`)) {
   fs.mkdirSync(`${outputPath}/images`);
 }
