@@ -26,7 +26,7 @@ if (!fs.existsSync(`${outputPath}/data`)) {
   fs.mkdirSync(`${outputPath}/data`);
 }
 
-if (!fs.existsSync(`${outputPath}/trips`)){
+if (!fs.existsSync(`${outputPath}/trips`)) {
   fs.mkdirSync(`${outputPath}/trips`);
 }
 

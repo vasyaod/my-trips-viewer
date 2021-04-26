@@ -16,3 +16,9 @@ jobs:
         cd etl
         npm install
         node main.js
+
+    - name: Check Viewer
+      run: |
+        cd viewer
+        npm install
+        npm run build
