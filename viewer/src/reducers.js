@@ -12,15 +12,6 @@ const initialState = {
   index: [],
 }
 
-function distanceBetweenPoints(latlng1, latlng2){
-  // const line = new ol.geom.LineString([
-  //   [latlng1.lng, latlng1.lat],[latlng2.lng, latlng2.lat]
-  // ]);
-  var wgs84sphere = new ol.Sphere(6378137);  
-  return wgs84sphere.haversineDistance([latlng1.lng, latlng1.lat],[latlng2.lng, latlng2.lat]); 
-}
-
-
 export function todoApp(state = initialState, action) {
   switch (action.type) {
     case 'TRACK_LOADED':
