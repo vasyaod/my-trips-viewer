@@ -1,5 +1,6 @@
 node_modules
 settings.json
+package-lock.json
 .vscode
 images
 bundle.js

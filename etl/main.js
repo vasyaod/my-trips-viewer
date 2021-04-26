@@ -3,6 +3,9 @@ const yaml = require('js-yaml')
 const util = require('util')
 const UUID = require('uuid-js');
 const mustache = require('mustache');
+const gpxParse = require("./src/gpx/gpx-parse");
+const gpxUtils = require("./src/gpx-utils");
+const { List } = require('immutable');
 
 const readdir = util.promisify(fs.readdir)
 const writeFile = util.promisify(fs.writeFile)
@@ -107,8 +110,42 @@ const processTrip = async tripId => {
   
   const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
 
+  const gpxes = await Promise.all(tripInfo
+    .gpx
+    .map( gpxFile => {
+      const text = fs.readFileSync(`${inputPath}/${tripId}/${gpxFile}`, 'utf8')
+      return new Promise((resolve, reject) => {
+        gpxParse.parseGpx(text, (error, data) => {
+          if (error) {
+            reject(error)
+          } else {
+            resolve(data.tracks)
+          }
+        })
+      })
+    })
+  )
+  const flattenGpxes = List(gpxes).flatMap(x => x)
+  
+  const tracks = flattenGpxes
+  .flatMap (track => {
+    return List(track.segments).map (segment => {
+      return List(segment).map ( point => {
+        return {
+          lng: point.lon,
+          lat: point.lat,
+          tm: Date.parse(point.time),
+          pathType: "line"
+        }
+      })
+    })
+  })
+
   const desc = { ...tripInfo,
-    objects: objects
+    objects: objects,
+    time: gpxUtils.getTime(flattenGpxes),
+    distance: gpxUtils.getDistance(flattenGpxes),
+    tracks: tracks
   }
 
   const output = mustache.render(

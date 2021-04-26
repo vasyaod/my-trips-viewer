@@ -6,8 +6,6 @@
 //import * as equal from 'deep-equal'
 import * as config from './config.js'
 
-const gpxParse = require("./gpx/gpx-parse");
-
 export function loadFile(fileName) {
   return async(dispatch) => {
     
@@ -16,34 +14,15 @@ export function loadFile(fileName) {
     const res2 = await fetch(`${config.url}data/${fileName}/objects.json`)
     if (res2.status == 200) {
       const data = await res2.json()
-      let gpxReses = await Promise.all(data.gpx.map(gpxFile => 
-        fetch(`${config.url}data/${fileName}/${gpxFile}`)
-      ))
-
-      let gpxData = await Promise.all(gpxReses.map(gpxRes => 
-        gpxRes.text()
-      ))
-
-      let tracks = await Promise.all(gpxData.map(text =>
-        new Promise((resolve, reject) => {
-          gpxParse.parseGpx(text, (error, data) => {
-            if (error) {
-              reject(error)
-            } else {
-              resolve(data.tracks)
-            }
-          })
-        })
-      ))
-      dispatch({
-        type: 'GPX_CHANGED',
-        tracks: tracks.flat()
-      })
 
       dispatch({
-        type: 'OBJECTS_CHANGED',
-        values: data.objects
+        type: 'TRACK_LOADED',
+        tracks: data.tracks,
+        objects: data.objects,
+        time: data.time,
+        distance: data.distance
       })
+
     } else {
       console.log("Object file " + fileName + "is not found")
     }
