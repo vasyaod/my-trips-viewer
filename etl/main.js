@@ -125,11 +125,27 @@ const processTrip = async tripId => {
       })
     })
   )
+  const flattenGpxes = List(gpxes).flatMap(x => x)
   
+  const tracks = flattenGpxes
+  .flatMap (track => {
+    return List(track.segments).map (segment => {
+      return List(segment).map ( point => {
+        return {
+          lng: point.lon,
+          lat: point.lat,
+          tm: Date.parse(point.time),
+          pathType: "line"
+        }
+      })
+    })
+  })
+
   const desc = { ...tripInfo,
     objects: objects,
-    time: gpxUtils.getTime(List(gpxes).flatMap(x => x)),
-    distance: gpxUtils.getDistance(List(gpxes).flatMap(x => x))
+    time: gpxUtils.getTime(flattenGpxes),
+    distance: gpxUtils.getDistance(flattenGpxes),
+    tracks: tracks
   }
 
   const output = mustache.render(
