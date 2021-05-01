@@ -37,7 +37,20 @@ export function loadIndex() {
   
     dispatch({
       type: 'INDEX_LOADED',
-      values: data
+      values: data.tracks
+    })
+  }
+}
+
+export function loadStats() {
+  return async(dispatch) => {
+    
+    const res = await fetch(`${config.url}index.json`)
+    const data = await res.json()
+  
+    dispatch({
+      type: 'STATS_LOADED',
+      values: data.stats
     })
   }
 }

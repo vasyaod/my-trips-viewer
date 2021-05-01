@@ -1,6 +1,7 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import { Segment, Card, Image, Container, Header, Button} from 'semantic-ui-react'
+import { Segment, Card, Image, Container, Header, Button, Menu} from 'semantic-ui-react'
+import { Link } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { connect } from 'react-redux'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
@@ -23,43 +24,52 @@ class Index extends Component {
 
   render() {
     return (
-      <Container>
-        <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
-                          target="_blank"
-                          position="right">
-          Fork me on GitHub
-        </GitHubForkRibbon>
+      <div>
+        <Menu tabular>
+            <Container>
+              <Menu.Item as={Link} active={true} to="/" header>All tracks</Menu.Item>
+              <Menu.Item as={Link} to="/stats">Stats</Menu.Item>
+            </Container>
+        </Menu>
 
-        <Header as='h1' content={this.props.siteTitle} style={style.h1} textAlign='center' />
+        <Container>
+          <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
+                            target="_blank"
+                            position="right">
+            Fork me on GitHub
+          </GitHubForkRibbon>
 
-        { this.props.siteDescription && <p><Container text><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Container></p> }
+          <Header as='h1' content={this.props.siteTitle} style={style.h1} textAlign='center' />
 
-        <Card.Group doubling itemsPerRow={3} stackable>
-          { 
-            this.props.index.map(trip =>
-              <Card 
-                key={trip.id}
-              >
-                <Image src={`${config.url}data/${trip.id}/preview.png`} wrapped ui={false} href={`#/maps/${trip.id}`} as='a'/>
-                <Card.Content href={`#/maps/${trip.id}`}>
-                  <Card.Header>{trip.title}</Card.Header>
-                  <Card.Meta>
-                    <span className='date'>{trip.date}</span>
-                  </Card.Meta>
-                  <Card.Description>
-                    {trip.description}
-                  </Card.Description>
+          { this.props.siteDescription && <p><Container text><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Container></p> }
+
+          <Card.Group doubling itemsPerRow={3} stackable>
+            { 
+              this.props.index.map(track =>
+                <Card 
+                  key={track.id}
+                >
+                  <Image src={`${config.url}data/${track.id}/preview.png`} wrapped ui={false} to={`/maps/${track.id}`} as={Link}/>
+                  <Card.Content href={`#/maps/${track.id}`}>
+                    <Card.Header>{track.title}</Card.Header>
+                    <Card.Meta>
+                      <span className='date'>{track.date}</span>
+                    </Card.Meta>
+                    <Card.Description>
+                      {track.description}
+                    </Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <Button circular icon='facebook' onClick={() => shareFacebook(track.id, track.title, track.description)}/>
+                    <Button circular icon='twitter' onClick={() => shareTwitter(track.id, track.title, track.description)} />
+                    <Button circular icon='vk' onClick={() => shareVk(track.id, track.title, track.description)}/>
                 </Card.Content>
-                <Card.Content extra>
-                  <Button circular icon='facebook' onClick={() => shareFacebook(trip.id, trip.title, trip.description)}/>
-                  <Button circular icon='twitter' onClick={() => shareTwitter(trip.id, trip.title, trip.description)} />
-                  <Button circular icon='vk' onClick={() => shareVk(trip.id, trip.title, trip.description)}/>
-              </Card.Content>
-              </Card>
-            )
-          }
-        </Card.Group>
-      </Container>
+                </Card>
+              )
+            }
+          </Card.Group>
+        </Container>
+      </div>
     );
   }
 }
