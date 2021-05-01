@@ -27,7 +27,7 @@ function distanceBetweenPoints(latlng1, latlng2) {
 }
 
 exports.getTime = (tracks) => {
-  let time = List(tracks)
+  return List(tracks)
     .flatMap (track => {
       return List(track.segments).flatMap (segment => {
         const s = List(segment)
@@ -44,10 +44,9 @@ exports.getTime = (tracks) => {
       })
     })
     .reduce((total, value) => total + value)
-  time = Math.round(time / 1000 / 60)
-  time = Math.round(time / 60) + ":" + (time % 60)
 
-  return time
+//    time = 
+//    time = Math.round(Math.round(time / 1000 / 60) / 60) + ":" + (Math.round(time / 1000 / 60) % 60)
 }
 
 exports.getDistance = (tracks) => {

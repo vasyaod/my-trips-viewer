@@ -141,10 +141,13 @@ const processTrip = async tripId => {
     })
   })
 
+  const time = gpxUtils.getTime(flattenGpxes)
+  const distance = gpxUtils.getDistance(flattenGpxes)
+
   const desc = { ...tripInfo,
     objects: objects,
-    time: gpxUtils.getTime(flattenGpxes),
-    distance: gpxUtils.getDistance(flattenGpxes),
+    time: time,
+    distance: distance,
     tracks: tracks
   }
 
@@ -173,7 +176,9 @@ const processTrip = async tripId => {
 
   return { ...tripInfo,
     id: tripId,
-    date: tripInfo.date.toISOString().split('T')[0]
+    date: tripInfo.date.toISOString().split('T')[0],
+    time: time,
+    distance: distance
   }
 }
 
@@ -183,13 +188,28 @@ const processTrip = async tripId => {
     .filter(item => !item.startsWith('.'))
     .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
 
-  const trips = await Promise.all(items.map(item => processTrip(item)))
+  const allTracks = await Promise.all(items.map(item => processTrip(item)))
+  const successfulTracks = allTracks.filter(tripDesc => tripDesc != null)
+
+  const stats = List(successfulTracks)
+    .groupBy(x => x.date.substring(0,7))
+    .map ( (x, key) => {
+      return {
+        date: key,
+        distance: x.map(x => x.distance).reduce((x,y) => x + y),
+        time: x.map(x => x.time).reduce((x,y) => x + y)
+      }
+    })
+    .toList()
 
   console.log("Creating index of trips")
   // Save trips indexes
   writeFile(
     `${outputPath}/index.json`, 
-    JSON.stringify(trips.filter(tripDesc => tripDesc != null), null, 2), 
+    JSON.stringify({
+      tracks: successfulTracks,
+      stats: stats.toJS()
+    }, null, 2), 
     'utf8'
   )
 
