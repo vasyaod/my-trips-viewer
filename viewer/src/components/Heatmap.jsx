@@ -9,8 +9,9 @@ import GitHubForkRibbon from 'react-github-fork-ribbon';
 
 import { loadIndex } from '../actions.js'
 import * as config from '../config.js'
-
-import 'react-calendar-heatmap/dist/styles.css';                                                                                                                                                                                                                                
+import ReactTooltip from 'react-tooltip';                                                                                                                                                                                                                                       
+ 
+import 'react-calendar-heatmap/dist/styles.css'
 
 const style = {
   h1: {
@@ -37,6 +38,7 @@ class Heatmap extends Component {
         </Menu>
 
         <Container>
+          <ReactTooltip html={true}/>
           <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                             target="_blank"
                             position="right">
@@ -60,7 +62,7 @@ class Heatmap extends Component {
                           tooltipDataAttrs={value => {
                             if (value.date)
                               return {
-                                'data-tip': `${value.date}, consumed time ${value.count}`,
+                                'data-tip': `${value.date}, distance ${value.count} km`,
                               }
                             else
                               return {
