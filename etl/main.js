@@ -196,10 +196,25 @@ const processTrip = async tripId => {
     .map ( (x, key) => {
       return {
         date: key,
+        count: x.size,
         distance: x.map(x => x.distance).reduce((x,y) => x + y),
         time: x.map(x => x.time).reduce((x,y) => x + y)
       }
     })
+    .toList()
+
+  const heatmap = List(successfulTracks)
+    .groupBy(x => x.date.substring(0,4))
+    .map ( (x, key) => ({
+      year: key,
+      values: x
+        .map(y => ({
+          date: y.date,
+          count: Math.round(y.distance / 1000)
+        }))
+        .toList()
+      })
+    )
     .toList()
 
   console.log("Creating index of trips")
@@ -208,7 +223,8 @@ const processTrip = async tripId => {
     `${outputPath}/index.json`, 
     JSON.stringify({
       tracks: successfulTracks,
-      stats: stats.toJS()
+      stats: stats.toJS(),
+      heatmap: heatmap.toJS()
     }, null, 2), 
     'utf8'
   )
