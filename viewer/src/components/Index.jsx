@@ -29,6 +29,7 @@ class Index extends Component {
             <Container>
               <Menu.Item as={Link} active={true} to="/" header>All tracks</Menu.Item>
               <Menu.Item as={Link} to="/stats">Stats</Menu.Item>
+              <Menu.Item as={Link} to="/heatmap">Heatmap</Menu.Item>
             </Container>
         </Menu>
 

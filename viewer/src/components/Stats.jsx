@@ -29,6 +29,7 @@ class Index extends Component {
             <Container>
               <Menu.Item as={Link} to="/">All tracks</Menu.Item>
               <Menu.Item as={Link} active={true} to="/stats">Stats</Menu.Item>
+              <Menu.Item as={Link} to="/heatmap">Heatmap</Menu.Item>
             </Container>
         </Menu>
 
@@ -45,6 +46,7 @@ class Index extends Component {
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Date</Table.HeaderCell>
+                <Table.HeaderCell>Num of activities</Table.HeaderCell>
                 <Table.HeaderCell>Distance (km)</Table.HeaderCell>
                 <Table.HeaderCell>Time (hh:mm)</Table.HeaderCell>
               </Table.Row>
@@ -55,6 +57,7 @@ class Index extends Component {
                 this.props.stats.map(row =>
                   <Table.Row key={row.date}>
                     <Table.Cell>{row.date}</Table.Cell>
+                    <Table.Cell>{row.count}</Table.Cell>
                     <Table.Cell>{row.distance}</Table.Cell>
                     <Table.Cell>{row.time}</Table.Cell>
                   </Table.Row>

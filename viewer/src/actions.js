@@ -37,7 +37,8 @@ export function loadIndex() {
   
     dispatch({
       type: 'INDEX_LOADED',
-      values: data.tracks
+      values: data.tracks,
+      heatmap: data.heatmap
     })
   }
 }
