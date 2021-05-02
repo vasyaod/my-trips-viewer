@@ -27,7 +27,7 @@ export function todoApp(state = initialState, action) {
     case 'INDEX_LOADED':
       return {...state,
         index: List(action.values).sortBy(item => item.date).reverse(),
-        heatmap: List(action.heatmap)
+        heatmap: List(action.heatmap).sortBy(item => item.year).reverse()
       }
 
     case 'STATS_LOADED':
