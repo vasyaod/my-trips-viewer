@@ -66,7 +66,7 @@ class Heatmap extends Component {
                               }
                             else
                               return {
-                                'data-tip': `No data`,
+                                'data-tip': `${value.date}, no data`,
                               }
                           }}
                           classForValue={(value) => {
