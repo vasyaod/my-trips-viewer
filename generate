@@ -15,8 +15,8 @@ npm run build
 cd ../..
 
 # Copy generated code and other resources...
-cp -u code-repo/viewer/bundle.js pages-repo
-cp -u code-repo/viewer/index.html pages-repo
+cp code-repo/viewer/bundle.js pages-repo
+cp code-repo/viewer/index.html pages-repo
 
 # Data processing
 cd code-repo/etl
