@@ -38,7 +38,7 @@ class Heatmap extends Component {
         </Menu>
 
         <Container>
-          <ReactTooltip html={true}/>
+          <ReactTooltip/>
           <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                             target="_blank"
                             position="right">
