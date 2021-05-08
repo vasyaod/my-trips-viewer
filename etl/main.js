@@ -143,9 +143,15 @@ const processTrip = async tripId => {
 
   const time = gpxUtils.getTime(flattenGpxes)
   const distance = gpxUtils.getDistance(flattenGpxes)
+  
+  let tags = []
+
+  if (tripInfo.tags)
+    tags = tripInfo.tags.split(',').map(x => x.trim());
 
   const desc = { ...tripInfo,
     objects: objects,
+    tags: tags,
     time: time,
     distance: distance,
     tracks: tracks
@@ -178,7 +184,8 @@ const processTrip = async tripId => {
     id: tripId,
     date: tripInfo.date.toISOString().split('T')[0],
     time: time,
-    distance: distance
+    distance: distance,
+    tags: tags
   }
 }
 

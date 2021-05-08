@@ -1,6 +1,6 @@
 // @flow
 import React, { Component, Fragment } from 'react';
-import { Segment, Card, Image, Container, Header, Button, Menu} from 'semantic-ui-react'
+import { Segment, Card, Image, Container, Header, Button, Menu, Label} from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 import { connect } from 'react-redux'
@@ -12,7 +12,7 @@ import * as config from '../config.js'
 const style = {
   h1: {
     marginTop: '1em',
-    marginBottom: '1em',
+    marginBottom: '0.1em',
   },
 }
 
@@ -42,7 +42,7 @@ class Index extends Component {
 
           <Header as='h1' content={this.props.siteTitle} style={style.h1} textAlign='center' />
 
-          { this.props.siteDescription && <p><Container text><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Container></p> }
+          { this.props.siteDescription && <Container text><Segment padded basic><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Segment></Container> }
 
           <Card.Group doubling itemsPerRow={3} stackable>
             { 
@@ -57,7 +57,16 @@ class Index extends Component {
                       <span className='date'>{track.date}</span>
                     </Card.Meta>
                     <Card.Description>
-                      {track.description}
+                      <p>
+                        {track.description}
+                      </p>
+                      {track.tags && 
+                        track.tags.map(tag =>
+                          <Label tag>
+                            {tag}
+                          </Label>
+                        )
+                      }
                     </Card.Description>
                   </Card.Content>
                   <Card.Content extra>
