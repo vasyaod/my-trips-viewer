@@ -42,7 +42,7 @@ class Index extends Component {
 
           <Header as='h1' content={this.props.siteTitle} style={style.h1} textAlign='center' />
 
-          { this.props.siteDescription && <Container text><Segment padded basic><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Segment></Container> }
+          { this.props.siteDescription && <Container text><Segment padded basic size="large" ><ReactMarkdown>{this.props.siteDescription}</ReactMarkdown></Segment></Container> }
 
           <Card.Group doubling itemsPerRow={3} stackable>
             { 
@@ -62,7 +62,7 @@ class Index extends Component {
                       </p>
                       {track.tags && 
                         track.tags.map(tag =>
-                          <Label tag>
+                          <Label key={tag} tag>
                             {tag}
                           </Label>
                         )
