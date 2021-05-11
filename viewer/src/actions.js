@@ -73,9 +73,9 @@ export function shareTwitter(trackId, title, description) {
   window.open(twitterShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
 }
 
-export function shareVk(tripId, title, description) {
+export function shareVk(trackId, title, description) {
   const text = `${title}: ${description}\n${tags}\n`
-  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const url = `${config.url}/tracks/trips/${trackId}`
   const twitterShareUrl = `https://vk.com/share.php?url=${encodeURI(url)}&title=${text}`
   window.open(twitterShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
 }
