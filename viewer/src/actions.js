@@ -58,17 +58,17 @@ export function loadStats() {
 
 const tags = "#mytrips #github #velolive #bikeling"
 
-export function shareFacebook(tripId, title, description) {
+export function shareFacebook(trackId, title, description) {
   const t = `${title}: ${description}\n${tags}\n`
-  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const url = `${config.url}/tracks/${trackId}`
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURI(url)}&t=${t}`
   window.open(facebookShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
 }
   
-export function shareTwitter(tripId, title, description) {
+export function shareTwitter(trackId, title, description) {
   const text = `${title}: ${description}\n${tags}\n`
 //    const twitterHandle = "amazon-budget-control"
-  const url = `https://vasyaod.github.io/my-trips/trips/${tripId}`
+  const url = `${config.url}/tracks/${trackId}`
   const twitterShareUrl = `https://twitter.com/share?url=${encodeURI(url)}&text=${text}`
   window.open(twitterShareUrl, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
 }

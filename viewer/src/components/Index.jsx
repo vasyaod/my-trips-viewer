@@ -50,8 +50,8 @@ class Index extends Component {
                 <Card 
                   key={track.id}
                 >
-                  <Image src={`${config.url}data/${track.id}/preview.png`} wrapped ui={false} to={`/maps/${track.id}`} as={Link}/>
-                  <Card.Content href={`#/maps/${track.id}`}>
+                  <Image src={`${config.url}data/${track.id}/preview.png`} wrapped ui={false} to={`/track/${track.id}`} as={Link}/>
+                  <Card.Content href={`#/track/${track.id}`}>
                     <Card.Header>{track.title}</Card.Header>
                     <Card.Meta>
                       <span className='date'>{track.date}</span>
