@@ -10,6 +10,7 @@ import Map from './Map.jsx'
 import Index from './Index.jsx'
 import Stats from './Stats.jsx'
 import Heatmap from './Heatmap.jsx'
+import Thumbnail from './Thumbnail.jsx'
 
 // import queryString from 'query-string';
 // import { loadProjectFromUrl } from '../actions/actions.js';
@@ -35,6 +36,8 @@ class Page extends Component {
               <Route exact path="/stats" component={Stats} />
               <Route exact path="/heatmap" component={Heatmap} />
               <Route exact path="/maps/:id" component={Map} />
+              <Route exact path="/track/:id" component={Map} />
+              <Route exact path="/thumbnail/:id" component={Thumbnail} />
             {/* </Sidebar.Pusher>
           </Sidebar.Pushable> */}
         </div>
