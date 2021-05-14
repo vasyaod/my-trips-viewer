@@ -7,6 +7,11 @@ module.exports = {
     filename: "bundle.js",
     path: __dirname,
   },
+  watchOptions: {
+    ignored: [
+      /node_modules/, 
+    ]
+  },
   // Existing Code ....
   module : {
     rules: [
@@ -21,10 +26,10 @@ module.exports = {
             }
           }
         ]
-      },                                                                                                                                                                                                                                                                        
-      {                                                                                                                                                                                                                                                                         
-        test: /\.css$/i,                                                                                                                                                                                                                                                        
-        use: ['css-loader'],                                                                                                                                                                                                                                                    
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       }, 
     ]
   }

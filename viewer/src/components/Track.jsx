@@ -1,16 +1,19 @@
 // @flow
 import React, { Component } from 'react';
-import { Segment, Header, Statistic, Modal, Image, Container, Embed} from 'semantic-ui-react'
+import { Segment, Header, Statistic, Modal, Image, Container, Embed, Card} from 'semantic-ui-react'
 import { connect } from 'react-redux'
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 const mapboxgl = require('mapbox-gl');
 
 import { loadFile } from '../actions.js'
 import * as config from '../config.js'
 
-import 'swiper/swiper.scss'
-import './swiper.css'
+const style = {
+  h1: {
+    marginTop: '1em',
+    marginBottom: '1em',
+  },
+}
 
 class Map extends Component {
 
@@ -34,14 +37,9 @@ class Map extends Component {
       zoom: 1
     });
     this.map = map
-
-    // Add zoom and rotation controls to the map.
-    map.addControl(new mapboxgl.NavigationControl(),  'top-left');
-
-    map.on('zoomend', e => {
-      var zoom = map.getZoom();
-    })
-      
+    
+    map.scrollZoom.disable();
+     
 //    const self = this
     map.once('load', () => {
       this.drawTrackData()
@@ -179,66 +177,48 @@ class Map extends Component {
     return (
       <div className="fullHeight">
         <div className="fullHeight">
+          
+          <Container>
+            <Header as='h1' content="2019 New year trip, Day 1" style={style.h1} textAlign='center' />
+          </Container>
+
           <div
             ref = {el => this.mapContainer = el}
             style = {{
-              height: "100%",
+              height: "80%",
               overflow: "hidden",
-              width: "100%",
             }}
+            class="ui container"
           />
-          <div
-            style = {{
-              top: "2em",
-              right: "2em",
-              position: "absolute",
-            }}
-          >
-            <Segment textAlign='center'>
-              {/* <Header as='h3' dividing>
-                Statistics
-              </Header> */}
-              <div>
-              <Statistic>
-                <Statistic.Value>{this.props.distance}</Statistic.Value>
-                <Statistic.Label>km</Statistic.Label>
-              </Statistic>
-              </div>
-              <div>
-              <Statistic>
-                <Statistic.Value>{this.props.time}</Statistic.Value>
-                <Statistic.Label>hh:mm</Statistic.Label>
-              </Statistic>
-              </div>
+          <Container>
+            <Segment padded basic textAlign='center'>
+              <Statistic.Group floated='left' widths='three'>
+                <Statistic>
+                  <Statistic.Value>{this.props.distance}</Statistic.Value>
+                  <Statistic.Label>km</Statistic.Label>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value>{this.props.time}</Statistic.Value>
+                  <Statistic.Label>hh:mm</Statistic.Label>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value>1420</Statistic.Value>
+                  <Statistic.Label>↑↓ m</Statistic.Label>
+                </Statistic>
+              </Statistic.Group>
             </Segment>
-          </div>
-          { (this.props.objects && this.props.objects.length > 0) &&
-            <div
-              style = {{
-                height: "15em",
-                left: "0em",
-                right: "0em",
-                bottom: "0em",
-                position: "absolute",
-              }}
-            >
-              <Swiper
-                slidesPerView = {'auto'} 
-                centeredSlides = {true} 
-                spaceBetween = {10}
-                pagination = {{ "clickable": true }}
-                className = "mySwiper"
-              >
-                { 
-                  this.props.objects.map( (obj, index) =>
-                    <SwiperSlide key={obj.img}>
-                      <img onClick={() => this.setState({obj: obj, objIndex: index})} src={`${config.url}/images/${obj.img}/original.jpg`}/>
-                    </SwiperSlide>
-                  )
-                }
-              </Swiper>
-            </div>
-          }
+
+            <Card.Group doubling itemsPerRow={3} stackable>
+            { 
+              this.props.objects.map(obj =>
+                <Card key={obj.img}>
+                  <Image src={`${config.url}/images/${obj.img}/original.jpg`} wrapped ui={false}/>
+                </Card>
+              )
+            }
+          </Card.Group>
+
+        </Container>
 
         </div>
         { this.state.obj &&
