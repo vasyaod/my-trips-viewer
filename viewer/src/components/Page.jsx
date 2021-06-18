@@ -9,6 +9,7 @@ import { HashRouter as Router, Route, Link } from "react-router-dom";
 import Map from './Map.jsx'
 import Index from './Index.jsx'
 import Stats from './Stats.jsx'
+import Tags from './Tags.jsx'
 import Heatmap from './Heatmap.jsx'
 import Thumbnail from './Thumbnail.jsx'
 
@@ -33,6 +34,7 @@ class Page extends Component {
           {/* <Sidebar.Pushable as={Segment}>
             <Sidebar.Pusher > */}
               <Route exact path="/" component={Index}/>
+              <Route exact path="/tags" component={Tags} />
               <Route exact path="/stats" component={Stats} />
               <Route exact path="/heatmap" component={Heatmap} />
               <Route exact path="/maps/:id" component={Map} />

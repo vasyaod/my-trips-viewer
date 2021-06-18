@@ -224,6 +224,20 @@ const processTrip = async tripId => {
     )
     .toList()
 
+  const tags = List(successfulTracks)
+    .flatMap(x => x.tags.map(y => { return {k: y, v: x} }))
+    .groupBy(x => x.k)
+    .map ( (items, key) => {
+      const x = items.map(x => x.v)
+      return {
+        tag: key,
+        count: x.size,
+        distance: x.map(x => x.distance).reduce((x,y) => x + y),
+        time: x.map(x => x.time).reduce((x,y) => x + y)
+      }
+    })
+    .toList()
+
   console.log("Creating index of trips")
   // Save trips indexes
   writeFile(
@@ -231,7 +245,8 @@ const processTrip = async tripId => {
     JSON.stringify({
       tracks: successfulTracks,
       stats: stats.toJS(),
-      heatmap: heatmap.toJS()
+      heatmap: heatmap.toJS(),
+      tags: tags.toJS(),
     }, null, 2), 
     'utf8'
   )

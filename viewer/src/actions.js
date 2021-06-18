@@ -56,6 +56,19 @@ export function loadStats() {
   }
 }
 
+export function loadTags() {
+  return async(dispatch) => {
+    
+    const res = await fetch(`${config.url}index.json`)
+    const data = await res.json()
+  
+    dispatch({
+      type: 'TAGS_LOADED',
+      values: data.tags
+    })
+  }
+}
+
 const tags = "#mytrips #github #velolive #bikeling"
 
 export function shareFacebook(trackId, title, description) {

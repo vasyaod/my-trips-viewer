@@ -10,7 +10,8 @@ const initialState = {
   distance: 0,
   time: 0,
   index: [],
-  stats: []
+  stats: [],
+  tags: [],
 }
 
 export function todoApp(state = initialState, action) {
@@ -41,6 +42,16 @@ export function todoApp(state = initialState, action) {
           .reverse()
       }
 
+    case 'TAGS_LOADED':
+      return {...state,
+        tags: List(action.values)
+          .sortBy(item => item.date)
+          .map(row => ({...row,
+            distance: Math.round(row.distance / 100) / 10,
+            time: Math.floor(row.time / 1000 / 60 / 60) + ":" + (Math.round(row.time / 1000 / 60) % 60)
+          }))
+      }
+  
     default:
       return state
   }

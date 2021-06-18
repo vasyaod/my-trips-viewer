@@ -34,6 +34,7 @@ class Heatmap extends Component {
               <Menu.Item as={Link} to="/">All tracks</Menu.Item>
               <Menu.Item as={Link} to="/stats">Stats</Menu.Item>
               <Menu.Item as={Link} active={true} to="/heatmap">Heatmap</Menu.Item>
+              <Menu.Item as={Link} to="/tags">Tags</Menu.Item>
             </Container>
         </Menu>
 

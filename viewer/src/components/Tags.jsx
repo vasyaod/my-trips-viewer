@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 
-import { loadStats } from '../actions.js'
-import * as config from '../config.js'
+import { loadTags } from '../actions.js'
 
 const style = {
   h1: {
@@ -15,10 +14,10 @@ const style = {
   },
 }
 
-class Index extends Component {
+class Tags extends Component {
 
   componentDidMount() {
-    this.props.loadStats()
+    this.props.loadTags()
   }
 
   render() {
@@ -27,9 +26,9 @@ class Index extends Component {
         <Menu tabular>
             <Container>
               <Menu.Item as={Link} to="/">All tracks</Menu.Item>
-              <Menu.Item as={Link} active={true} to="/stats">Stats</Menu.Item>
+              <Menu.Item as={Link} to="/stats">Stats</Menu.Item>
               <Menu.Item as={Link} to="/heatmap">Heatmap</Menu.Item>
-              <Menu.Item as={Link} to="/tags">Tags</Menu.Item>
+              <Menu.Item as={Link} active={true} to="/tags">Tags</Menu.Item>
             </Container>
         </Menu>
 
@@ -40,12 +39,12 @@ class Index extends Component {
             Fork me on GitHub
           </GitHubForkRibbon>
 
-          <Header as='h1' content="Stats" style={style.h1} textAlign='center' />
+          <Header as='h1' content="Tags" style={style.h1} textAlign='center' />
 
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>Date</Table.HeaderCell>
+                <Table.HeaderCell>Tag</Table.HeaderCell>
                 <Table.HeaderCell>Num of activities</Table.HeaderCell>
                 <Table.HeaderCell>Distance (km)</Table.HeaderCell>
                 <Table.HeaderCell>Time (hh:mm)</Table.HeaderCell>
@@ -55,8 +54,8 @@ class Index extends Component {
             <Table.Body>
               { 
                 this.props.stats.map(row =>
-                  <Table.Row key={row.date}>
-                    <Table.Cell>{row.date}</Table.Cell>
+                  <Table.Row key={row.tag}>
+                    <Table.Cell>{row.tag}</Table.Cell>
                     <Table.Cell>{row.count}</Table.Cell>
                     <Table.Cell>{row.distance}</Table.Cell>
                     <Table.Cell>{row.time}</Table.Cell>
@@ -74,8 +73,8 @@ class Index extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    stats: state.stats
+    stats: state.tags
   };
 };
 
-export default connect(mapStateToProps, { loadStats })(Index)
+export default connect(mapStateToProps, { loadTags })(Tags)
