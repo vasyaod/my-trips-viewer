@@ -44,5 +44,7 @@ npm run lets-do-this
 cd ../..
 
 # Tag inference using python and tensorflow
-cd classification
+pwd
+ls -al
+cd tagger
 python3 ./tagger.py
