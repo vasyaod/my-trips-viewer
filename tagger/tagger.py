@@ -32,8 +32,8 @@ all_tracks = list(filter(lambda x : os.path.exists(x[1]), list(map(mF, all_track
 tagged_tracks = list(filter(lambda x : len(x[0]) > 0, all_tracks))
 none_tagget_tracks = list(filter(lambda x : len(x[0]) == 0, all_tracks))
 
-#tags = ["school", "office A", "office B"]
-tags = ["school"]
+tags = ["school", "office B"]
+#tags = ["school"]
 
 feature_extractor_model = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"
 
