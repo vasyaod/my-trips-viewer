@@ -2,8 +2,8 @@
 
 set -e
 
-apt install python
-pip3 install tensorflow
+sudo apt install python
+sudo pip3 install tensorflow
 
 export INPUT_DATA_PATH="$(pwd)/data-repo"
 export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
