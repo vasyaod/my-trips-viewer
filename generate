@@ -3,7 +3,7 @@
 set -e
 
 sudo apt install python
-sudo pip3 install tensorflow matplotlib numpy
+sudo pip3 install tensorflow matplotlib numpy tensorflow_hub
 
 export INPUT_DATA_PATH="$(pwd)/data-repo"
 export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
