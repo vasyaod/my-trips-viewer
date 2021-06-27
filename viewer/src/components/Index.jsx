@@ -63,9 +63,18 @@ class Index extends Component {
                       </p>
                       {track.tags && 
                         track.tags.map(tag =>
-                          <Label key={tag} tag>
-                            {tag}
-                          </Label>
+                          <span key={tag}>
+                            { track.autoTagged &&
+                              <Label color='yellow' tag>
+                                {tag}
+                              </Label>
+                            }
+                            { !track.autoTagged &&
+                              <Label tag>
+                                {tag}
+                              </Label>
+                            }
+                          </span>
                         )
                       }
                     </Card.Description>

@@ -21,6 +21,7 @@ There are three parts here
  * `elt` generates data (make image and video previews) of trips for the `viewer`
  * `viewer` is a template/view or a single page site for github
  * `previewer` is generate page previews for social networks
+ * `tagger` tries automatically to classifficate a track based on previous given tags and preview image (rastered map)
 
 ## Data model
 
