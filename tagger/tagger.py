@@ -12,23 +12,23 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import tensorflow as tf
 
+import yaml
+
 print(tf.__version__)
 
-data_path = f"{os.environ['OUTPUT_DATA_PATH']}/data"
+input_data_path = os.environ.get('INPUT_DATA_PATH', "/home/vasyaod/work/my-tracks-data")
+output_data_path = os.environ.get('OUTPUT_DATA_PATH', "/home/vasyaod/work/my-tracks") + "/data"
 
-all_tracks = [f for f in os.listdir(data_path) if isdir(join(data_path, f))]
-#all_tracks = map()
-
-import json
+all_tracks = [f for f in os.listdir(input_data_path) if isdir(join(input_data_path, f)) and not(f.startswith("."))]
 
 def mF(x):
-    with open(data_path + "/" + x + '/trip.json') as f:
-      data = json.load(f)
-    return (data.get('tags',[]), data_path + "/" + x + '/preview.png', x)
+    with open(f"{input_data_path}/{x}/trip.yml") as f:
+      data = yaml.safe_load(f)
+      tag_str = data.get("tags", "")
+      tags = [x.strip() for x in tag_str.split(',') if not(x == "")]
+    return (tags, output_data_path + "/" + x + '/preview.png', x)
 
-flatten = lambda t: [item for sublist in t for item in sublist]
-
-all_tracks = list(map(mF, all_tracks))
+all_tracks = list(filter(lambda x : os.path.exists(x[1]), list(map(mF, all_tracks))))
 tagged_tracks = list(filter(lambda x : len(x[0]) > 0, all_tracks))
 none_tagget_tracks = list(filter(lambda x : len(x[0]) == 0, all_tracks))
 
@@ -114,9 +114,11 @@ for tag in tags:
 for i in none_tagget_tracks:
     if len(i[0]) > 0:
         trackId = i[2]
-        with open(data_path + "/" + trackId + '/trip.json') as f:
-            data = json.load(f)
-        data['tags'] = i[0]
+        tags = i[0]
+        with open(f"{input_data_path}/{trackId}/trip.yml") as f:
+            data = yaml.safe_load(f)
+        data['tags'] = ','.join(tags)
         data['autoTagged'] = True
-        with open(data_path + "/" + trackId + '/trip.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, ensure_ascii=True, indent=2)
+        with open(f"{input_data_path}/{trackId}/trip.yml", 'w', encoding='utf-8') as f:
+            yaml.dump(data, f)
+
