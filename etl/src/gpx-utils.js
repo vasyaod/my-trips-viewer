@@ -72,3 +72,23 @@ exports.getDistance = (tracks) => {
   //distance = Math.round(distance / 100) / 10
   return distance
 }
+
+exports.getUphill = (tracks) => {
+  const points = List(tracks)
+    .flatMap (track => {
+      return List(track.segments).flatMap (segment => {
+        return List(segment).map ( point =>{
+          return point.elevation
+        })
+      })
+    })
+
+  let uphill = 0
+  let i
+  for(i = 0; i < points.size - 1; i++) {
+    if (points.get(i + 1) > points.get(i))
+      uphill = uphill + (points.get(i + 1) - points.get(i))
+  }
+
+  return uphill
+}

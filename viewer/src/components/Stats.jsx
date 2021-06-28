@@ -47,8 +47,9 @@ class Index extends Component {
               <Table.Row>
                 <Table.HeaderCell>Date</Table.HeaderCell>
                 <Table.HeaderCell>Num of activities</Table.HeaderCell>
-                <Table.HeaderCell>Distance (km)</Table.HeaderCell>
-                <Table.HeaderCell>Time (hh:mm)</Table.HeaderCell>
+                <Table.HeaderCell>Distance, km</Table.HeaderCell>
+                <Table.HeaderCell>Time, hh:mm</Table.HeaderCell>
+                <Table.HeaderCell>Uphill ￪, m</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
@@ -60,6 +61,7 @@ class Index extends Component {
                     <Table.Cell>{row.count}</Table.Cell>
                     <Table.Cell>{row.distance}</Table.Cell>
                     <Table.Cell>{row.time}</Table.Cell>
+                    <Table.Cell>{row.uphill}</Table.Cell>
                   </Table.Row>
                 )
               }

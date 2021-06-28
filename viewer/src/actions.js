@@ -15,12 +15,8 @@ export function loadFile(fileName) {
     if (res2.status == 200) {
       const data = await res2.json()
 
-      dispatch({
+      dispatch({ ...data,
         type: 'TRACK_LOADED',
-        tracks: data.tracks,
-        objects: data.objects,
-        time: data.time,
-        distance: data.distance
       })
 
     } else {

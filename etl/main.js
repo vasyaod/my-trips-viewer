@@ -143,6 +143,7 @@ const processTrip = async tripId => {
 
   const time = gpxUtils.getTime(flattenGpxes)
   const distance = gpxUtils.getDistance(flattenGpxes)
+  const uphill = gpxUtils.getUphill(flattenGpxes)
   
   let tags = []
 
@@ -154,6 +155,7 @@ const processTrip = async tripId => {
     tags: tags,
     time: time,
     distance: distance,
+    uphill: uphill,
     tracks: tracks
   }
 
@@ -185,6 +187,7 @@ const processTrip = async tripId => {
     date: tripInfo.date.toISOString().split('T')[0],
     time: time,
     distance: distance,
+    uphill: uphill, 
     tags: tags
   }
 }
@@ -205,7 +208,8 @@ const processTrip = async tripId => {
         date: key,
         count: x.size,
         distance: x.map(x => x.distance).reduce((x,y) => x + y),
-        time: x.map(x => x.time).reduce((x,y) => x + y)
+        time: x.map(x => x.time).reduce((x,y) => x + y),
+        uphill: x.map(x => x.uphill).reduce((x,y) => x + y)
       }
     })
     .toList()
@@ -233,7 +237,8 @@ const processTrip = async tripId => {
         tag: key,
         count: x.size,
         distance: x.map(x => x.distance).reduce((x,y) => x + y),
-        time: x.map(x => x.time).reduce((x,y) => x + y)
+        time: x.map(x => x.time).reduce((x,y) => x + y),
+        uphill: x.map(x => x.uphill).reduce((x,y) => x + y)
       }
     })
     .toList()

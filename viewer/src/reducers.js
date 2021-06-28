@@ -17,12 +17,12 @@ const initialState = {
 export function todoApp(state = initialState, action) {
   switch (action.type) {
     case 'TRACK_LOADED':
-      
       return {...state,
         tracks: List(action.tracks).map(x => List(x)),
         objects: action.objects,
         distance: Math.round(action.distance / 100) / 10,
-        time: Math.floor(action.time / 1000 / 60 / 60) + ":" + (Math.round(action.time / 1000 / 60) % 60) 
+        time: Math.floor(action.time / 1000 / 60 / 60) + ":" + (Math.round(action.time / 1000 / 60) % 60),
+        uphill: action.uphill
       }
 
     case 'INDEX_LOADED':

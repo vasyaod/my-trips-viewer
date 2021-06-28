@@ -199,16 +199,22 @@ class Map extends Component {
                 Statistics
               </Header> */}
               <div>
-              <Statistic>
-                <Statistic.Value>{this.props.distance}</Statistic.Value>
-                <Statistic.Label>km</Statistic.Label>
-              </Statistic>
+                <Statistic>
+                  <Statistic.Value>{this.props.distance}</Statistic.Value>
+                  <Statistic.Label>km</Statistic.Label>
+                </Statistic>
               </div>
               <div>
-              <Statistic>
-                <Statistic.Value>{this.props.time}</Statistic.Value>
-                <Statistic.Label>hh:mm</Statistic.Label>
-              </Statistic>
+                <Statistic>
+                  <Statistic.Value>{this.props.time}</Statistic.Value>
+                  <Statistic.Label>hh:mm</Statistic.Label>
+                </Statistic>
+              </div>
+              <div>
+                <Statistic>
+                  <Statistic.Value>{this.props.uphill}</Statistic.Value>
+                  <Statistic.Label>￪ uphill, m</Statistic.Label>
+                </Statistic>
               </div>
             </Segment>
           </div>
@@ -278,6 +284,7 @@ const mapStateToProps = (state) => {
     tracks: state.tracks,
     distance: state.distance,
     time: state.time,
+    uphill: state.uphill,
     objects: state.objects,
   };
 };
