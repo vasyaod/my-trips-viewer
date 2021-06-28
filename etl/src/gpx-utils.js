@@ -82,12 +82,12 @@ exports.getUphill = (tracks) => {
         })
       })
     })
+    .filter (el => el > 0)
 
   let uphill = 0
   let i
   let j = 0
   for(i = 0; i < points.size - 1; i++) {
-
     if (Math.abs(points.get(i + 1) - points.get(j)) > 15) {
       if (points.get(i + 1) > points.get(j))
         uphill = uphill + (points.get(i + 1) - points.get(i))
