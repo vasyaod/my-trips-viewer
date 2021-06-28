@@ -65,12 +65,12 @@ class Index extends Component {
                         track.tags.map(tag =>
                           <span key={tag}>
                             { track.autoTagged &&
-                              <Label color='yellow' tag>
+                              <Label tag>
                                 {tag}
                               </Label>
                             }
                             { !track.autoTagged &&
-                              <Label tag>
+                              <Label color='grey' tag>
                                 {tag}
                               </Label>
                             }
