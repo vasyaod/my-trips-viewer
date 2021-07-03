@@ -108,7 +108,9 @@ def process_tag(tag):
             if predictions[0][0] > 0.5:
                 print(f"Tag {tag} was added to {i[2]}")
                 i[0].append(tag)
-        except Exception:
+                
+        except Exception as err:
+            print('Handling run-time error:', err)
             pass
 
 for tag in tags:
