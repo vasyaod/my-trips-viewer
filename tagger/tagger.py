@@ -98,15 +98,18 @@ def process_tag(tag):
     model.fit(train_ds, epochs=5)
 
     for i in none_tagget_tracks:
-        img = tf.keras.preprocessing.image.load_img(i[1], target_size=IMAGE_SHAPE)
-        img_array = tf.keras.preprocessing.image.img_to_array(img)
-        img_array = normalization_layer(img_array)
-        img_array = tf.expand_dims(img_array, 0)  # Create batch axis
-        #print(img_array)
-        predictions = model.predict(img_array)
-        if predictions[0][0] > 0.5:
-            print(f"Tag {tag} was added to {i[2]}")
-            i[0].append(tag)
+        try:
+            img = tf.keras.preprocessing.image.load_img(i[1], target_size=IMAGE_SHAPE)
+            img_array = tf.keras.preprocessing.image.img_to_array(img)
+            img_array = normalization_layer(img_array)
+            img_array = tf.expand_dims(img_array, 0)  # Create batch axis
+            #print(img_array)
+            predictions = model.predict(img_array)
+            if predictions[0][0] > 0.5:
+                print(f"Tag {tag} was added to {i[2]}")
+                i[0].append(tag)
+        except Exception:
+            pass
 
 for tag in tags:
     process_tag(tag) 
