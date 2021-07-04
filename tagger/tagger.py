@@ -41,7 +41,7 @@ IMAGE_SHAPE = (224, 224)
 batch_size = 32
 
 feature_extractor_layer = hub.KerasLayer(
-    feature_extractor_model, input_shape=IMAGE_SHAPE+(3,), trainable=False)
+    feature_extractor_model, input_shape=IMAGE_SHAPE+(3,), trainable=True)
 
 num_classes = 2
 
@@ -100,6 +100,7 @@ def process_tag(tag):
     for i in none_tagget_tracks:
         try:
             img = tf.keras.preprocessing.image.load_img(i[1], target_size=IMAGE_SHAPE)
+            print(img)
             img_array = tf.keras.preprocessing.image.img_to_array(img)
             img_array = normalization_layer(img_array)
             img_array = tf.expand_dims(img_array, 0)  # Create batch axis
@@ -108,7 +109,7 @@ def process_tag(tag):
             if predictions[0][0] > 0.5:
                 print(f"Tag {tag} was added to {i[2]}")
                 i[0].append(tag)
-                
+
         except Exception as err:
             print('Handling run-time error:', err)
             pass
