@@ -14,7 +14,15 @@ import tensorflow as tf
 
 import yaml
 
-print(tf.__version__)
+print("Tensor flow version", tf.__version__)
+
+IMAGE_SHAPE = (224, 224)
+batch_size = 32
+
+num_classes = 2
+
+img = tf.keras.preprocessing.image.load_img("./preview-test.png", target_size=IMAGE_SHAPE)
+img_array = tf.keras.preprocessing.image.img_to_array(img)
 
 input_data_path = os.environ.get('INPUT_DATA_PATH', "/home/vasyaod/work/my-tracks-data")
 output_data_path = os.environ.get('OUTPUT_DATA_PATH', "/home/vasyaod/work/my-tracks") + "/data"
@@ -36,14 +44,6 @@ tags = ["school", "office B", "office A", "tandem", "recumbent"]
 #tags = ["school"]
 
 feature_extractor_model = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"
-
-IMAGE_SHAPE = (224, 224)
-batch_size = 32
-
-feature_extractor_layer = hub.KerasLayer(
-    feature_extractor_model, input_shape=IMAGE_SHAPE+(3,), trainable=True)
-
-num_classes = 2
 
 normalization_layer = tf.keras.layers.experimental.preprocessing.Rescaling(1./255)
 
@@ -73,6 +73,9 @@ def process_tag(tag):
     for i in negative_exes:
         copyfile(i[1], f"{path}/0/{i[2]}.png")
 
+    feature_extractor_layer = hub.KerasLayer(
+        feature_extractor_model, input_shape=IMAGE_SHAPE+(3,), trainable=False)
+
 
     model = tf.keras.Sequential([
         feature_extractor_layer,
@@ -100,7 +103,6 @@ def process_tag(tag):
     for i in none_tagget_tracks:
         try:
             img = tf.keras.preprocessing.image.load_img(i[1], target_size=IMAGE_SHAPE)
-            print(img)
             img_array = tf.keras.preprocessing.image.img_to_array(img)
             img_array = normalization_layer(img_array)
             img_array = tf.expand_dims(img_array, 0)  # Create batch axis
