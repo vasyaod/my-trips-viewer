@@ -1,0 +1,28 @@
+{
+  "name": "site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "build": "next build && next export",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immutable": "^4.0.0",
+    "mapbox-gl": "^1.6.1",
+    "next": "^11.0.1",
+    "react": "^17.0.2",
+    "react-calendar-heatmap": "^1.8.1",
+    "react-dom": "^17.0.2",
+    "react-github-fork-ribbon": "^0.6.0",
+    "react-markdown": "^7.0.1",
+    "sass": "^1.42.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
+    "swiper": "^6.8.4",
+    "uuid": "^8.3.2"
+  }
+}
