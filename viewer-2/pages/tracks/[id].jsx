@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Segment, Statistic, Modal, Container, Embed, Image} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import Link from 'next/link'
@@ -87,7 +87,7 @@ function drawTrackData(map, tracks) {
   })
 }
 
-function drawObjects(map, objects) {
+function drawObjects(map, objects, setObj) {
 
   // add markers to map
   objects.map( (obj, index) => {
@@ -98,9 +98,11 @@ function drawObjects(map, objects) {
     el.style.width = '32px';
     el.style.height = '32px';
 
-    // el.addEventListener('click', () => {
-    //   this.setState({obj: obj, objIndex: index})
-    // });
+    if (setObj) {
+      el.addEventListener('click', () => {
+        setObj(obj)
+      });
+    }
 
     // add marker to map
     return (new mapboxgl.Marker(el)
@@ -113,15 +115,15 @@ function drawObjects(map, objects) {
 const Index = ({tracks, distance, time, uphill, objects}) => {
 
   const [obj, setObj] = useState(null);
+  const mapContainer = useRef(null);
 
-  let mapContainer
+//  let mapContainer
 
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1IjoidnZhemhlc292IiwiYSI6ImNqdHBpdnUxcTA1NXk0MXBjMTl4OHJlOWgifQ.J262J1QTtrGIlylAXKTYSQ';
     
-    console.log("!!!!!!")
     const map = new mapboxgl.Map({
-      container: mapContainer,
+      container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [-0.0, 0.0],
       zoom: 1
@@ -136,7 +138,7 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
       })
 
       drawTrackData(map, tracks)
-      drawObjects(map, objects)
+      drawObjects(map, objects, setObj)
 
       map.getCanvas().style.cursor = 'default'
     })
@@ -146,7 +148,7 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
     <div className="fullHeight">
       <div className="fullHeight">
        <div
-          ref = {el => mapContainer = el}
+          ref = {mapContainer}
           style = {{
             height: "100%",
             overflow: "hidden",
