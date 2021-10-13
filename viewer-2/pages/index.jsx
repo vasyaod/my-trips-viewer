@@ -91,7 +91,7 @@ const Index = ({siteTitle, siteDescription, index}) => {
 
 export async function getStaticProps() {
  
-  const rawdata = fs.readFileSync('index.json')
+  const rawdata = fs.readFileSync('public/index.json')
   const data = JSON.parse(rawdata)
 
   return {

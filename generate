@@ -9,17 +9,19 @@ export INPUT_DATA_PATH="$(pwd)/data-repo"
 export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
 
 # Copy config file from data repo to viewer
-cp -u data-repo/config.js code-repo/viewer/src || true
+cp -u data-repo/config.js code-repo/viewer-2 || true
+
+cp -R pages-repo/data code-repo/viewer-2/public
+cp -R pages-repo/images code-repo/viewer-2/public
+cp -R pages-repo/index.json code-repo/viewer-2/public
 
 # Compile code of site/viewer
-cd code-repo/viewer
+cd code-repo/viewer-2
 npm install
 npm run build
 cd ../..
 
-# Copy generated code and other resources...
-cp code-repo/viewer/bundle.js pages-repo
-cp code-repo/viewer/index.html pages-repo
+cp -R code-repo/viewer-2/out/* $OUTPUT_DATA_PATH
 
 # Data processing
 cd code-repo/etl
@@ -30,12 +32,8 @@ npm run lets-do-this
 cd ../..
 
 # Run site in dev mode
-cp -R pages-repo/data code-repo/viewer
-cp -R pages-repo/images code-repo/viewer
-cd code-repo/viewer
-npm install
-npm run dev &
-cd ../..
+npm install http-server -g
+http-server code-repo/viewer-2/out -p 8080 &
 
 # Make preview/thumbnail for every trip
 cd code-repo/previewer

@@ -248,7 +248,7 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
 }
 
 export async function getStaticPaths() {
-  const rawdata = fs.readFileSync('index.json')
+  const rawdata = fs.readFileSync('public/index.json')
   const data = JSON.parse(rawdata)
 
   // Get the paths we want to pre-render based on posts
@@ -262,7 +262,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const rawdata = fs.readFileSync(`data/${params.id}/objects.json`)
+  const rawdata = fs.readFileSync(`public/data/${params.id}/objects.json`)
   const data = JSON.parse(rawdata)
 
   return {
