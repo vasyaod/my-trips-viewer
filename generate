@@ -11,6 +11,7 @@ export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
 # Copy config file from data repo to viewer
 cp -u data-repo/config.js code-repo/viewer-2 || true
 
+rm -R code-repo/viewer-2/public/*
 cp -R pages-repo/data code-repo/viewer-2/public
 cp -R pages-repo/images code-repo/viewer-2/public
 cp -R pages-repo/index.json code-repo/viewer-2/public
