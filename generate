@@ -33,8 +33,10 @@ npm run lets-do-this
 cd ../..
 
 # Run site in dev mode
-npm install http-server -g
-http-server code-repo/viewer-2/out -p 8080 &
+cd code-repo/viewer-2
+npm run dev &
+#http-server code-repo/viewer-2/out -p 8080 &
+cd ../..
 
 # Make preview/thumbnail for every trip
 cd code-repo/previewer
