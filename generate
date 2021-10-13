@@ -23,6 +23,7 @@ npm run build
 cd ../..
 
 cp -R code-repo/viewer-2/out/* $OUTPUT_DATA_PATH
+touch $OUTPUT_DATA_PATH/_next/.nojekyll
 
 # Data processing
 cd code-repo/etl
