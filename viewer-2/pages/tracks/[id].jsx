@@ -94,7 +94,7 @@ function drawObjects(map, objects, setObj) {
     // create a DOM element for the marker
     var el = document.createElement('div');
 //    el.className = 'marker play2 button';
-    el.style.backgroundImage =`url(/images/${obj.img}/circle-thumb-32.png)`;
+    el.style.backgroundImage =`url(/my-tracks/images/${obj.img}/circle-thumb-32.png)`;
     el.style.width = '32px';
     el.style.height = '32px';
 
@@ -207,7 +207,7 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
                 { 
                   objects.map( (obj, index) =>
                     <SwiperSlide key={obj.img}>
-                      <img onClick={() => setObj(obj)} src={`/images/${obj.img}/original.jpg`}/>
+                      <img onClick={() => setObj(obj)} src={`/my-tracks/images/${obj.img}/original.jpg`}/>
                     </SwiperSlide>
                   )
                 }
@@ -231,12 +231,12 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
                     <Embed
                       active={true}
                       id={obj.youtubeId}
-                      placeholder={`/images/${obj.img}/original.jpg`}
+                      placeholder={`/my-tracks/images/${obj.img}/original.jpg`}
                       source='youtube'
                     />
                   }
                   { obj.type == "image" &&
-                    <Image src={`/images/${obj.img}/original.jpg`} onClick={() => setObj(null)}/>
+                    <Image src={`/my-tracks/images/${obj.img}/original.jpg`} onClick={() => setObj(null)}/>
                   }
                 </Container>
               </Modal.Description>
