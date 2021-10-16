@@ -19,7 +19,7 @@ cd ../..
 # Copy config file from data repo to viewer
 cp -u data-repo/config.js code-repo/viewer-2 || true
 
-genereteFn () {
+genereteStaticPages () {
     rm -R code-repo/viewer-2/public/*
     cp -R $OUTPUT_DATA_PATH/data code-repo/viewer-2/public
     cp -R $OUTPUT_DATA_PATH/images code-repo/viewer-2/images
@@ -35,7 +35,7 @@ genereteFn () {
     touch $OUTPUT_DATA_PATH/_next/.nojekyll
 }
 
-genereteFn
+genereteStaticPages
 
 # Run site in dev mode
 cd code-repo/viewer-2
@@ -59,4 +59,4 @@ cd code-repo/etl
 npm run lets-do-this
 cd ../..
 
-genereteFn
+genereteStaticPages
