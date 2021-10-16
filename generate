@@ -19,19 +19,23 @@ cd ../..
 # Copy config file from data repo to viewer
 cp -u data-repo/config.js code-repo/viewer-2 || true
 
-rm -R code-repo/viewer-2/public/*
-cp -R $OUTPUT_DATA_PATH/data code-repo/viewer-2/public
-cp -R $OUTPUT_DATA_PATH/images code-repo/viewer-2/images
-cp -R $OUTPUT_DATA_PATH/index.json code-repo/viewer-2/public
+genereteFn () {
+    rm -R code-repo/viewer-2/public/*
+    cp -R $OUTPUT_DATA_PATH/data code-repo/viewer-2/public
+    cp -R $OUTPUT_DATA_PATH/images code-repo/viewer-2/images
+    cp -R $OUTPUT_DATA_PATH/index.json code-repo/viewer-2/public
 
-# Compile code of site/viewer
-cd code-repo/viewer-2
-npm install
-npm run build
-cd ../..
+    # Compile code of site/viewer
+    cd code-repo/viewer-2
+    npm install
+    npm run build
+    cd ../..
 
-cp -R code-repo/viewer-2/out/* $OUTPUT_DATA_PATH
-touch $OUTPUT_DATA_PATH/_next/.nojekyll
+    cp -R code-repo/viewer-2/out/* $OUTPUT_DATA_PATH
+    touch $OUTPUT_DATA_PATH/_next/.nojekyll
+}
+
+genereteFn
 
 # Run site in dev mode
 cd code-repo/viewer-2
@@ -54,3 +58,5 @@ cd ../..
 cd code-repo/etl
 npm run lets-do-this
 cd ../..
+
+genereteFn
