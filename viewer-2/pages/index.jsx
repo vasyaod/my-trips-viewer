@@ -17,7 +17,7 @@ const Index = ({siteTitle, siteDescription, index}) => {
             <Link href="/" passHref>
               <Menu.Item active={true}>All tracks</Menu.Item>
             </Link>
-            <Link href="/stats" passHref>
+            <Link href="/stats">
               <Menu.Item>Stats</Menu.Item>
             </Link>
             <Link href="/heatmap" passHref>
@@ -45,7 +45,7 @@ const Index = ({siteTitle, siteDescription, index}) => {
               <Card 
                 key={track.id}
               >
-                <Link href={`tracks/${track.id}`}>
+                <Link href={`/tracks/${track.id}`}>
                   <Image src={`data/${track.id}/preview.png`} wrapped ui={false}/>
                 </Link>
                 <Card.Content href={`tracks/${track.id}`}>
