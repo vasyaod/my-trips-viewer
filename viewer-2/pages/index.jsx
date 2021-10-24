@@ -6,6 +6,7 @@ import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
 import { List } from 'immutable'
 import * as config from '../config.js'
+import * as nextConfig from '../next.config'
 import * as fs from 'fs'
 
 const Index = ({siteTitle, siteDescription, index}) => {
@@ -17,7 +18,7 @@ const Index = ({siteTitle, siteDescription, index}) => {
             <Link href="/" passHref>
               <Menu.Item active={true}>All tracks</Menu.Item>
             </Link>
-            <Link href="/stats">
+            <Link href="/stats" passHref>
               <Menu.Item>Stats</Menu.Item>
             </Link>
             <Link href="/heatmap" passHref>
@@ -45,10 +46,10 @@ const Index = ({siteTitle, siteDescription, index}) => {
               <Card 
                 key={track.id}
               >
-                <Link href={`/tracks/${track.id}`}>
-                  <Image src={`data/${track.id}/preview.png`} wrapped ui={false}/>
-                </Link>
-                <Card.Content href={`tracks/${track.id}`}>
+                <a href={`${nextConfig.basePath}/tracks/${track.id}`}>
+                  <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} wrapped ui={false}/>
+                </a>
+                <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`}>
                   <Card.Header>{track.title}</Card.Header>
                   <Card.Meta>
                     <span className='date'>{track.date}</span>
