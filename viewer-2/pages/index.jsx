@@ -46,9 +46,9 @@ const Index = ({siteTitle, siteDescription, index}) => {
               <Card 
                 key={track.id}
               >
-                <a href={`${nextConfig.basePath}/tracks/${track.id}`}>
+                <Link href={`/tracks/${track.id}`} passHref>
                   <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} wrapped ui={false}/>
-                </a>
+                </Link>
                 <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`}>
                   <Card.Header>{track.title}</Card.Header>
                   <Card.Meta>
