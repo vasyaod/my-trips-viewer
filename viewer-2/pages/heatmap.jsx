@@ -7,6 +7,8 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import * as config from '../config.js'
 import * as fs from 'fs'
 
+import 'react-calendar-heatmap/dist/styles.css'
+
 const Index = ({heatmap}) => {
 
   return (
