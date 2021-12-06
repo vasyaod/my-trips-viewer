@@ -20,6 +20,9 @@ cd ../..
 cp -u data-repo/config.js code-repo/viewer-2 || true
 
 genereteStaticPages () {
+    echo ""
+    echo "Regenerate static pages"
+
     rm -R code-repo/viewer-2/public/*
     cp -R $OUTPUT_DATA_PATH/data code-repo/viewer-2/public
     cp -R $OUTPUT_DATA_PATH/images code-repo/viewer-2/images
