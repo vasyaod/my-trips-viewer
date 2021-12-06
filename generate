@@ -30,7 +30,7 @@ genereteStaticPages () {
 
     # Compile code of site/viewer
     cd code-repo/viewer-2
-    npm install
+    npm install --force
     npm run build
     cd ../..
 
