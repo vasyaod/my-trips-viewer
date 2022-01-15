@@ -227,6 +227,7 @@ const processTrip = async tripId => {
       })
     )
     .toList()
+    .reverse()
 
   const tags = List(successfulTracks)
     .flatMap(x => x.tags.map(y => { return {k: y, v: x} }))
