@@ -17,7 +17,7 @@ npm run lets-do-this
 cd ../..
 
 # Copy config file from data repo to viewer
-cp -u data-repo/config.js code-repo/viewer-2 || true
+cp -u data-repo/config.yml code-repo || true
 
 genereteStaticPages () {
     echo ""
