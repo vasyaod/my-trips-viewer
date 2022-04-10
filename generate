@@ -23,14 +23,14 @@ export BASE_PATH=$(yq e .basePath data-repo/config.yml)
 export SITE_TITLE=$(yq e .siteTitle data-repo/config.yml)
 export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
 
-cat code-repo/next.config.js | envsubst > code-repo/next.config.js
+cat code-repo/viewer-2/next.config.js | envsubst > code-repo/viewer-2/next.config.js
 
 echo $BASE_PATH
 echo $SITE_TITLE
 echo $SITE_DESCRIPTION
 
 echo "next.config.js start"
-cat code-repo/next.config.js
+cat code-repo/viewer-2/next.config.js
 echo "next.config.js end"
 
 genereteStaticPages () {
