@@ -4,7 +4,6 @@ import { Container, Header, Menu, Card } from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import CalendarHeatmap from 'react-calendar-heatmap';
-import * as config from '../config.js'
 import * as fs from 'fs'
 
 import 'react-calendar-heatmap/dist/styles.css'

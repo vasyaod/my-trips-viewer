@@ -19,6 +19,16 @@ cd ../..
 # Copy config file from data repo to viewer
 cp -u data-repo/config.yml code-repo || true
 
+export BASE_PATH=$(yq e .basePath data-repo/config.yml)
+export SITE_TITLE=$(yq e .siteTitle data-repo/config.yml)
+export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
+
+cat code-repo/next.config.js | envsubst > code-repo/next.config.js
+
+echo $BASE_PATH
+echo $SITE_TITLE
+echo $SITE_DESCRIPTION
+
 genereteStaticPages () {
     echo ""
     echo "Regenerate static pages"

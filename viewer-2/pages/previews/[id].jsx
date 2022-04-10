@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react'
 import { Segment, Statistic} from 'semantic-ui-react'
 import { useEffect } from 'react';
-import * as config from '../../config.js'
 import * as fs from 'fs'
 
 const mapboxgl = require('mapbox-gl');

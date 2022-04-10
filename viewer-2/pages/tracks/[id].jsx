@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react'
 import { Segment, Statistic, Modal, Container, Embed, Image} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import Link from 'next/link'
-import * as config from '../../config.js'
 import * as fs from 'fs'
 import { Swiper, SwiperSlide } from 'swiper/swiper-react.cjs.js';
 

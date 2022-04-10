@@ -6,7 +6,6 @@ import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
 import { List } from 'immutable'
-import * as config from '../config.js'
 import * as fs from 'fs'
 
 const Index = ({tags}) => {
