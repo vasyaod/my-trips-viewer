@@ -1,3 +1,5 @@
+const config = yaml.safeLoad(fs.readFileSync('../config.yml', 'utf8'));
+
 module.exports = {
-  basePath: '/my-tracks',
+  basePath: config.basePath,
 }

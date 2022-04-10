@@ -1,5 +1,8 @@
 # Full URL to the pages
-url: 
+url: "https://vasyaod.github.io/my-tracks"
+
+# Base path
+basePath: "my-tracks"
 
 # Caption of the site.
 siteTitle: "Tracks"
