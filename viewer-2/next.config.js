@@ -1,5 +1,5 @@
-import { fs } from 'fs';
-import { yaml } from 'js-yaml';
+const yaml = require('js-yaml');
+const fs = require('fs');
 
 const config = yaml.load(fs.readFileSync('../config.yml', 'utf8'));
 
