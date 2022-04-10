@@ -26,9 +26,10 @@ export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
 cp code-repo/viewer-2/next.config.js code-repo/viewer-2/next.config.js.tmp
 cat code-repo/viewer-2/next.config.js.tmp | envsubst > code-repo/viewer-2/next.config.js
 
-echo $BASE_PATH
-echo $SITE_TITLE
-echo $SITE_DESCRIPTION
+echo "Configuration:"
+echo "BASE_PATH: $BASE_PATH"
+echo "SITE_TITLE: $SITE_TITLE"
+echo "SITE_DESCRIPTION: $SITE_DESCRIPTION"
 
 genereteStaticPages () {
     echo ""
