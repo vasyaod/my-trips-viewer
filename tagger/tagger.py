@@ -1,4 +1,5 @@
 import os
+import sys
 from os.path import isdir, join
 from shutil import copyfile
 
@@ -39,6 +40,10 @@ def mF(x):
 all_tracks = list(filter(lambda x : os.path.exists(x[1]), list(map(mF, all_tracks))))
 tagged_tracks = list(filter(lambda x : len(x[0]) > 0, all_tracks))
 none_tagget_tracks = list(filter(lambda x : len(x[0]) == 0, all_tracks))
+
+if len(tagged_tracks) == 0:
+    print(f"There is no tags in the data")
+    sys.exit()
 
 tags = ["school", "office B", "office C", "office A", "tandem", "recumbent"]
 #tags = ["school"]
@@ -129,4 +134,3 @@ for i in none_tagget_tracks:
         data['autoTagged'] = True
         with open(f"{input_data_path}/{trackId}/trip.yml", 'w', encoding='utf-8') as f:
             yaml.dump(data, f)
-
