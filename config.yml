@@ -2,7 +2,7 @@
 url: "https://vasyaod.github.io/my-tracks"
 
 # Base path
-basePath: "my-tracks"
+basePath: "/my-tracks"
 
 # Caption of the site.
 siteTitle: "Tracks"
