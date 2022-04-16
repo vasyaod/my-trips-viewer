@@ -5,6 +5,8 @@ import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import * as fs from 'fs'
+import ReactTooltip from 'react-tooltip';
+
 
 import 'react-calendar-heatmap/dist/styles.css'
 
@@ -29,6 +31,7 @@ const Index = ({heatmap}) => {
           </Container>
       </Menu>
       <Container>
+        <ReactTooltip effect="solid"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
                           position="right">

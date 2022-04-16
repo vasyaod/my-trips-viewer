@@ -34,7 +34,7 @@ Viewer is a template/view or a single page site for github.
 ### Build viewer locally for debuging purpose
 
 ```bash
-cd viewer
+cd viewer-2
 npm install
 npm run build
 ```
@@ -45,7 +45,7 @@ Since Webpack is using for assembling of the viewer we have good opportunity to 
 on http://localhost:8080
 
 ```bash
-cd viewer
+cd viewer-2
 npm install
 npm run dev
 ```
