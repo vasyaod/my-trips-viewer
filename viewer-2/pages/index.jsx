@@ -8,7 +8,7 @@ import { List } from 'immutable'
 import * as config from '../next.config'
 import * as nextConfig from '../next.config'
 import * as fs from 'fs'
-import { shareFacebook, shareTwitter, shareVk } from './social-buttons.js'
+import { shareFacebook, shareTwitter, shareVk } from '../src/social-buttons.js'
 
 const Index = ({siteTitle, siteDescription, index}) => {
 
