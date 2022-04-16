@@ -32,7 +32,7 @@ const Index = ({heatmap}) => {
           </Container>
       </Menu>
       <Container>
-        <ReactTooltip effect="solid"/>
+        <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
                           position="right">
