@@ -4,6 +4,7 @@ import { Container, Button, Form, Grid, Header, Image, Message, Segment, Card, L
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
+import ReactTooltip from 'react-tooltip';
 import { List } from 'immutable'
 import * as config from '../next.config'
 import * as nextConfig from '../next.config'
@@ -31,6 +32,7 @@ const Index = ({siteTitle, siteDescription, index}) => {
           </Container>
       </Menu>
       <Container>
+        <ReactTooltip effect="solid"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
                           position="right">
@@ -63,12 +65,12 @@ const Index = ({siteTitle, siteDescription, index}) => {
                       track.tags.map(tag =>
                         <span key={tag}>
                           { track.autoTagged &&
-                            <Label tag>
+                            <Label tag data-tip='Automatically inferred tag'>
                               {tag}
                             </Label>
                           }
                           { !track.autoTagged &&
-                            <Label color='grey' tag>
+                            <Label color='grey' tag data-tip='Manual tag'>
                               {tag}
                             </Label>
                           }
