@@ -5,6 +5,7 @@ import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import * as fs from 'fs'
+import * as nextConfig from '../next.config'
 import ReactTooltip from 'react-tooltip';
 
 
@@ -51,6 +52,7 @@ const Index = ({heatmap}) => {
                       startDate={new Date(x.year + '-01-01')}
                       endDate={new Date(x.year + '-12-31')}
                       values={x.values}
+                      onClick={value => location.href = `${nextConfig.basePath}/tracks/${value.date.replaceAll("-", "")}`}
                       tooltipDataAttrs={value => {
                         if (value.date)
                           return {
