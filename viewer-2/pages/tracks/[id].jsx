@@ -11,7 +11,7 @@ const mapboxgl = require('mapbox-gl');
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 
-function drawTrackData(map, tracks) {
+function drawTrackData(map, tracks, bounds) {
   if (!map.loaded())
     return
 
@@ -73,13 +73,6 @@ function drawTrackData(map, tracks) {
 
   map.getSource(polylineId).setData(data)
 
-  const allCoordinates = tracks.flatMap(t => 
-    t.map(p => [p.lng, p.lat])
-  )
-  var bounds = allCoordinates.reduce(function(bounds, p) {
-    return bounds.extend(p);
-  }, new mapboxgl.LngLatBounds(allCoordinates[0], allCoordinates[0]));
-     
   map.fitBounds(bounds, {
     padding: 30,
     linear: true,
@@ -122,11 +115,17 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
   useEffect(() => {
     mapboxgl.accessToken = 'pk.eyJ1IjoidnZhemhlc292IiwiYSI6ImNqdHBpdnUxcTA1NXk0MXBjMTl4OHJlOWgifQ.J262J1QTtrGIlylAXKTYSQ';
     
+    const allCoordinates = tracks.flatMap(t => 
+      t.map(p => [p.lng, p.lat])
+    )
+    const bounds = allCoordinates.reduce(function(bounds, p) {
+      return bounds.extend(p);
+    }, new mapboxgl.LngLatBounds(allCoordinates[0], allCoordinates[0]));
+    
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-0.0, 0.0],
-      zoom: 1
+      bounds: bounds
     });
 
     // Add zoom and rotation controls to the map.
@@ -137,7 +136,7 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
         var zoom = map.getZoom();
       })
 
-      drawTrackData(map, tracks)
+      drawTrackData(map, tracks, bounds)
       drawObjects(map, objects, setObj)
 
       map.getCanvas().style.cursor = 'default'
