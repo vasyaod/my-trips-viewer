@@ -53,10 +53,10 @@ genereteStaticPages () {
 genereteStaticPages
 
 # Run site in dev mode
-cd code-repo/viewer-2
+#cd code-repo/viewer-2
 #npm run dev &
+#cd ../..
 http-server code-repo/viewer-2/out -p 3000 &
-cd ../..
 
 # Make preview/thumbnail for every trip
 cd code-repo/previewer
