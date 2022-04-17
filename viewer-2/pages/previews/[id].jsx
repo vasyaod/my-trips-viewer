@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Segment, Statistic} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import * as fs from 'fs'
+import * as nextConfig from '../next.config'
 
 const mapboxgl = require('mapbox-gl');
 
@@ -83,7 +84,7 @@ function drawObjects(map, objects) {
     // create a DOM element for the marker
     var el = document.createElement('div');
     el.className = 'marker play2 button';
-    el.style.backgroundImage =`url(/my-tracks/images/${obj.img}/circle-thumb-32.png)`;
+    el.style.backgroundImage =`url(${nextConfig.basePath}/images/${obj.img}/circle-thumb-32.png)`;
     el.style.width = '32px';
     el.style.height = '32px';
 

@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react'
 import { Segment, Statistic, Modal, Container, Embed, Image} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import Link from 'next/link'
+import * as nextConfig from '../next.config'
 import * as fs from 'fs'
 import { Swiper, SwiperSlide } from 'swiper/swiper-react.cjs.js';
 import Head from 'next/head'
@@ -88,7 +89,7 @@ function drawObjects(map, objects, setObj) {
     // create a DOM element for the marker
     var el = document.createElement('div');
 //    el.className = 'marker play2 button';
-    el.style.backgroundImage =`url(/my-tracks/images/${obj.img}/circle-thumb-32.png)`;
+    el.style.backgroundImage =`url(${nextConfig.basePath}/images/${obj.img}/circle-thumb-32.png)`;
     el.style.width = '32px';
     el.style.height = '32px';
 
@@ -150,7 +151,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
         <Head>
           <title>{title}</title>
           <meta property="og:title" content={title}/>
-          <meta property="og:image" content={`../data/${trackId}/preview.png`}/>
+          <meta property="og:image" content={`${nextConfig.basePath}/data/${trackId}/preview.png`}/>
           <meta property="og:description" content={description}/>
         </Head>
         <div
@@ -213,7 +214,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
                 { 
                   objects.map( (obj, index) =>
                     <SwiperSlide key={obj.img}>
-                      <img onClick={() => setObj(obj)} src={`/my-tracks/images/${obj.img}/original.jpg`}/>
+                      <img onClick={() => setObj(obj)} src={`${nextConfig.basePath}/images/${obj.img}/original.jpg`}/>
                     </SwiperSlide>
                   )
                 }
@@ -237,12 +238,12 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
                     <Embed
                       active={true}
                       id={obj.youtubeId}
-                      placeholder={`/my-tracks/images/${obj.img}/original.jpg`}
+                      placeholder={`${nextConfig.basePath}/images/${obj.img}/original.jpg`}
                       source='youtube'
                     />
                   }
                   { obj.type == "image" &&
-                    <Image src={`/my-tracks/images/${obj.img}/original.jpg`} onClick={() => setObj(null)}/>
+                    <Image src={`${nextConfig.basePath}/images/${obj.img}/original.jpg`} onClick={() => setObj(null)}/>
                   }
                 </Container>
               </Modal.Description>
