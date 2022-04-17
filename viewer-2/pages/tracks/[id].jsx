@@ -143,7 +143,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
 
       map.getCanvas().style.cursor = 'default'
     })
-  });
+  }, []);
 
   return (
     <div className="fullHeight">
