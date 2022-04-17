@@ -82,7 +82,8 @@ function drawTrackData(map, tracks) {
      
   map.fitBounds(bounds, {
     padding: 30,
-    linear: true
+    linear: true,
+    duration: 0
   })
 }
 
