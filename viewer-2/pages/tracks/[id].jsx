@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import Link from 'next/link'
 import * as fs from 'fs'
 import { Swiper, SwiperSlide } from 'swiper/swiper-react.cjs.js';
+import Head from 'next/head'
 
 const mapboxgl = require('mapbox-gl');
 
@@ -105,7 +106,7 @@ function drawObjects(map, objects, setObj) {
   });
 }
 
-const Index = ({tracks, distance, time, uphill, objects}) => {
+const Index = ({tracks, distance, time, uphill, objects, title, description, trackId}) => {
 
   const [obj, setObj] = useState(null);
   const mapContainer = useRef(null);
@@ -146,7 +147,13 @@ const Index = ({tracks, distance, time, uphill, objects}) => {
   return (
     <div className="fullHeight">
       <div className="fullHeight">
-       <div
+        <Head>
+          <title>{title}</title>
+          <meta property="og:title" content={title}/>
+          <meta property="og:image" content={`../data/${trackId}/preview.png`}/>
+          <meta property="og:description" content={description}/>
+        </Head>
+        <div
           ref = {mapContainer}
           style = {{
             height: "100%",
@@ -268,6 +275,9 @@ export async function getStaticProps({ params }) {
     props: {
       tracks: data.tracks,
       objects: data.objects,
+      title: data.title,
+      description: data.description,
+      trackId: params.id,
       distance: Math.round(data.distance / 100) / 10,
       time: Math.floor(data.time / 1000 / 60 / 60) + ":" + (Math.round(data.time / 1000 / 60) % 60),
       uphill: data.uphill
