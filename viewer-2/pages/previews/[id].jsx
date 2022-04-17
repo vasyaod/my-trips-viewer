@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Segment, Statistic} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import * as fs from 'fs'
-import * as nextConfig from '../next.config'
+import * as nextConfig from '../../next.config'
 
 const mapboxgl = require('mapbox-gl');
 
