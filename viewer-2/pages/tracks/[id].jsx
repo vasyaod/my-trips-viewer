@@ -276,7 +276,7 @@ export async function getStaticProps({ params }) {
       tracks: data.tracks,
       objects: data.objects,
       title: data.title,
-      description: data.description,
+      description: data.description ? data.description : "",
       trackId: params.id,
       distance: Math.round(data.distance / 100) / 10,
       time: Math.floor(data.time / 1000 / 60 / 60) + ":" + (Math.round(data.time / 1000 / 60) % 60),
