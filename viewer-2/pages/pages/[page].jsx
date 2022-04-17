@@ -122,8 +122,8 @@ export async function getStaticPaths() {
 
   return {
     // Opt-in to on-demand generation for non-existent pages
-    fallback: true,
-    paths: Range(0, pages).map( i => {return { params: { page: `${i+1}` } }}).toArray()
+    fallback: false,
+    paths: Range(0, pages).toArray().map( i => {return { params: { page: `${i+1}` } }})
   }
 }
 
