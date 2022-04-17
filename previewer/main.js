@@ -13,7 +13,8 @@ const previewerVersion = "1.0"
 
 const inputPath = process.env.INPUT_DATA_PATH || "../test-data/input"
 const outputPath = process.env.OUTPUT_DATA_PATH || "../test-data/output"
-const basePath = process.env.BASE_PATH || "my-tracks"
+//const basePath = "/" + (process.env.BASE_PATH || "my-tracks")
+const basePath = "/"
 
 function sleep(t) {
   return new Promise((resolve) => setTimeout(resolve, t))
@@ -47,7 +48,7 @@ const processTrip = async (browser, tripId) => {
     page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
     
-    await page.goto(`http://localhost:3000/${basePath}/previews/${tripId}`);
+    await page.goto(`http://localhost:3000${basePath}/previews/${tripId}`);
     await sleep(4000)
     await page.screenshot({path: out});
     await page.close()

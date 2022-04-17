@@ -24,8 +24,6 @@ export BASE_PATH=$(yq e .basePath data-repo/config.yml)
 export SITE_TITLE=$(yq e .siteTitle data-repo/config.yml)
 export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
 
-cat code-repo/viewer-2/next.config.template.js | envsubst > code-repo/viewer-2/next.config.js
-
 echo "Configuration:"
 echo "URL: $URL"
 echo "BASE_PATH: $BASE_PATH"
@@ -51,12 +49,13 @@ genereteStaticPages () {
     touch $OUTPUT_DATA_PATH/_next/.nojekyll
 }
 
+# Generate static pages with default setting for cretion of previews
 genereteStaticPages
 
 # Run site in dev mode
 cd code-repo/viewer-2
-npm run dev &
-#http-server code-repo/viewer-2/out -p 8080 &
+#npm run dev &
+http-server code-repo/viewer-2/out -p 3000 &
 cd ../..
 
 # Make preview/thumbnail for every trip
@@ -74,5 +73,7 @@ cd ../..
 cd code-repo/etl
 npm run lets-do-this
 cd ../..
+
+cat code-repo/viewer-2/next.config.template.js | envsubst > code-repo/viewer-2/next.config.js
 
 genereteStaticPages

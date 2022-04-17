@@ -1,6 +1,6 @@
 module.exports = {
   url: "://localhost:3000",
-  basePath: "/my-tracks",
+  basePath: "",
   siteTitle: "Local dev version",
   siteDescription: "Description of local dev version",
   pageSize: 2
