@@ -56,7 +56,7 @@ genereteStaticPages
 #cd code-repo/viewer-2
 #npm run dev &
 #cd ../..
-http-server code-repo/viewer-2/out -p 3000 &
+npx http-server code-repo/viewer-2/out -p 3000 &
 
 # Make preview/thumbnail for every trip
 cd code-repo/previewer
