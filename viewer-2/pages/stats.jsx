@@ -23,7 +23,7 @@ const Index = ({stats}) => {
               <Menu.Item>Heatmap</Menu.Item>
             </Link>
             <Link href="/tags" passHref>
-              <Menu.Item>Tags</Menu.Item>
+              <Menu.Item>Tag Stats</Menu.Item>
             </Link>
           </Container>
       </Menu>

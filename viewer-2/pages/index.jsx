@@ -10,7 +10,7 @@ import * as config from '../next.config'
 import * as nextConfig from '../next.config'
 import * as fs from 'fs'
 import { shareFacebook, shareTwitter, shareVk } from '../src/social-buttons.js'
-import * as Index from './pages/[page].jsx'
+import * as Index from './pages/[category]/[page].jsx'
 
 const IndexPage = Index.default
 
@@ -27,6 +27,8 @@ export async function getStaticProps({ params }) {
       siteTitle: config.siteTitle,
       currentPage: 1,
       pages: pages,
+      categories: data.categories,
+      category: "all",
       index: List(data.tracks).sortBy(item => item.date).reverse().toArray().slice(0, nextConfig.pageSize)
     },
   }

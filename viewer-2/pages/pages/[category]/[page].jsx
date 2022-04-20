@@ -8,12 +8,20 @@ import ReactTooltip from 'react-tooltip';
 import { List, Repeat, Range } from 'immutable'
 import Head from 'next/head'
 
-import * as config from '../../next.config'
-import * as nextConfig from '../../next.config'
+import * as config from '../../../next.config'
+import * as nextConfig from '../../../next.config'
 import * as fs from 'fs'
-import { shareFacebook, shareTwitter, shareVk } from '../../src/social-buttons.js'
+import { shareFacebook, shareTwitter, shareVk } from '../../../src/social-buttons.js'
 
-const Index = ({siteTitle, siteDescription, index, currentPage, pages}) => {
+const fixedOverlayStyle = {
+  position: 'relative',
+  float: 'left',
+  top: '0px',
+  zIndex: 10,
+  left: '100%',
+}
+
+const Index = ({siteTitle, siteDescription, index, currentPage, pages, categories, category}) => {
 
   return (
     <div>
@@ -32,11 +40,29 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages}) => {
               <Menu.Item>Heatmap</Menu.Item>
             </Link>
             <Link href="/tags" passHref>
-              <Menu.Item>Tags</Menu.Item>
+              <Menu.Item>Tag Stats</Menu.Item>
             </Link>
           </Container>
       </Menu>
       <Container>
+        <div style={fixedOverlayStyle}>
+          <Header as='h3'>Filters</Header>
+          <Menu vertical>
+            {
+              categories.map( category =>
+                <Menu.Item key={category.id}
+                  name={category.id} 
+                  active={category.id == category}
+                  onClick={(e, { name }) => location = `${nextConfig.basePath}/pages/${name}/1`}
+                >
+                  <Label>{category.count}</Label>
+                  {category.id}
+                </Menu.Item>
+              )
+            }
+          </Menu>
+        </div>
+
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
@@ -53,7 +79,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages}) => {
             <Pagination 
               defaultActivePage={currentPage} 
               totalPages={pages} 
-              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${activePage}`}
+              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${category}/${activePage}`}
             />
           </Segment>
         }
@@ -109,7 +135,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages}) => {
             <Pagination 
               defaultActivePage={currentPage} 
               totalPages={pages} 
-              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${activePage}`}
+              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${category}/${activePage}`}
             />
           </Segment>
         }
@@ -122,12 +148,16 @@ export async function getStaticPaths() {
   const rawdata = fs.readFileSync('public/index.json')
   const data = JSON.parse(rawdata)
 
-  const pages = Math.ceil(List(data.tracks).size / nextConfig.pageSize)
+
+  const paths = List(data.categories).flatMap ( category => {
+    const pages = Math.ceil(List(data.tracks).filter(t => t.categories.includes(category.id)).size / nextConfig.pageSize)
+    return Range(0, pages).map( i => {return { params: { category: category.id, page: `${i+1}` } }})
+  })
 
   return {
     // Opt-in to on-demand generation for non-existent pages
     fallback: false,
-    paths: Range(0, pages).toArray().map( i => {return { params: { page: `${i+1}` } }})
+    paths: paths.toArray()
   }
 }
 
@@ -138,16 +168,27 @@ export async function getStaticProps({ params }) {
   const data = JSON.parse(rawdata)
 
   const p = params.page ? parseInt(params.page) : 1;
-
-  const pages = Math.ceil(List(data.tracks).size / nextConfig.pageSize)
+  const category = params.category
+  const pages = Math.ceil(
+    List(data.tracks)
+      .filter(t => t.categories.includes(category))
+      .size / nextConfig.pageSize
+  )
 
   return {
     props: {
       siteDescription: config.siteDescription,
       siteTitle: config.siteTitle,
       currentPage: params.page,
+      categories: data.categories,
       pages: pages,
-      index: List(data.tracks).sortBy(item => item.date).reverse().toArray().slice(0 + nextConfig.pageSize*(p-1), nextConfig.pageSize*p)
+      category: category,
+      index: List(data.tracks)
+        .filter(t => t.categories.includes(category))
+        .sortBy(item => item.date)
+        .reverse()
+        .toArray()
+        .slice(0 + nextConfig.pageSize*(p-1), nextConfig.pageSize*p)
     },
   }
 }
