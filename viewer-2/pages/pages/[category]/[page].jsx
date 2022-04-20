@@ -19,6 +19,7 @@ const fixedOverlayStyle = {
   top: '0px',
   zIndex: 10,
   left: '100%',
+  overflow: "hidden",
 }
 
 const Index = ({siteTitle, siteDescription, index, currentPage, pages, categories, category}) => {
