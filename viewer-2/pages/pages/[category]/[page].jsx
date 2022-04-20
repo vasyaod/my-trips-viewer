@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Container, Button, Form, Grid, Header, Image, Message, Segment, Card, Label, Menu, Pagination} from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Image, Message, Segment, Card, Label, Menu, Pagination, Dropdown} from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
@@ -12,15 +12,6 @@ import * as config from '../../../next.config'
 import * as nextConfig from '../../../next.config'
 import * as fs from 'fs'
 import { shareFacebook, shareTwitter, shareVk } from '../../../src/social-buttons.js'
-
-const fixedOverlayStyle = {
-  position: 'relative',
-  float: 'left',
-  top: '0px',
-  zIndex: 10,
-  left: '100%',
-  overflow: "hidden",
-}
 
 const Index = ({siteTitle, siteDescription, index, currentPage, pages, categories, category}) => {
 
@@ -43,27 +34,25 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
             <Link href="/tags" passHref>
               <Menu.Item>Tag Stats</Menu.Item>
             </Link>
+            <Dropdown item text='Categories'>
+              <Dropdown.Menu>
+                {
+                  categories.map( category =>
+                    <Dropdown.Item key={category.id}
+                      name={category.id} 
+                      active={category.id == category}
+                      onClick={(e, { name }) => location = `${nextConfig.basePath}/pages/${name}/1`}
+                    >
+                      <Label>{category.count}</Label>
+                      {category.id}
+                    </Dropdown.Item>
+                  )
+                }
+              </Dropdown.Menu>
+            </Dropdown>
           </Container>
       </Menu>
       <Container>
-        <div style={fixedOverlayStyle}>
-          <Header as='h3'>Filters</Header>
-          <Menu vertical>
-            {
-              categories.map( category =>
-                <Menu.Item key={category.id}
-                  name={category.id} 
-                  active={category.id == category}
-                  onClick={(e, { name }) => location = `${nextConfig.basePath}/pages/${name}/1`}
-                >
-                  <Label>{category.count}</Label>
-                  {category.id}
-                </Menu.Item>
-              )
-            }
-          </Menu>
-        </div>
-
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
