@@ -6,6 +6,7 @@ import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
 import ReactTooltip from 'react-tooltip';
 import { List, Repeat, Range } from 'immutable'
+import Head from 'next/head'
 
 import * as config from '../../next.config'
 import * as nextConfig from '../../next.config'
