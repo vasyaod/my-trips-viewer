@@ -73,7 +73,13 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
 
         <Header as='h1' content={siteTitle} textAlign='center' />
 
-        { siteDescription && <Container text><Segment padded basic size="large" ><ReactMarkdown>{siteDescription}</ReactMarkdown></Segment></Container> }
+        { siteDescription && 
+          <Container text>
+            <Segment padded basic size="large">
+              <ReactMarkdown>{siteDescription}</ReactMarkdown>
+            </Segment>
+          </Container> 
+        }
 
         { pages > 1 && 
           <Segment basic textAlign='center'>
