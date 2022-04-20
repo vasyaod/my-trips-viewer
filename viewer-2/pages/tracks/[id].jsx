@@ -145,12 +145,14 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
     })
   }, []);
 
+  const titleWithDistance = `${title}, ${distance} km`
+
   return (
     <div className="fullHeight">
       <div className="fullHeight">
         <Head>
-          <title>{title}</title>
-          <meta property="og:title" content={title}/>
+          <title>{titleWithDistance}</title>
+          <meta property="og:title" content={titleWithDistance}/>
           <meta property="og:image" content={`${nextConfig.basePath}/data/${trackId}/preview.png`}/>
           <meta property="og:description" content={description}/>
         </Head>

@@ -16,6 +16,9 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages}) => {
 
   return (
     <div>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
       <Menu tabular>
           <Container>
             <Link href="/" passHref>
