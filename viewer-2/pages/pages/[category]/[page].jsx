@@ -11,7 +11,8 @@ import Head from 'next/head'
 import * as config from '../../../next.config'
 import * as nextConfig from '../../../next.config'
 import * as fs from 'fs'
-import { shareFacebook, shareTwitter, shareVk } from '../../../src/social-buttons.js'
+import { shareFacebook, shareTwitter, shareVk, shareTelegram } from '../../../src/social-buttons.js'
+import { categoryUrl } from '../../../src/utils.js'
 
 const Index = ({siteTitle, siteDescription, index, currentPage, pages, categories, category}) => {
 
@@ -41,7 +42,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     <Dropdown.Item key={category.id}
                       name={category.id} 
                       active={category.id == category}
-                      onClick={(e, { name }) => location = `${nextConfig.basePath}/pages/${name}/1`}
+                      href={categoryUrl(category.id, 1)}
                     >
                       <Label>{category.count}</Label>
                       {category.id}
@@ -75,7 +76,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
             <Pagination 
               defaultActivePage={currentPage} 
               totalPages={pages} 
-              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${category}/${activePage}`}
+              onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
             />
           </Segment>
         }
@@ -119,8 +120,9 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                 <Card.Content extra>
                   <Button circular icon='facebook' onClick={() => shareFacebook(track.id, track.title, track.description)}/>
                   <Button circular icon='twitter' onClick={() => shareTwitter(track.id, track.title, track.description)} />
+                  <Button circular icon='telegram' onClick={() => shareTelegram(track.id, track.title, track.description)}/>
                   <Button circular icon='vk' onClick={() => shareVk(track.id, track.title, track.description)}/>
-              </Card.Content>
+                </Card.Content>
               </Card>
             )
           }
@@ -131,7 +133,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
             <Pagination 
               defaultActivePage={currentPage} 
               totalPages={pages} 
-              onPageChange={ (e, { activePage }) => location.href = `${nextConfig.basePath}/pages/${category}/${activePage}`}
+              onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
             />
           </Segment>
         }
