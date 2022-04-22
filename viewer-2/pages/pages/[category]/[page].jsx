@@ -31,14 +31,25 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
           Fork me on GitHub
         </GitHubForkRibbon>
 
-        <Header as='h1' content={siteTitle} textAlign='center' />
 
-        { siteDescription && 
-          <Container text>
-            <Segment padded basic size="large">
-              <ReactMarkdown>{siteDescription}</ReactMarkdown>
-            </Segment>
-          </Container> 
+        { category == "all" &&
+          <Segment basic>
+            <Header as='h1' content={siteTitle} textAlign='center' />
+      
+           { siteDescription && 
+              <Container text>
+                <Segment padded basic size="large">
+                  <ReactMarkdown>{siteDescription}</ReactMarkdown>
+                </Segment>
+              </Container> 
+            }
+          </Segment>
+        }
+
+        { category != "all" &&
+          <Segment basic>
+            <Header as='h3' content={"Tracks for category: " + category} textAlign='center' />
+          </Segment>
         }
 
         { pages > 1 && 
