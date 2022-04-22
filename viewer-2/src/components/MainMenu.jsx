@@ -12,15 +12,6 @@ export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
           <Link href="/" passHref>
             <Menu.Item active={currentPage == "main" && currentCategory == "all"}>All tracks</Menu.Item>
           </Link>
-          <Link href="/stats" passHref>
-            <Menu.Item active={currentPage == "stats"}>Stats</Menu.Item>
-          </Link>
-          <Link href="/heatmap" passHref>
-            <Menu.Item active={currentPage == "heatmap"}>Heatmap</Menu.Item>
-          </Link>
-          <Link href="/tags" passHref>
-            <Menu.Item active={currentPage == "tag-stats"}>Tag Stats</Menu.Item>
-          </Link>
           <Dropdown item text='Categories'>
             <Dropdown.Menu>
               {
@@ -35,6 +26,19 @@ export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
                   </Dropdown.Item>
                 )
               }
+            </Dropdown.Menu>
+          </Dropdown>
+          <Link href="/heatmap" passHref>
+            <Menu.Item active={currentPage == "heatmap"}>Heatmap</Menu.Item>
+          </Link>
+          <Dropdown item text='Stats'>
+            <Dropdown.Menu>
+              <Dropdown.Item active={currentPage == "stats"} href="/stats">
+                Stats by months
+              </Dropdown.Item>
+              <Dropdown.Item active={currentPage == "tag-stats"} href="/tags">
+                Tag stats
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Container>
