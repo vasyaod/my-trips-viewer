@@ -3,6 +3,7 @@ import React from 'react'
 import { Container, Label, Menu, Dropdown} from 'semantic-ui-react'
 import Link from 'next/link'
 import { categoryUrl } from '../../src/utils.js'
+import * as nextConfig from '../../next.config'
 
 export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
 
@@ -33,10 +34,10 @@ export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
           </Link>
           <Dropdown item text='Stats'>
             <Dropdown.Menu>
-              <Dropdown.Item active={currentPage == "stats"} href="/stats">
+              <Dropdown.Item active={currentPage == "stats"} href={`${nextConfig.basePath}/stats`}>
                 Stats by months
               </Dropdown.Item>
-              <Dropdown.Item active={currentPage == "tag-stats"} href="/tags">
+              <Dropdown.Item active={currentPage == "tag-stats"} href={`${nextConfig.basePath}/stats`}>
                 Tag stats
               </Dropdown.Item>
             </Dropdown.Menu>
