@@ -200,7 +200,15 @@ const processTrip = async tripId => {
     .filter(item => fs.lstatSync(`${inputPath}/${item}`).isDirectory())
 
   const allTracks = await Promise.all(items.map(item => processTrip(item)))
-  const successfulTracks = allTracks.filter(tripDesc => tripDesc != null)
+  const successfulTracks = List(allTracks)
+    .filter(tripDesc => tripDesc != null)
+    .sortBy(tripDesc => tripDesc.date)
+    .map( (tripDesc, index) => {               // Add a index to a track title
+      return { ...tripDesc,
+        title: tripDesc.title + " #" + index,
+      }
+    })
+    .toArray()
 
   const stats = List(successfulTracks)
     .groupBy(x => x.date.substring(0,7))
