@@ -7,6 +7,7 @@ import * as nextConfig from '../../next.config'
 import * as fs from 'fs'
 import { Swiper, SwiperSlide } from 'swiper/swiper-react.cjs.js';
 import Head from 'next/head'
+import { MainMenu } from '../../src/components/MainMenu.jsx'
 
 const mapboxgl = require('mapbox-gl');
 
@@ -272,12 +273,12 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const rawdata = fs.readFileSync(`public/data/${params.id}/objects.json`)
-  const data = JSON.parse(rawdata)
+  const data = JSON.parse(fs.readFileSync(`public/data/${params.id}/objects.json`))
+  const indexData = JSON.parse(fs.readFileSync('public/index.json'))
 
   return {
     props: {
-      categories: data.categories,
+      categories: indexData.categories,
       tracks: data.tracks,
       objects: data.objects,
       title: data.title,
