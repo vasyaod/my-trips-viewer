@@ -6,27 +6,13 @@ import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { List } from 'immutable'
 import * as fs from 'fs'
+import { MainMenu } from '../src/components/MainMenu.jsx'
 
-const Index = ({tags}) => {
+const Index = ({tags, categories}) => {
 
   return (
     <div>
-      <Menu tabular>
-          <Container>
-            <Link href="/" passHref>
-              <Menu.Item>All tracks</Menu.Item>
-            </Link>
-            <Link href="/stats" passHref>
-              <Menu.Item>Stats</Menu.Item>
-            </Link>
-            <Link href="/heatmap" passHref>
-              <Menu.Item>Heatmap</Menu.Item>
-            </Link>
-            <Link href="/tags" passHref>
-              <Menu.Item active={true}>Tag Stats</Menu.Item>
-            </Link>
-          </Container>
-      </Menu>
+      <MainMenu page={""} categories={categories} currentPage="tag-stats"/>
       <Container>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
@@ -73,6 +59,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      categories: data.categories,
       tags: List(data.tags)
       .sortBy(item => item.date)
       .map(row => ({...row,

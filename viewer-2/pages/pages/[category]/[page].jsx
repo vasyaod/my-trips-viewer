@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown'
 import ReactTooltip from 'react-tooltip';
 import { List, Repeat, Range } from 'immutable'
 import Head from 'next/head'
+import { MainMenu } from '../../../src/components/MainMenu.jsx'
 
 import * as config from '../../../next.config'
 import * as nextConfig from '../../../next.config'
@@ -21,38 +22,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <Menu tabular>
-          <Container>
-            <Link href="/" passHref>
-              <Menu.Item active={true}>All tracks</Menu.Item>
-            </Link>
-            <Link href="/stats" passHref>
-              <Menu.Item>Stats</Menu.Item>
-            </Link>
-            <Link href="/heatmap" passHref>
-              <Menu.Item>Heatmap</Menu.Item>
-            </Link>
-            <Link href="/tags" passHref>
-              <Menu.Item>Tag Stats</Menu.Item>
-            </Link>
-            <Dropdown item text='Categories'>
-              <Dropdown.Menu>
-                {
-                  categories.map( category =>
-                    <Dropdown.Item key={category.id}
-                      name={category.id} 
-                      active={category.id == category}
-                      href={categoryUrl(category.id, 1)}
-                    >
-                      <Label>{category.count}</Label>
-                      {category.id}
-                    </Dropdown.Item>
-                  )
-                }
-              </Dropdown.Menu>
-            </Dropdown>
-          </Container>
-      </Menu>
+      <MainMenu page={""} categories={categories} currentPage="main"/>
       <Container>
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
@@ -87,9 +57,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
               <Card 
                 key={track.id}
               >
-                <Link href={`/tracks/${track.id}`} passHref>
-                  <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} wrapped ui={false}/>
-                </Link>
+                <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
                 <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`}>
                   <Card.Header>{track.title}</Card.Header>
                   <Card.Meta>

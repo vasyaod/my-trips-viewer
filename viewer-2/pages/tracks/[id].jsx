@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react'
-import { Segment, Statistic, Modal, Container, Embed, Image} from 'semantic-ui-react'
+import { Segment, Statistic, Modal, Container, Embed, Image, Button, Menu} from 'semantic-ui-react'
 import { useEffect } from 'react';
 import Link from 'next/link'
 import * as nextConfig from '../../next.config'
@@ -107,7 +107,7 @@ function drawObjects(map, objects, setObj) {
   });
 }
 
-const Index = ({tracks, distance, time, uphill, objects, title, description, trackId}) => {
+const Index = ({tracks, distance, time, uphill, objects, title, description, trackId, categories}) => {
 
   const [obj, setObj] = useState(null);
   const mapContainer = useRef(null);
@@ -156,6 +156,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
           <meta property="og:image" content={`${nextConfig.basePath}/data/${trackId}/preview.png`}/>
           <meta property="og:description" content={description}/>
         </Head>
+        <MainMenu page={""} categories={categories} currentPage=""/>
         <div
           ref = {mapContainer}
           style = {{
@@ -166,7 +167,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
         />
         <div
           style = {{
-            top: "2em",
+            top: "3.5em",
             right: "2em",
             position: "absolute",
           }}
@@ -276,6 +277,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
+      categories: data.categories,
       tracks: data.tracks,
       objects: data.objects,
       title: data.title,

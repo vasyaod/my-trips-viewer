@@ -7,30 +7,16 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import * as fs from 'fs'
 import * as nextConfig from '../next.config'
 import ReactTooltip from 'react-tooltip';
+import { MainMenu } from '../src/components/MainMenu.jsx'
 
 
 import 'react-calendar-heatmap/dist/styles.css'
 
-const Index = ({heatmap}) => {
+const Index = ({heatmap, categories}) => {
 
   return (
     <div>
-      <Menu tabular>
-          <Container>
-            <Link href="/" passHref>
-              <Menu.Item>All tracks</Menu.Item>
-            </Link>
-            <Link href="/stats" passHref>
-              <Menu.Item>Stats</Menu.Item>
-            </Link>
-            <Link href="/heatmap" passHref>
-              <Menu.Item active={true}>Heatmap</Menu.Item>
-            </Link>
-            <Link href="/tags" passHref>
-              <Menu.Item>Tag Stats</Menu.Item>
-            </Link>
-          </Container>
-      </Menu>
+      <MainMenu page={""} categories={categories} currentPage="heatmap"/>
       <Container>
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
@@ -97,6 +83,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      categories: data.categories,
       heatmap: data.heatmap
     },
   }
