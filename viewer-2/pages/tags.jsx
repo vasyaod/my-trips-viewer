@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { Container, Header, Menu, Table} from 'semantic-ui-react'
 import { useEffect } from 'react';
-import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import { List } from 'immutable'
 import * as fs from 'fs'

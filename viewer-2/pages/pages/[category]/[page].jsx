@@ -67,23 +67,25 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     <p>
                       {track.description}
                     </p>
-                    {track.tags && 
-                      track.tags.map(tag =>
-                        <span key={tag}>
-                          { track.autoTagged &&
-                            <Label tag data-tip='Automatically inferred tag'>
-                              {tag}
-                            </Label>
-                          }
-                          { !track.autoTagged &&
-                            <Label color='grey' tag data-tip='Manual tag'>
-                              {tag}
-                            </Label>
-                          }
-                        </span>
-                      )
-                    }
                   </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  {track.tags && 
+                    track.tags.map(tag =>
+                      <span key={tag}>
+                        { track.autoTagged &&
+                          <Label tag data-tip='Automatically inferred tag' href={categoryUrl(tag, 1)}>
+                            {tag}
+                          </Label>
+                        }
+                        { !track.autoTagged &&
+                          <Label color='grey' tag data-tip='Manual tag' href={categoryUrl(tag, 1)}>
+                            {tag}
+                          </Label>
+                        }
+                      </span>
+                    )
+                  }
                 </Card.Content>
                 <Card.Content extra>
                   <Button circular icon='facebook' onClick={() => shareFacebook(track.id, track.title, track.description)}/>

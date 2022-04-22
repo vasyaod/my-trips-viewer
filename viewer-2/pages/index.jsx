@@ -1,15 +1,8 @@
 
-import React from 'react'
-import { Container, Button, Form, Grid, Header, Image, Message, Segment, Card, Label, Menu} from 'semantic-ui-react'
-import Link from 'next/link'
-import GitHubForkRibbon from 'react-github-fork-ribbon';
-import ReactMarkdown from 'react-markdown'
-import ReactTooltip from 'react-tooltip';
 import { List } from 'immutable'
 import * as config from '../next.config'
 import * as nextConfig from '../next.config'
 import * as fs from 'fs'
-import { shareFacebook, shareTwitter, shareVk } from '../src/social-buttons.js'
 import * as Index from './pages/[category]/[page].jsx'
 
 const IndexPage = Index.default
