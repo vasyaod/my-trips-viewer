@@ -22,7 +22,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <MainMenu page={""} categories={categories} currentPage="main"/>
+      <MainMenu page={""} categories={categories} currentPage="main" currentCategory={category}/>
       <Container>
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"

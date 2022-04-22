@@ -4,13 +4,13 @@ import { Container, Label, Menu, Dropdown} from 'semantic-ui-react'
 import Link from 'next/link'
 import { categoryUrl } from '../../src/utils.js'
 
-export const MainMenu = ({page, categories, currentPage}) => {
+export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
 
   return (
     <Menu inverted>
         <Container>
           <Link href="/" passHref>
-            <Menu.Item active={currentPage == "main"}>All tracks</Menu.Item>
+            <Menu.Item active={currentPage == "main" && currentCategory == "all"}>All tracks</Menu.Item>
           </Link>
           <Link href="/stats" passHref>
             <Menu.Item active={currentPage == "stats"}>Stats</Menu.Item>
@@ -27,7 +27,7 @@ export const MainMenu = ({page, categories, currentPage}) => {
                 categories.map( category =>
                   <Dropdown.Item key={category.id}
                     name={category.id} 
-                    active={category.id == category}
+                    active={category.id == currentCategory}
                     href={categoryUrl(category.id, 1)}
                   >
                     <Label>{category.count}</Label>
