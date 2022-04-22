@@ -37,7 +37,7 @@ export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
               <Dropdown.Item active={currentPage == "stats"} href={`${nextConfig.basePath}/stats`}>
                 Stats by months
               </Dropdown.Item>
-              <Dropdown.Item active={currentPage == "tag-stats"} href={`${nextConfig.basePath}/stats`}>
+              <Dropdown.Item active={currentPage == "tag-stats"} href={`${nextConfig.basePath}/tags`}>
                 Tag stats
               </Dropdown.Item>
             </Dropdown.Menu>
