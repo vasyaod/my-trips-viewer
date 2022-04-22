@@ -205,7 +205,7 @@ const processTrip = async tripId => {
     .sortBy(tripDesc => tripDesc.date)
     .map( (tripDesc, index) => {               // Add a index to a track title
       return { ...tripDesc,
-        title: tripDesc.title + " #" + index,
+        title: tripDesc.title + " #" + (index + 1),
       }
     })
     .toArray()
