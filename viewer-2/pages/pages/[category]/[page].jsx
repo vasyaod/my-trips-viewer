@@ -55,6 +55,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
         { pages > 1 && 
           <Segment basic textAlign='center'>
             <Pagination 
+              size='mini'
               defaultActivePage={currentPage} 
               totalPages={pages} 
               onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
@@ -112,6 +113,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
         { pages > 1 && 
           <Segment basic textAlign='center'>
             <Pagination 
+              size='mini'
               defaultActivePage={currentPage} 
               totalPages={pages} 
               onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
