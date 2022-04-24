@@ -19,7 +19,7 @@ const Index = ({stats, categories}) => {
           Fork me on GitHub
         </GitHubForkRibbon>
 
-        <Header as='h1' content="Stats" textAlign='center' />
+        <Header as='h1' content="Stats by months" textAlign='center' />
 
         <Table celled>
           <Table.Header>
