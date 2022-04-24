@@ -95,6 +95,7 @@ exports.getUphill = (tracks) => {
     }
 
   }
-
+  
+  uphill = Math.round(uphill / 100) / 10
   return uphill
 }
