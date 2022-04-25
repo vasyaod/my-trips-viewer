@@ -32,34 +32,68 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
         </GitHubForkRibbon>
 
 
-        { category == "all" &&
-          <Segment basic>
-            <Header as='h1' content={siteTitle} textAlign='center' />
-      
-           { siteDescription && 
-              <Container text>
-                <Segment padded basic size="large">
-                  <ReactMarkdown>{siteDescription}</ReactMarkdown>
-                </Segment>
-              </Container> 
-            }
-          </Segment>
-        }
-
-        { category != "all" &&
-          <Segment basic>
-            <Header as='h3' content={"Tracks for category: " + category} textAlign='center' />
-          </Segment>
-        }
+        <Segment basic>
+          <Header as='h1' content={siteTitle} textAlign='center' />
+    
+          { siteDescription && 
+            <Container text>
+              <Segment padded basic size="large">
+                <ReactMarkdown>{siteDescription}</ReactMarkdown>
+              </Segment>
+            </Container> 
+          }
+        </Segment>
 
         { pages > 1 && 
-          <Segment basic textAlign='center'>
+          <Segment basic textAlign='center' >
             <Pagination 
+              style={{marginBottom: "1em"}}
               size='mini'
               defaultActivePage={currentPage} 
               totalPages={pages} 
               onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
-            />
+            /> <br/>
+            <Menu compact>
+              <Dropdown item text={'Filter: ' + category}>
+                <Dropdown.Menu>
+                  {
+                    categories.map( category =>
+                      <Dropdown.Item key={category.id}
+                        name={category.id} 
+                        active={category.id == category}
+                        href={categoryUrl(category.id, 1)}
+                      >
+                        <Label>{category.count}</Label>
+                        {category.id}
+                      </Dropdown.Item>
+                    )
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
+          </Segment>
+        }
+
+        { pages < 2 && 
+          <Segment basic textAlign='center'>
+            <Menu compact>
+              <Dropdown item text={'Filter: ' + category}>
+                <Dropdown.Menu>
+                  {
+                    categories.map( category =>
+                      <Dropdown.Item key={category.id}
+                        name={category.id} 
+                        active={category.id == category}
+                        href={categoryUrl(category.id, 1)}
+                      >
+                        <Label>{category.count}</Label>
+                        {category.id}
+                      </Dropdown.Item>
+                    )
+                  }
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu>
           </Segment>
         }
 
