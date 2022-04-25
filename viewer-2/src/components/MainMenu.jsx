@@ -34,8 +34,11 @@ export const MainMenu = ({page, categories, currentPage, currentCategory, zeroPa
           </Link>
           <Dropdown item text='Stats'>
             <Dropdown.Menu>
-              <Dropdown.Item active={currentPage == "stats"} href={`${nextConfig.basePath}/stats`}>
+              <Dropdown.Item active={currentPage == "month-stats"} href={`${nextConfig.basePath}/month-stats`}>
                 Stats by months
+              </Dropdown.Item>
+              <Dropdown.Item active={currentPage == "year-stats"} href={`${nextConfig.basePath}/year-stats`}>
+                Stats by years
               </Dropdown.Item>
               <Dropdown.Item active={currentPage == "tag-stats"} href={`${nextConfig.basePath}/tags`}>
                 Tag stats

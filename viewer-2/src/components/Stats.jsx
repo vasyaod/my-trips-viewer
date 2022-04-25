@@ -1,17 +1,14 @@
 
-import React, { useState } from 'react'
-import { Container, Header, Menu, Table} from 'semantic-ui-react'
-import { MainMenu } from '../src/components/MainMenu.jsx'
-import { useEffect } from 'react';
+import React from 'react'
+import { Container, Header, Menu, Table } from 'semantic-ui-react'
+import { MainMenu } from './MainMenu.jsx'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
-import { List } from 'immutable'
-import * as fs from 'fs'
 
-const Index = ({stats, categories}) => {
+export const Stats = ({stats, categories, title, currentPage}) => {
 
   return (
     <div>
-      <MainMenu page={""} categories={categories} currentPage="stats"/>
+      <MainMenu page={""} categories={categories} currentPage={currentPage}/>
       <Container>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
@@ -19,7 +16,7 @@ const Index = ({stats, categories}) => {
           Fork me on GitHub
         </GitHubForkRibbon>
 
-        <Header as='h1' content="Stats by months" textAlign='center' />
+        <Header as='h1' content={title} textAlign='center' />
 
         <Table celled>
           <Table.Header>
@@ -51,24 +48,3 @@ const Index = ({stats, categories}) => {
     </div>
   )
 }
-
-export async function getStaticProps() {
-  const rawdata = fs.readFileSync('public/index.json')
-  const data = JSON.parse(rawdata)
-
-  return {
-    props: {
-      categories: data.categories,
-      stats: List(data.stats)
-          .sortBy(item => item.date)
-          .map(row => ({...row,
-            distance: Math.round(row.distance / 100) / 10,
-            time: Math.floor(row.time / 1000 / 60 / 60) + ":" + (Math.round(row.time / 1000 / 60) % 60)
-          }))
-          .reverse()
-          .toArray()
-    },
-  }
-}
-
-export default Index
