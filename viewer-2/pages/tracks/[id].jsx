@@ -156,7 +156,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
           <meta property="og:image" content={`${nextConfig.basePath}/data/${trackId}/preview.png`}/>
           <meta property="og:description" content={description}/>
         </Head>
-        <MainMenu page={""} categories={categories} currentPage=""/>
+        <MainMenu page={""} categories={categories} currentPage="" zeroPadding={true}/>
         <div
           ref = {mapContainer}
           style = {{

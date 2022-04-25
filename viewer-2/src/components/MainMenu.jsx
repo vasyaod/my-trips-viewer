@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { categoryUrl } from '../../src/utils.js'
 import * as nextConfig from '../../next.config'
 
-export const MainMenu = ({page, categories, currentPage, currentCategory}) => {
+export const MainMenu = ({page, categories, currentPage, currentCategory, zeroPadding}) => {
 
   return (
-    <Menu inverted>
+    <Menu inverted style={zeroPadding ? {margin: 0}: {}}>
         <Container>
           <Link href="/" passHref>
             <Menu.Item active={currentPage == "main" && currentCategory == "all"}>All tracks</Menu.Item>
