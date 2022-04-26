@@ -1,22 +1,24 @@
 
 import React, { useState, useEffect } from 'react'
-import { Container, Header, Menu, Card } from 'semantic-ui-react'
+import { Container, Header, Menu, Card, Dropdown, Label, Segment } from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import * as fs from 'fs'
-import * as nextConfig from '../../../next.config'
+import * as nextConfig from '../../next.config'
 import ReactTooltip from 'react-tooltip';
-import { MainMenu } from '../../../src/components/MainMenu.jsx'
+import { MainMenu } from '../../src/components/MainMenu.jsx'
+
+import { List } from 'immutable'
 
 
 import 'react-calendar-heatmap/dist/styles.css'
 
-const Index = ({heatmap, categories}) => {
+const Index = ({heatmap, categories, category}) => {
 
   return (
     <div>
-      <MainMenu page={""} categories={categories} currentPage="heatmap"/>
+      <MainMenu currentPage="heatmap"/>
       <Container>
         <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
@@ -26,6 +28,27 @@ const Index = ({heatmap, categories}) => {
         </GitHubForkRibbon>
 
         <Header as='h1' content="Heatmap" textAlign='center' />
+
+        <Segment basic textAlign='center'>
+          <Menu compact>
+            <Dropdown item text={'Filter: ' + category}>
+              <Dropdown.Menu>
+                {
+                  categories.map( category =>
+                    <Dropdown.Item key={category.id}
+                      name={category.id} 
+                      active={category.id == category}
+                      href={`${nextConfig.basePath}/heatmap/${category.id}`}
+                    >
+                      <Label>{category.count}</Label>
+                      {category.id}
+                    </Dropdown.Item>
+                  )
+                }
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu>
+        </Segment>
 
         <Card.Group doubling itemsPerRow={1} stackable>
           { heatmap &&
@@ -77,11 +100,31 @@ const Index = ({heatmap, categories}) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticPaths() {
+  const rawdata = fs.readFileSync('public/index.json')
+  const data = JSON.parse(rawdata)
+
+   const paths = List(data.categories)
+   .map ( category => {
+     return { params: { category: category.id } }
+    })
+    .toJS()
+
+  return {
+    // Opt-in to on-demand generation for non-existent pages
+    fallback: false,
+    paths: paths
+  }
+}
+
+
+export async function getStaticProps({ params }) {
   const rawdata = fs.readFileSync('public/index.json')
   const data  = JSON.parse(rawdata)
 
-  const heatmap = List(data.tags)
+  const category = params.category
+  const heatmap = List(data.tracks)
+    .filter(t => t.categories.includes(category))
     .groupBy(x => x.date.substring(0,4))
     .map ( (x, key) => ({
       year: key,
@@ -91,13 +134,16 @@ export async function getStaticProps() {
           count: Math.round(y.distance / 1000)
         }))
         .toList()
+        
       })
     )
     .toList()
     .reverse()
-
+    .toJS()
+    
   return {
     props: {
+      category: category,
       categories: data.categories,
       heatmap: heatmap
     },

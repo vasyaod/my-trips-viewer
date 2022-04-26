@@ -5,15 +5,15 @@ import Link from 'next/link'
 import { categoryUrl } from '../../src/utils.js'
 import * as nextConfig from '../../next.config'
 
-export const MainMenu = ({page, categories, currentPage, currentCategory, zeroPadding}) => {
+export const MainMenu = ({currentPage, zeroPadding}) => {
 
   return (
     <Menu inverted style={zeroPadding ? {margin: 0}: {}}>
         <Container>
           <Link href="/" passHref>
-            <Menu.Item active={currentPage == "main" && currentCategory == "all"}>All tracks</Menu.Item>
+            <Menu.Item active={currentPage == "main"}>All tracks</Menu.Item>
           </Link>
-          <Link href="/heatmap" passHref>
+          <Link href="/heatmap/all" passHref>
             <Menu.Item active={currentPage == "heatmap"}>Heatmap</Menu.Item>
           </Link>
           <Dropdown item text='Stats'>
