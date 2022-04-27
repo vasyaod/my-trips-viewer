@@ -150,7 +150,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     {track.description}
                   </Card.Description>
                 </Card.Content>
-                {track.tags &&
+                {track.tags.length > 0 &&
                   <Card.Content extra>
                     {track.tags && 
                       track.tags.map(tag =>
