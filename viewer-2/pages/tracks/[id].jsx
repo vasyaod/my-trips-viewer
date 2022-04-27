@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import * as nextConfig from '../../next.config'
 import * as fs from 'fs'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation} from "swiper";
+import { Pagination, Navigation, Mousewheel } from "swiper";
 import Head from 'next/head'
 import { MainMenu } from '../../src/components/MainMenu.jsx'
 
@@ -208,13 +208,13 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
               }}
             >
               <Swiper
-                pagination={true} 
+                pagination = {{ "clickable": true }}
                 navigation={true} 
+                mousewheel={true}
                 slidesPerView = {'auto'} 
-                modules={[Pagination, Navigation]}
+                modules={[Pagination, Navigation, Mousewheel]}
                 centeredSlides = {true} 
                 spaceBetween = {10}
-                pagination = {{ "clickable": true }}
                 className = "pageSwiper"
               >
                 { 
@@ -230,11 +230,11 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
       </div>
 
       { obj &&
-          <Modal 
-            size="fullscreen" 
+          <Modal
+            size="large"
+            closeIcon
             basic 
             open={true} 
-            closeOnDimmerClick={true}
             onClose={() => setObj(null)}
             >
             <Modal.Content>

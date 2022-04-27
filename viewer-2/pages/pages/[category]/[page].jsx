@@ -124,7 +124,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                   <Swiper 
                     className="indexSwiper" 
                     pagination = {{ "clickable": true }}
-                    navigation={true} 
+                    navigation={true}
                     slidesPerView = {'auto'} 
                     modules={[Pagination1, Navigation]} 
                     style={{position: "absolute", top: 0, left: 0, aspectRatio: "4/3"}} 
