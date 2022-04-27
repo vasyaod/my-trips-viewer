@@ -147,9 +147,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     <span className='date'>{track.date}</span>
                   </Card.Meta>
                   <Card.Description>
-                    <p>
-                      {track.description}
-                    </p>
+                    {track.description}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
