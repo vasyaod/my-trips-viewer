@@ -159,21 +159,6 @@ const processTrip = async tripId => {
     tracks: tracks
   }
 
-  const output = mustache.render(
-    await readFile(`template.mustache`, 'utf8'),
-    {
-      title: tripInfo.title,
-      description: tripInfo.description,
-      tripId: tripId
-    }
-  )
-  await writeFile(`${outputPath}/trips/${tripId}.html`, output, 'utf8')
-  
-  if (!fs.existsSync(`${outputPath}/trips/${tripId}`)){
-    fs.mkdirSync(`${outputPath}/trips/${tripId}`);
-  }
-  await writeFile(`${outputPath}/trips/${tripId}/index.html`, output, 'utf8')
-
   await Promise.all([
     imagePromises,
     videoPromises,
@@ -185,6 +170,7 @@ const processTrip = async tripId => {
   return { ...tripInfo,
     id: tripId,
     date: tripInfo.date.toISOString().split('T')[0],
+    objects: objects,
     time: time,
     distance: distance,
     uphill: uphill, 

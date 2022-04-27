@@ -4,14 +4,14 @@ import { Segment, Statistic, Modal, Container, Embed, Image, Button, Menu} from 
 import { useEffect } from 'react';
 import * as nextConfig from '../../next.config'
 import * as fs from 'fs'
-import { Swiper, SwiperSlide } from 'swiper/swiper-react.cjs.js';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation} from "swiper";
 import Head from 'next/head'
 import { MainMenu } from '../../src/components/MainMenu.jsx'
 
 const mapboxgl = require('mapbox-gl');
 
 import 'mapbox-gl/dist/mapbox-gl.css'
-
 
 function drawTrackData(map, tracks, bounds) {
   if (!map.loaded())
@@ -208,11 +208,14 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
               }}
             >
               <Swiper
+                pagination={true} 
+                navigation={true} 
                 slidesPerView = {'auto'} 
+                modules={[Pagination, Navigation]}
                 centeredSlides = {true} 
                 spaceBetween = {10}
                 pagination = {{ "clickable": true }}
-                className = "mySwiper"
+                className = "pageSwiper"
               >
                 { 
                   objects.map( (obj, index) =>

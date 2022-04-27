@@ -5,6 +5,11 @@ import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
 import ReactTooltip from 'react-tooltip';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+// import required modules
+import { Pagination as Pagination1, Navigation} from "swiper";
+
 import { List, Range } from 'immutable'
 import Head from 'next/head'
 import { MainMenu } from '../../../src/components/MainMenu.jsx'
@@ -16,6 +21,13 @@ import { shareFacebook, shareTwitter, shareVk, shareTelegram } from '../../../sr
 import { categoryUrl } from '../../../src/utils.js'
 
 const Index = ({siteTitle, siteDescription, index, currentPage, pages, categories, category}) => {
+  
+  function imgs1 (track) {
+    const x = track.objects.map ( obj =>
+    `${nextConfig.basePath}/images/${obj.img}/original.jpg`
+    )
+    return List(x).insert(0, `${nextConfig.basePath}/data/${track.id}/preview.png`).toArray()
+  }
 
   return (
     <div>
@@ -96,6 +108,9 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
             </Menu>
           </Segment>
         }
+                  {/* <SwiperSlide>
+                    <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
+                    </SwiperSlide> */}
 
         <Card.Group doubling itemsPerRow={3} stackable>
           { 
@@ -104,6 +119,28 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                 key={track.id}
               >
                 <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
+
+                { track.objects.length != 0 &&
+                  <Swiper 
+                    className="indexSwiper" 
+                    pagination = {{ "clickable": true }}
+                    navigation={true} 
+                    slidesPerView = {'auto'} 
+                    modules={[Pagination1, Navigation]} 
+                    style={{position: "absolute", top: 0, left: 0, aspectRatio: "4/3"}} 
+                  >
+                    { 
+                      imgs1(track).map( (imgSrc) =>
+                        <SwiperSlide key={imgSrc}>
+                          <Image src={imgSrc} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
+                        </SwiperSlide>
+                      )
+                    }
+                    {/* <SwiperSlide style={{margin: 0, padding: 0, aspectRatio: "4/3"}}>
+                      <img src={`${nextConfig.basePath}/data/${track.id}/preview.png`} style={{margin: 0, padding: 0, aspectRatio: "4/3"}}/>
+                    </SwiperSlide> */}
+                  </Swiper>
+                }
                 <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`}>
                   <Card.Header>{track.title}</Card.Header>
                   <Card.Meta>
