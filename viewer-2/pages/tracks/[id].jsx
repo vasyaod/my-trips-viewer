@@ -177,19 +177,19 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
               Statistics
             </Header> */}
             <div>
-              <Statistic>
+              <Statistic size='small'>
                 <Statistic.Value>{distance}</Statistic.Value>
                 <Statistic.Label>km</Statistic.Label>
               </Statistic>
             </div>
             <div>
-              <Statistic>
+              <Statistic size='small'>
                 <Statistic.Value>{time}</Statistic.Value>
                 <Statistic.Label>hh:mm</Statistic.Label>
               </Statistic>
             </div>
             <div>
-              <Statistic>
+              <Statistic size='small'>
                 <Statistic.Value>{uphill}</Statistic.Value>
                 <Statistic.Label>￪ uphill, m</Statistic.Label>
               </Statistic>
