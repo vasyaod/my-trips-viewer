@@ -141,7 +141,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     </SwiperSlide> */}
                   </Swiper>
                 }
-                <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`}>
+                <Card.Content href={`${nextConfig.basePath}/tracks/${track.id}`} style={{display: "block"}}>
                   <Card.Header>{track.title}</Card.Header>
                   <Card.Meta>
                     <span className='date'>{track.date}</span>
