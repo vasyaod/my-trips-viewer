@@ -26,15 +26,16 @@ function distanceBetweenPoints(latlng1, latlng2) {
  return distance(latlng1.lat, latlng1.lng, latlng2.lat, latlng2.lng); 
 }
 
+exports.distanceBetweenPoints = distanceBetweenPoints
+
 exports.getTime = (tracks) => {
-  return List(tracks)
-    .flatMap (track => {
-      return List(track.segments).flatMap (segment => {
-        const s = List(segment)
-        if(s.size > 1) {
-          return s
+  return tracks
+    .flatMap (segments => {
+      return segments.flatMap (segment => {
+        if(segment.size > 1) {
+          return segment
             .pop()
-            .zip(s.shift())
+            .zip(segment.shift())
             .map((p) => {
               return (Date.parse(p[1].time) - Date.parse(p[0].time))
             })
@@ -44,16 +45,21 @@ exports.getTime = (tracks) => {
       })
     })
     .reduce((total, value) => total + value)
+}
 
-//    time = 
-//    time = Math.round(Math.round(time / 1000 / 60) / 60) + ":" + (Math.round(time / 1000 / 60) % 60)
+exports.getPointCount = (tracks) => {
+  return tracks
+    .flatMap (segments => {
+      return segments.map (segment => segment.size)
+    })
+    .reduce((total, value) => total + value)
 }
 
 exports.getDistance = (tracks) => {
-  const points = List(tracks)
-    .flatMap (track => {
-      return List(track.segments).flatMap (segment => {
-        return List(segment).map ( point =>{
+  const points = tracks
+    .flatMap (segments => {
+      return segments.flatMap (segment => {
+        return segment.map ( point =>{
           return {
             lng: point.lon,
             lat: point.lat,
@@ -74,10 +80,10 @@ exports.getDistance = (tracks) => {
 }
 
 exports.getUphill = (tracks) => {
-  const points = List(tracks)
-    .flatMap (track => {
-      return List(track.segments).flatMap (segment => {
-        return List(segment).map ( point =>{
+  const points = tracks
+    .flatMap (segments => {
+      return segments.flatMap (segment => {
+        return segment.map ( point =>{
           return point.elevation
         })
       })

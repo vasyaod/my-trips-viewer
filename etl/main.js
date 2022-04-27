@@ -127,23 +127,54 @@ const processTrip = async tripId => {
   )
   const flattenGpxes = List(gpxes).flatMap(x => x)
   
-  const tracks = flattenGpxes
-  .flatMap (track => {
-    return List(track.segments).map (segment => {
-      return List(segment).map ( point => {
-        return {
-          lng: point.lon,
-          lat: point.lat,
-          tm: Date.parse(point.time),
-          pathType: "line"
-        }
+  const filteredGpx = flattenGpxes
+    .map (track => {
+      return List(track.segments)
+        .filter(segment => List(segment).size > 1 )
+        .map (segment => {
+          const points = List(segment)
+          let currentP = points.get(0)
+          let newPoints = [currentP]
+          for(i = 1; i < points.size; i++) {
+            const p1 =  {
+              lng: currentP.lon,
+              lat: currentP.lat,
+            }
+            
+            const p2 = {
+              lng: points.get(i).lon,
+              lat: points.get(i).lat,
+            }
+
+            if (gpxUtils.distanceBetweenPoints(p1, p2) > 20.0) {
+              currentP = points.get(i)
+              newPoints.push(currentP)
+            } 
+          }
+
+          return List(newPoints)
+        })
+        .filter(segment => List(segment).size > 3 )
+    })
+
+  const tracks = filteredGpx
+    .flatMap (track => {
+      return track.map (segment => {
+        return segment.map ( point => {
+          return {
+            lng: point.lon,
+            lat: point.lat,
+            tm: Date.parse(point.time),
+            pathType: "line"
+          }
+        })
       })
     })
-  })
 
-  const time = gpxUtils.getTime(flattenGpxes)
-  const distance = gpxUtils.getDistance(flattenGpxes)
-  const uphill = gpxUtils.getUphill(flattenGpxes)
+  const pointCount = gpxUtils.getPointCount(filteredGpx)
+  const time = gpxUtils.getTime(filteredGpx)
+  const distance = gpxUtils.getDistance(filteredGpx)
+  const uphill = gpxUtils.getUphill(filteredGpx)
   
   let tags = []
 
@@ -167,13 +198,16 @@ const processTrip = async tripId => {
     exec(`cp ${tripPath}/*.gpx ${tripOutputPath}/`),
   ])
 
+  console.log("Trip done ", tripId, distance, uphill, pointCount)
+
   return { ...tripInfo,
     id: tripId,
     date: tripInfo.date.toISOString().split('T')[0],
     objects: objects,
     time: time,
     distance: distance,
-    uphill: uphill, 
+    uphill: uphill,
+    pointCount: pointCount,
     tags: tags,
     categories: List(["all"]).concat(tags)
   }
