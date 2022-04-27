@@ -149,20 +149,22 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
 
   return (
     <div className="fullHeight">
-      <div className="fullHeight">
+      <div className="fullHeight" style={{display: "table", width: "100%"}}>
         <Head>
           <title>{titleWithDistance}</title>
           <meta property="og:title" content={titleWithDistance}/>
           <meta property="og:image" content={`${nextConfig.basePath}/data/${trackId}/preview.png`}/>
           <meta property="og:description" content={description}/>
         </Head>
-        <MainMenu page={""} categories={categories} currentPage="" zeroPadding={true}/>
+        <MainMenu currentPage="" zeroPadding={true} style = {{
+            display: "table-row",
+            zIndex: 10000
+          }}/>
         <div
           ref = {mapContainer}
           style = {{
-            height: "100%",
-            overflow: "hidden",
-            width: "100%",
+            display: "table-row",
+            height: "100%"
           }}
         />
         <div
@@ -200,7 +202,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
         { (objects && objects.length > 0) &&
             <div
               style = {{
-                height: "15em",
+                height: "15rem",
                 left: "0em",
                 right: "0em",
                 bottom: "0em",
