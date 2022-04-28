@@ -82,7 +82,12 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
               <Card 
                 key={track.id}
               >
-                <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
+                <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} 
+                       as='a' 
+                       wrapped ui={false} 
+                       href={`${nextConfig.basePath}/tracks/${track.id}`}
+                       style={{aspectRatio: "4/3", width: "100%"}}
+                />
 
                 { track.objects.length != 0 &&
                   <Swiper 
