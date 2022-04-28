@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Container, Button, Form, Grid, Header, Image, Message, Segment, Card, Label, Menu, Pagination, Dropdown} from 'semantic-ui-react'
+import { Container, Button, Header, Image, Segment, Card, Label, Menu, Pagination, Dropdown, Icon} from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
@@ -76,7 +76,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                         href={categoryUrl(category.id, 1)}
                       >
                         <Label>{category.count}</Label>
-                        {category.id}
+                        {category.title}
                       </Dropdown.Item>
                     )
                   }
@@ -99,7 +99,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                         href={categoryUrl(category.id, 1)}
                       >
                         <Label>{category.count}</Label>
-                        {category.id}
+                        {category.title}
                       </Dropdown.Item>
                     )
                   }
@@ -151,8 +151,14 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     {track.description}
                   </Card.Description>
                 </Card.Content>
-                {track.tags.length > 0 &&
+                {(track.tags.length > 0 || track.objects.length > 0) &&
                   <Card.Content extra>
+                    { track.objects.length > 0 && 
+                      <Label data-tip='This track has photos or videos' href={categoryUrl("with-pictures", 1)}>
+                        <Icon name='images' />
+                      </Label>
+                    }
+
                     {track.tags && 
                       track.tags.map(tag =>
                         <span key={tag}>

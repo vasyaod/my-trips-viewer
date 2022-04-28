@@ -258,7 +258,7 @@ const processTrip = async tripId => {
     uphill: uphill,
     pointCount: pointCount,
     tags: tags,
-    categories: List(["all"]).concat(tags)
+    categories: List(["all"]).concat(tags).concat(List(objects.length > 0 ? ["with-pictures"]: []))
   }
 }
 
@@ -353,6 +353,11 @@ const processTrip = async tripId => {
       id: "all",
       title: "All",
       count: List(successfulTracks).size
+    },
+    {
+      id: "with-pictures",
+      title: "With pictures or videos",
+      count: List(successfulTracks.filter(t => t.objects.length > 0)).size
     }
   ])
 

@@ -36,12 +36,12 @@ const Index = ({heatmap, categories, category}) => {
                 {
                   categories.map( category =>
                     <Dropdown.Item key={category.id}
-                      name={category.id} 
+                      name={category.id}
                       active={category.id == category}
                       href={`${nextConfig.basePath}/heatmap/${category.id}`}
                     >
                       <Label>{category.count}</Label>
-                      {category.id}
+                      {category.title}
                     </Dropdown.Item>
                   )
                 }
