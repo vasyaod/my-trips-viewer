@@ -2,6 +2,7 @@ import 'semantic-ui-css/semantic.min.css'
 import '../styles.css'
 
 import 'swiper/css';
+import "swiper/css/lazy";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 

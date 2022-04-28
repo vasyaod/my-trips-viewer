@@ -128,12 +128,15 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     slidesPerView = {'auto'}
                     lazy={true}
                     modules={[Pagination1, Navigation, Lazy]} 
-                    style={{position: "absolute", top: 0, left: 0, aspectRatio: "4/3"}} 
+                    style={{position: "absolute", top: 0, left: 0, aspectRatio: "4/3", width: "100%" }} 
                   >
                     { 
                       imgs1(track).map( (imgSrc) =>
                         <SwiperSlide key={imgSrc}>
-                          <Image src={imgSrc} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`} className="swiper-lazy"/>
+                          <a href={`${nextConfig.basePath}/tracks/${track.id}`}>
+                            <img data-src={imgSrc} className="swiper-lazy"/>
+                          </a>
+                          <div className="swiper-lazy-preloader"></div>
                         </SwiperSlide>
                       )
                     }
