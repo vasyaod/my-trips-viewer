@@ -20,7 +20,6 @@ const Index = ({heatmap, categories, category}) => {
     <div>
       <MainMenu currentPage="heatmap"/>
       <Container>
-        <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
                           position="right">
@@ -96,6 +95,7 @@ const Index = ({heatmap, categories, category}) => {
         </Card.Group>
 
       </Container>
+      <ReactTooltip effect="solid" uuid="mytt"/>
     </div>
   )
 }

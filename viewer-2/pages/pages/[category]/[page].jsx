@@ -36,7 +36,6 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
       </Head>
       <MainMenu page={""} categories={categories} currentPage="main" currentCategory={category}/>
       <Container>
-        <ReactTooltip effect="solid" uuid="mytt"/>
         <GitHubForkRibbon href="//github.com/vasyaod/my-trips-viewer"
                           target="_blank"
                           position="right">
@@ -202,6 +201,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
           </Segment>
         }
       </Container>
+      <ReactTooltip effect="solid" uuid="mytt"/>
     </div>
   )
 }
