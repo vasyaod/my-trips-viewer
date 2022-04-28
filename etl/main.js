@@ -201,7 +201,7 @@ const processTrip = async tripId => {
             })
             .reduce((total, value) => Math.max(total, value))
           
-          return maxDistance > 30
+          return maxDistance > 50
         })
     })
 
