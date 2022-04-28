@@ -16,6 +16,8 @@ const exec = util.promisify(require('child_process').exec)
 
 const inputPath = process.env.INPUT_DATA_PATH || "../test-data/input"
 const outputPath = process.env.OUTPUT_DATA_PATH || "../test-data/output"
+const distanceThreshold = parseFloat(process.env.DISTANCE_THRESHOLD || "20")
+const timeThreshold = parseFloat(process.env.TIME_THRESHOLD || "600")
 
 if (!fs.existsSync(`${outputPath}`)) {
   fs.mkdirSync(`${outputPath}`);
@@ -146,7 +148,7 @@ const processTrip = async tripId => {
               lat: points.get(i).lat,
             }
 
-            if (gpxUtils.distanceBetweenPoints(p1, p2) > 20.0) {
+            if (gpxUtils.distanceBetweenPoints(p1, p2) > distanceThreshold) {
               currentP = points.get(i)
               newPoints.push(currentP)
             } 
@@ -154,13 +156,13 @@ const processTrip = async tripId => {
 
           return List(newPoints)
         })
-        .filter(segment => List(segment).size > 3 )
+        .filter(segment => segment.size > 3 )
     })
 
   const splittedGpx = filteredGpx
     .map (track => {
-      return List(track)
-        .filter(segment => List(segment).size > 1 )
+      return track
+        .filter(segment => segment.size > 1 )
         .flatMap (segment => {
           const points = segment
           
@@ -171,7 +173,7 @@ const processTrip = async tripId => {
           for(i = 1; i < points.size; i++) {
             const p1Time = Date.parse(currentP.time)
             const p2Time = Date.parse(points.get(i).time)
-            if(Math.abs(p2Time - p1Time) > 600 * 1000) {
+            if(Math.abs(p2Time - p1Time) > timeThreshold * 1000) {
               segments.push(newPoints)
               newPoints = []
             }
@@ -182,7 +184,8 @@ const processTrip = async tripId => {
           segments.push(newPoints)
           return List(segments)
         })
-        .filter(segment => List(segment).size > 3 )
+        .map(segment => List(segment))
+        .filter(segment => segment.size > 3 )
     })
 
     const tracks = splittedGpx

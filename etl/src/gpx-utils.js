@@ -50,7 +50,10 @@ exports.getTime = (tracks) => {
 exports.getPointCount = (tracks) => {
   return tracks
     .flatMap (segments => {
-      return segments.map (segment => segment.size)
+      return segments.map (segment => {
+          return segment.size
+        }
+      )
     })
     .reduce((total, value) => total + value)
 }

@@ -23,12 +23,16 @@ export URL=$(yq e .url data-repo/config.yml)
 export BASE_PATH=$(yq e .basePath data-repo/config.yml)
 export SITE_TITLE=$(yq e .siteTitle data-repo/config.yml)
 export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
+export DISTANCE_THRESHOLD=$(yq e .distanceThreshold data-repo/config.yml)
+export TIME_THRESHOLD=$(yq e .timeThreshold data-repo/config.yml)
 
 echo "Configuration:"
 echo "URL: $URL"
 echo "BASE_PATH: $BASE_PATH"
 echo "SITE_TITLE: $SITE_TITLE"
 echo "SITE_DESCRIPTION: $SITE_DESCRIPTION"
+echo "DISTANCE_THRESHOLD: $DISTANCE_THRESHOLD"
+echo "TIME_THRESHOLD: $TIME_THRESHOLD"
 
 genereteStaticPages () {
     echo ""
