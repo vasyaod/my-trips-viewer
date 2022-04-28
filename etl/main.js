@@ -186,6 +186,23 @@ const processTrip = async tripId => {
         })
         .map(segment => List(segment))
         .filter(segment => segment.size > 3 )
+        .filter(segment => {                    // Remove one place tracks
+          const center = {
+            lng: segment.map(p => p.lon).reduce((total, value) => total + value) / segment.size,
+            lat: segment.map(p => p.lat).reduce((total, value) => total + value) / segment.size,
+          }
+          const maxDistance = segment
+            .map(p0 => {
+              const p = {
+                lng: p0.lon,
+                lat: p0.lat
+              }
+              return gpxUtils.distanceBetweenPoints(p, center)
+            })
+            .reduce((total, value) => Math.max(total, value))
+          
+          return maxDistance > 30
+        })
     })
 
     const tracks = splittedGpx
@@ -230,7 +247,7 @@ const processTrip = async tripId => {
     exec(`cp ${tripPath}/*.gpx ${tripOutputPath}/`),
   ])
 
-  console.log("Trip done ", tripId, distance, uphill, pointCount)
+  console.log("Trip done ", tripId, "distance", distance, "uphill", uphill, "pointCount", pointCount, "time", time)
 
   return { ...tripInfo,
     id: tripId,
