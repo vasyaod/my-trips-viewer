@@ -157,7 +157,35 @@ const processTrip = async tripId => {
         .filter(segment => List(segment).size > 3 )
     })
 
-  const tracks = filteredGpx
+  const splittedGpx = filteredGpx
+    .map (track => {
+      return List(track)
+        .filter(segment => List(segment).size > 1 )
+        .flatMap (segment => {
+          const points = segment
+          
+          let currentP = points.get(0)
+          let newPoints = [currentP]
+          let segments = []
+
+          for(i = 1; i < points.size; i++) {
+            const p1Time = Date.parse(currentP.time)
+            const p2Time = Date.parse(points.get(i).time)
+            if(Math.abs(p2Time - p1Time) > 600 * 1000) {
+              segments.push(newPoints)
+              newPoints = []
+            }
+            currentP = points.get(i)
+            newPoints.push(currentP)
+          }
+
+          segments.push(newPoints)
+          return List(segments)
+        })
+        .filter(segment => List(segment).size > 3 )
+    })
+
+    const tracks = splittedGpx
     .flatMap (track => {
       return track.map (segment => {
         return segment.map ( point => {
@@ -171,10 +199,10 @@ const processTrip = async tripId => {
       })
     })
 
-  const pointCount = gpxUtils.getPointCount(filteredGpx)
-  const time = gpxUtils.getTime(filteredGpx)
-  const distance = gpxUtils.getDistance(filteredGpx)
-  const uphill = gpxUtils.getUphill(filteredGpx)
+  const pointCount = gpxUtils.getPointCount(splittedGpx)
+  const time = gpxUtils.getTime(splittedGpx)
+  const distance = gpxUtils.getDistance(splittedGpx)
+  const uphill = gpxUtils.getUphill(splittedGpx)
   
   let tags = []
 
@@ -187,6 +215,7 @@ const processTrip = async tripId => {
     time: time,
     distance: distance,
     uphill: uphill,
+    pointCount: pointCount,
     tracks: tracks
   }
 
