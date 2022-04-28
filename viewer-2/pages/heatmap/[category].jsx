@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { Container, Header, Menu, Card, Dropdown, Label, Segment } from 'semantic-ui-react'
+import { Container, Header, Card, Segment } from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import CalendarHeatmap from 'react-calendar-heatmap';
@@ -8,6 +8,7 @@ import * as fs from 'fs'
 import * as nextConfig from '../../next.config'
 import ReactTooltip from 'react-tooltip';
 import { MainMenu } from '../../src/components/MainMenu.jsx'
+import { CategoryDropDown } from '../../src/components/CategoryDropDown.jsx'
 
 import { List } from 'immutable'
 
@@ -29,24 +30,7 @@ const Index = ({heatmap, categories, category}) => {
         <Header as='h1' content="Heatmap" textAlign='center' />
 
         <Segment basic textAlign='center'>
-          <Menu compact>
-            <Dropdown item text={'Filter: ' + category}>
-              <Dropdown.Menu>
-                {
-                  categories.map( category =>
-                    <Dropdown.Item key={category.id}
-                      name={category.id}
-                      active={category.id == category}
-                      href={`${nextConfig.basePath}/heatmap/${category.id}`}
-                    >
-                      <Label>{category.count}</Label>
-                      {category.title}
-                    </Dropdown.Item>
-                  )
-                }
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu>
+          <CategoryDropDown categories={categories} category={category} href={(categoryId) => `${nextConfig.basePath}/heatmap/${categoryId}`}/>
         </Segment>
 
         <Card.Group doubling itemsPerRow={1} stackable>

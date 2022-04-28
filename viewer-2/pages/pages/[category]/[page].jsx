@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Container, Button, Header, Image, Segment, Card, Label, Menu, Pagination, Dropdown, Icon} from 'semantic-ui-react'
+import { Container, Button, Header, Image, Segment, Card, Label, Pagination, Icon} from 'semantic-ui-react'
 import Link from 'next/link'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
 import ReactMarkdown from 'react-markdown'
@@ -13,6 +13,7 @@ import { Pagination as Pagination1, Navigation, Lazy} from "swiper";
 import { List, Range } from 'immutable'
 import Head from 'next/head'
 import { MainMenu } from '../../../src/components/MainMenu.jsx'
+import { CategoryDropDown } from '../../../src/components/CategoryDropDown.jsx'
 
 import * as config from '../../../next.config'
 import * as nextConfig from '../../../next.config'
@@ -64,52 +65,16 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
               totalPages={pages} 
               onPageChange={ (e, { activePage }) => location.href = categoryUrl(category, activePage)}
             /> <br/>
-            <Menu compact>
-              <Dropdown item text={'Filter: ' + category}>
-                <Dropdown.Menu>
-                  {
-                    categories.map( category =>
-                      <Dropdown.Item key={category.id}
-                        name={category.id} 
-                        active={category.id == category}
-                        href={categoryUrl(category.id, 1)}
-                      >
-                        <Label>{category.count}</Label>
-                        {category.title}
-                      </Dropdown.Item>
-                    )
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu>
+            <CategoryDropDown categories={categories} category={category} href={(categoryId) => categoryUrl(categoryId, 1)}/>
           </Segment>
         }
 
         { pages < 2 && 
           <Segment basic textAlign='center'>
-            <Menu compact>
-              <Dropdown item text={'Filter: ' + category}>
-                <Dropdown.Menu>
-                  {
-                    categories.map( category =>
-                      <Dropdown.Item key={category.id}
-                        name={category.id} 
-                        active={category.id == category}
-                        href={categoryUrl(category.id, 1)}
-                      >
-                        <Label>{category.count}</Label>
-                        {category.title}
-                      </Dropdown.Item>
-                    )
-                  }
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu>
+            <CategoryDropDown categories={categories} category={category} href={(categoryId) => categoryUrl(categoryId, 1)}/>
           </Segment>
         }
-                  {/* <SwiperSlide>
-                    <Image src={`${nextConfig.basePath}/data/${track.id}/preview.png`} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
-                    </SwiperSlide> */}
+
 
         <Card.Group doubling itemsPerRow={3} stackable>
           { 
