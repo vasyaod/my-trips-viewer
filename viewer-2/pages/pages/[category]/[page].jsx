@@ -8,7 +8,7 @@ import ReactTooltip from 'react-tooltip';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
-import { Pagination as Pagination1, Navigation} from "swiper";
+import { Pagination as Pagination1, Navigation, Lazy} from "swiper";
 
 import { List, Range } from 'immutable'
 import Head from 'next/head'
@@ -125,14 +125,15 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                     className="indexSwiper" 
                     pagination = {{ "clickable": true }}
                     navigation={true}
-                    slidesPerView = {'auto'} 
-                    modules={[Pagination1, Navigation]} 
+                    slidesPerView = {'auto'}
+                    lazy={true}
+                    modules={[Pagination1, Navigation, Lazy]} 
                     style={{position: "absolute", top: 0, left: 0, aspectRatio: "4/3"}} 
                   >
                     { 
                       imgs1(track).map( (imgSrc) =>
                         <SwiperSlide key={imgSrc}>
-                          <Image src={imgSrc} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`}/>
+                          <Image src={imgSrc} as='a' wrapped ui={false} href={`${nextConfig.basePath}/tracks/${track.id}`} className="swiper-lazy"/>
                         </SwiperSlide>
                       )
                     }

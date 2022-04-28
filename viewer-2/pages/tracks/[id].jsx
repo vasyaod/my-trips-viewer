@@ -149,7 +149,7 @@ const Index = ({tracks, distance, time, uphill, objects, title, description, tra
 
   return (
     <div className="fullHeight">
-      <div className="fullHeight" style={{display: "table", width: "100%"}}>
+      <div className="fullHeight" style={{display: "table", width: "100%", overflow: "hidden"}}>
         <Head>
           <title>{titleWithDistance}</title>
           <meta property="og:title" content={titleWithDistance}/>
