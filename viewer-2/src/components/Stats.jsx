@@ -1,10 +1,12 @@
 
 import React from 'react'
-import { Container, Header, Menu, Table } from 'semantic-ui-react'
+import { Container, Header, Table, Segment } from 'semantic-ui-react'
 import { MainMenu } from './MainMenu.jsx'
 import GitHubForkRibbon from 'react-github-fork-ribbon';
+import { CategoryDropDown } from './CategoryDropDown.jsx'
+import * as nextConfig from '../../next.config'
 
-export const Stats = ({stats, categories, title, currentPage}) => {
+export const Stats = ({stats, categories, title, currentPage, category}) => {
 
   return (
     <div>
@@ -17,6 +19,10 @@ export const Stats = ({stats, categories, title, currentPage}) => {
         </GitHubForkRibbon>
 
         <Header as='h1' content={title} textAlign='center' />
+        
+        <Segment basic textAlign='center'>
+          <CategoryDropDown categories={categories} category={category} href={(categoryId) => `${nextConfig.basePath}/${currentPage}/${categoryId}`}/>
+        </Segment>
 
         <Table celled>
           <Table.Header>

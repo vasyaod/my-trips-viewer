@@ -18,10 +18,10 @@ export const MainMenu = ({currentPage, zeroPadding}) => {
           </Link>
           <Dropdown item text='Stats'>
             <Dropdown.Menu>
-              <Dropdown.Item active={currentPage == "month-stats"} href={`${nextConfig.basePath}/month-stats`}>
+              <Dropdown.Item active={currentPage == "month-stats"} href={`${nextConfig.basePath}/month-stats/all`}>
                 Stats by months
               </Dropdown.Item>
-              <Dropdown.Item active={currentPage == "year-stats"} href={`${nextConfig.basePath}/year-stats`}>
+              <Dropdown.Item active={currentPage == "year-stats"} href={`${nextConfig.basePath}/year-stats/all`}>
                 Stats by years
               </Dropdown.Item>
               <Dropdown.Item active={currentPage == "tag-stats"} href={`${nextConfig.basePath}/tags`}>
