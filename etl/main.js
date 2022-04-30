@@ -279,47 +279,6 @@ const processTrip = async tripId => {
     })
     .toArray()
 
-  const stats = List(successfulTracks)
-    .groupBy(x => x.date.substring(0,7))
-    .map ( (x, key) => {
-      return {
-        date: key,
-        count: x.size,
-        distance: x.map(x => x.distance).reduce((x,y) => x + y),
-        time: x.map(x => x.time).reduce((x,y) => x + y),
-        uphill: x.map(x => x.uphill).reduce((x,y) => x + y)
-      }
-    })
-    .toList()
-  
-  const yearStats = List(successfulTracks)
-    .groupBy(x => x.date.substring(0,4))
-    .map ( (x, key) => {
-      return {
-        date: key,
-        count: x.size,
-        distance: x.map(x => x.distance).reduce((x,y) => x + y),
-        time: x.map(x => x.time).reduce((x,y) => x + y),
-        uphill: x.map(x => x.uphill).reduce((x,y) => x + y)
-      }
-    })
-    .toList()
-
-  const heatmap = List(successfulTracks)
-    .groupBy(x => x.date.substring(0,4))
-    .map ( (x, key) => ({
-      year: key,
-      values: x
-        .map(y => ({
-          date: y.date,
-          count: Math.round(y.distance / 1000)
-        }))
-        .toList()
-      })
-    )
-    .toList()
-    .reverse()
-
   const tags = List(successfulTracks)
     .flatMap(x => x.tags.map(y => { return {k: y, v: x} }))
     .groupBy(x => x.k)
@@ -367,9 +326,6 @@ const processTrip = async tripId => {
     `${outputPath}/index.json`, 
     JSON.stringify({
       tracks: successfulTracks,
-      monthStats: stats.toJS(),
-      yearStats: yearStats.toJS(),
-      heatmap: heatmap.toJS(),
       tags: tags.toJS(),
       categories: allCategories.concat(tagCategories)
     }, null, 2), 

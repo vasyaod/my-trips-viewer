@@ -7,7 +7,7 @@ export const CategoryDropDown = ({categories, category, href}) => {
   const currentCat = categories.find(e => e.id == category)
   return (
     <Menu compact>
-      <Dropdown item scrolling downward text={'Filter: ' + currentCat.title}>
+      <Dropdown item scrolling text={'Filter: ' + currentCat.title}>
         <Dropdown.Menu>
           {
             categories.map( category =>
