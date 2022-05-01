@@ -15,8 +15,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Check ETL
-      run: |
-        cd etl
-        npm install
-        node main.js
+    # - name: Check ETL
+    #   run: |
+    #     cd etl
+    #     npm install
+    #     node main.js
