@@ -1,0 +1,7 @@
+.vscode
+.metals
+.bloop
+out
+.idea
+*.iml
+target

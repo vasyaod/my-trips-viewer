@@ -1,0 +1,118 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.f-proj.my-tracks</groupId>
+  <artifactId>etl</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>bintray-maven</id>
+      <url>https://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
+
+
+  <build>
+      <sourceDirectory>src/main/scala</sourceDirectory>
+      <testSourceDirectory>src/test/scala</testSourceDirectory>
+      <plugins>
+          <plugin>
+              <groupId>net.alchim31.maven</groupId>
+              <artifactId>scala-maven-plugin</artifactId>
+              <version>4.4.1</version>
+              <configuration>
+                <scalaCompatVersion>2.13.5</scalaCompatVersion>
+              </configuration>
+            <executions>
+              <execution>
+                <id>scala-compile-first</id>
+                <phase>process-resources</phase>
+                <goals>
+                  <goal>compile</goal>
+                  <goal>testCompile</goal>
+                </goals>
+              </execution>
+            </executions>
+
+          </plugin>
+
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <mainClass>com.fproj.mytracks.etl.Processor</mainClass>
+            </configuration>
+          </plugin>
+
+          <plugin>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest-maven-plugin</artifactId>
+            <configuration>
+              <skipTests>false</skipTests>
+              <testFailureIgnore>false</testFailureIgnore>
+              <forkMode>once</forkMode>
+              <argLine>-Dorg.slf4j.simpleLogger.defaultLogLevel=debug</argLine>
+            </configuration>
+            <executions>
+              <execution>
+                <id>test</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+      </plugins>
+  </build>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>me.himanshusoni.gpxparser</groupId>
+      <artifactId>gpx-parser</artifactId>
+      <version>1.13</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.jcazevedo</groupId>
+      <artifactId>moultingyaml_2.13</artifactId>
+      <version>0.4.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.lihaoyi</groupId>
+      <artifactId>ammonite_2.13.5</artifactId>
+      <version>2.3.8-65-0f0d597f</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_2.13</artifactId>
+      <version>3.2.7</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+</project>
