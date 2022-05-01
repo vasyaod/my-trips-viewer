@@ -1,6 +1,11 @@
 name: Checks
 
-on: [pull_request]
+#on: [pull_request]
+
+on:
+  push:
+    branches: [ dev ]
+
 
 jobs:
   build:
@@ -11,14 +16,14 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Check ETL
-      run: |
-        cd etl
-        npm install
-        node main.js
+    # - name: Check ETL
+    #   run: |
+    #     cd etl
+    #     npm install
+    #     node main.js
 
-    - name: Check Viewer
-      run: |
-        cd viewer
-        npm install
-        npm run build
+    # - name: Check Viewer
+    #   run: |
+    #     cd viewer
+    #     npm install
+    #     npm run build
