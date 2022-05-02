@@ -11,10 +11,17 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
-
+    env:
+      INPUT_DATA_PATH: ${{env.base_directory}}/test-data/input
+      OUTPUT_DATA_PATH: ${{env.base_directory}}/test-data/output
+      CODE_REPO_PATH: ${{env.base_directory}}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
+    - name: Generate static pages
+      run: |
+        ./generate
 
   push-to-master:
     needs: [test]

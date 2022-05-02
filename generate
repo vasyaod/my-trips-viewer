@@ -5,11 +5,12 @@ set -e
 sudo apt install python
 sudo pip3 install "pillow!=8.3.0" tensorflow==2.4.2 matplotlib numpy tensorflow_hub pyyaml 
 
-export INPUT_DATA_PATH="$(pwd)/data-repo"
-export OUTPUT_DATA_PATH="$(pwd)/pages-repo"
+export INPUT_DATA_PATH=${INPUT_DATA_PATH:="$(pwd)/data-repo"}
+export OUTPUT_DATA_PATH=${OUTPUT_DATA_PATH:="$(pwd)/pages-repo"}
+export CODE_REPO_PATH=${CODE_REPO_PATH:="$(pwd)/code-repo"}
 
 # Data processing
-cd code-repo/etl
+cd $CODE_REPO_PATH/etl
 curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
 chmod +x youtube-dl
 npm install
@@ -17,7 +18,7 @@ npm run lets-do-this
 cd ../..
 
 # Copy config file from data repo to viewer
-# cp -u data-repo/config.yml code-repo || true
+# cp -u data-repo/config.yml $CODE_REPO_PATH || true
 
 export URL=$(yq e .url data-repo/config.yml)
 export BASE_PATH=$(yq e .basePath data-repo/config.yml)
@@ -38,18 +39,18 @@ genereteStaticPages () {
     echo ""
     echo "Regenerate static pages"
 
-    rm -R code-repo/viewer-2/public/*
-    cp -R $OUTPUT_DATA_PATH/data code-repo/viewer-2/public
-    cp -R $OUTPUT_DATA_PATH/images code-repo/viewer-2/images
-    cp -R $OUTPUT_DATA_PATH/index.json code-repo/viewer-2/public
+    rm -R $CODE_REPO_PATH/viewer-2/public/*
+    cp -R $OUTPUT_DATA_PATH/data $CODE_REPO_PATH/viewer-2/public
+    cp -R $OUTPUT_DATA_PATH/images $CODE_REPO_PATH/viewer-2/images
+    cp -R $OUTPUT_DATA_PATH/index.json $CODE_REPO_PATH/viewer-2/public
 
     # Compile code of site/viewer
-    cd code-repo/viewer-2
+    cd $CODE_REPO_PATH/viewer-2
     npm install --force
     npm run build
     cd ../..
 
-    cp -R code-repo/viewer-2/out/* $OUTPUT_DATA_PATH
+    cp -R $CODE_REPO_PATH/viewer-2/out/* $OUTPUT_DATA_PATH
     touch $OUTPUT_DATA_PATH/_next/.nojekyll
 }
 
@@ -57,27 +58,27 @@ genereteStaticPages () {
 genereteStaticPages
 
 # Run site in dev mode
-#cd code-repo/viewer-2
+#cd $CODE_REPO_PATH/viewer-2
 #npm run dev &
 #cd ../..
-npx http-server code-repo/viewer-2/out -p 3000 &
+npx http-server $CODE_REPO_PATH/viewer-2/out -p 3000 &
 
 # Make preview/thumbnail for every trip
-cd code-repo/previewer
+cd $CODE_REPO_PATH/previewer
 npm install
 npm run lets-do-this
 cd ../..
 
 # Tag inference using python and tensorflow
-cd code-repo/tagger
+cd $CODE_REPO_PATH/tagger
 python3 ./tagger.py
 cd ../..
 
 # Data processing (ELT) again since out tags were changed
-cd code-repo/etl
+cd $CODE_REPO_PATH/etl
 npm run lets-do-this
 cd ../..
 
-cat code-repo/viewer-2/next.config.template.js | envsubst > code-repo/viewer-2/next.config.js
+cat $CODE_REPO_PATH/viewer-2/next.config.template.js | envsubst > $CODE_REPO_PATH/viewer-2/next.config.js
 
 genereteStaticPages
