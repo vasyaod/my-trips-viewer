@@ -105,7 +105,7 @@ const Index = ({siteTitle, siteDescription, index, currentPage, pages, categorie
                           <a href={`${nextConfig.basePath}/tracks/${track.id}`}>
                             <img data-src={imgSrc} className="swiper-lazy"/>
                           </a>
-                          <div className="swiper-lazy-preloader"></div>
+                          {/* <div className="swiper-lazy-preloader"></div> */}
                         </SwiperSlide>
                       )
                     }
