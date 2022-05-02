@@ -44,7 +44,7 @@ genereteStaticPages () {
 
     rm -R $CODE_REPO_PATH/viewer-2/public/*
     cp -R $OUTPUT_DATA_PATH/data $CODE_REPO_PATH/viewer-2/public
-    cp -R $OUTPUT_DATA_PATH/images $CODE_REPO_PATH/viewer-2/images
+    cp -R $OUTPUT_DATA_PATH/images $CODE_REPO_PATH/viewer-2/public
     cp -R $OUTPUT_DATA_PATH/index.json $CODE_REPO_PATH/viewer-2/public
 
     # Compile code of site/viewer
