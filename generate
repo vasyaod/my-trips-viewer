@@ -28,6 +28,9 @@ export DISTANCE_THRESHOLD=$(yq e .distanceThreshold data-repo/config.yml)
 export TIME_THRESHOLD=$(yq e .timeThreshold data-repo/config.yml)
 
 echo "Configuration:"
+echo "INPUT_DATA_PATH: $INPUT_DATA_PATH"
+echo "OUTPUT_DATA_PATH: $OUTPUT_DATA_PATH"
+echo "CODE_REPO_PATH: $CODE_REPO_PATH"
 echo "URL: $URL"
 echo "BASE_PATH: $BASE_PATH"
 echo "SITE_TITLE: $SITE_TITLE"
