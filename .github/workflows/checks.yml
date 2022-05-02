@@ -12,9 +12,9 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      INPUT_DATA_PATH: ${{env.base_directory}}/test-data/input
-      OUTPUT_DATA_PATH: ${{env.base_directory}}/test-data/output
-      CODE_REPO_PATH: ${{env.base_directory}}
+      INPUT_DATA_PATH: ${{GITHUB_WORKSPACE}}/test-data/input
+      OUTPUT_DATA_PATH: ${{GITHUB_WORKSPACE}}/test-data/output
+      CODE_REPO_PATH: ${{GITHUB_WORKSPACE}}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
