@@ -74,7 +74,7 @@ cd ../..
 
 # Tag inference using python and tensorflow
 cd $CODE_REPO_PATH/tagger
-python3 ./tagger.py
+#python3 ./tagger.py
 cd ../..
 
 # Data processing (ELT) again since out tags were changed
