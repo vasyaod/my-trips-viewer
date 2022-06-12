@@ -83,6 +83,7 @@ const processTrip = async tripId => {
     .map(item => {
       const meta = yaml.safeLoad(fs.readFileSync(`${tripPath}/${item}`, 'utf8'))
       return { ...meta,
+        timestamp: meta.timestamp ? meta.timestamp : 0,
         name: item.replace(".meta", "")
       }
     })
@@ -107,10 +108,12 @@ const processTrip = async tripId => {
         type: meta.type,
         img: `${tripId}-${meta.name}`,
         youtubeId: meta.youtubeId,
+        timestamp: meta.timestamp,
         lat: meta.lat,
         lng: meta.lng
       }
     })
+    .sortBy(x => x.timestamp)
   
   const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
 
