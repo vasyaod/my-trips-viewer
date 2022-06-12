@@ -101,7 +101,7 @@ const processTrip = async tripId => {
   )
 
   // Convert objects file in JSON array
-  const objects = metas
+  const objects = List(metas)
     .filter(meta => meta.lat && meta.lng)
     .map(meta => {
       return {
@@ -114,6 +114,7 @@ const processTrip = async tripId => {
       }
     })
     .sortBy(x => x.timestamp)
+    .toJS()
   
   const tripInfo = yaml.safeLoad(fs.readFileSync(`${inputPath}/${tripId}/trip.yml`, 'utf8'))
 
