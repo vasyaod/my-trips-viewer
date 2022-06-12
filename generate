@@ -3,7 +3,7 @@
 set -e
 
 sudo apt install python
-sudo pip3 install "pillow!=8.3.0" tensorflow==2.4.2 matplotlib numpy tensorflow_hub pyyaml 
+sudo pip3 install "pillow!=8.3.0" tensorflow-cpu==2.4.2 matplotlib numpy tensorflow_hub pyyaml 
 
 export INPUT_DATA_PATH=${INPUT_DATA_PATH:="$(pwd)/data-repo"}
 export OUTPUT_DATA_PATH=${OUTPUT_DATA_PATH:="$(pwd)/pages-repo"}
@@ -74,7 +74,7 @@ cd ../..
 
 # Tag inference using python and tensorflow
 cd $CODE_REPO_PATH/tagger
-#python3 ./tagger.py
+python3 ./tagger.py
 cd ../..
 
 # Data processing (ELT) again since out tags were changed
