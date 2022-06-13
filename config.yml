@@ -15,3 +15,9 @@ distanceThreshold: 20
 
 # Time threshold (seconds) for splitting of tracks
 timeThreshold: 600
+
+# Enable 
+enableTagger: true
+
+#
+autoTags: ""

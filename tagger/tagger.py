@@ -27,6 +27,7 @@ img_array = tf.keras.preprocessing.image.img_to_array(img)
 
 input_data_path = os.environ.get('INPUT_DATA_PATH', "/home/vasyaod/work/my-tracks-data")
 output_data_path = os.environ.get('OUTPUT_DATA_PATH', "/home/vasyaod/work/my-tracks") + "/data"
+auto_tag_str = os.environ.get('AUTO_TAGS', "")
 
 all_tracks = [f for f in os.listdir(input_data_path) if isdir(join(input_data_path, f)) and not(f.startswith("."))]
 
@@ -45,7 +46,9 @@ if len(tagged_tracks) == 0:
     print(f"There is no tags in the data")
     sys.exit()
 
-tags = ["school", "office B", "office C", "office A", "tandem", "recumbent"]
+
+tags = auto_tag_str.split(",") #["school", "office B", "office C", "office A", "tandem", "recumbent"]
+print("Auto tag list", tags)
 #tags = ["school"]
 
 feature_extractor_model = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"

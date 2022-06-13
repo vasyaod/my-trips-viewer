@@ -26,6 +26,8 @@ export SITE_TITLE=$(yq e .siteTitle data-repo/config.yml)
 export SITE_DESCRIPTION=$(yq e .siteDescription data-repo/config.yml)
 export DISTANCE_THRESHOLD=$(yq e .distanceThreshold data-repo/config.yml)
 export TIME_THRESHOLD=$(yq e .timeThreshold data-repo/config.yml)
+export ENABLE_TAGGER=$(yq e .enableTagger data-repo/config.yml)
+export AUTO_TAGS=$(yq e .autoTags data-repo/config.yml)
 
 echo "Configuration:"
 echo "INPUT_DATA_PATH: $INPUT_DATA_PATH"
@@ -37,6 +39,8 @@ echo "SITE_TITLE: $SITE_TITLE"
 echo "SITE_DESCRIPTION: $SITE_DESCRIPTION"
 echo "DISTANCE_THRESHOLD: $DISTANCE_THRESHOLD"
 echo "TIME_THRESHOLD: $TIME_THRESHOLD"
+echo "ENABLE_TAGGER: $ENABLE_TAGGER"
+echo "AUTO_TAGS: $AUTO_TAGS"
 
 genereteStaticPages () {
     echo ""
@@ -73,9 +77,11 @@ npm run lets-do-this
 cd ../..
 
 # Tag inference using python and tensorflow
-cd $CODE_REPO_PATH/tagger
-python3 ./tagger.py
-cd ../..
+if [ -z "$ENABLE_TAGGER" ]; then
+    cd $CODE_REPO_PATH/tagger
+    python3 ./tagger.py
+    cd ../..
+fi
 
 # Data processing (ELT) again since out tags were changed
 cd $CODE_REPO_PATH/etl
