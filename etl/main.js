@@ -63,10 +63,11 @@ const processVideo = async (tripId, meta, metaName) => {
       await exec(`convert ${dir}/original.jpg.webp ${dir}/original.jpg`)
     }
 
-    await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
-    
+    if (fs.existsSync(`${dir}/original.jpg`)) {
+      await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+      console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
+    }
 
-    console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
   }
 }
 
