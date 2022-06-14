@@ -59,7 +59,13 @@ const processVideo = async (tripId, meta, metaName) => {
     await exec(`./youtube-dl -o ${dir}/original.jpg --write-thumbnail --skip-download https://youtu.be/${meta.youtubeId}`)
     console.log(`Video preview has been downloaded ${dir}/original.jpg`)
 
-    await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+    if (!fs.existsSync(${dir}/original.jpg.webp)) {
+      await exec(`./circle-thumb.sh ${dir}/original.jpg.webp ${dir}/circle-thumb-32.png`)
+    }
+    if (!fs.existsSync(${dir}/original.jpg)) {
+      await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+    }
+    
 
     console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
   }
