@@ -77,7 +77,8 @@ npm run lets-do-this
 cd ../..
 
 # Tag inference using python and tensorflow
-if [[ "$ENABLE_TAGGER" == "true" ]] then
+if [[ "$ENABLE_TAGGER" == "true" ]] 
+then
     echo "Tagger is enabled"
     cd $CODE_REPO_PATH/tagger
     python3 ./tagger.py
