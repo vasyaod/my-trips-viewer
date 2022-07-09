@@ -78,9 +78,12 @@ cd ../..
 
 # Tag inference using python and tensorflow
 if [[ "$ENABLE_TAGGER" == "true" ]] then
+    echo "Tagger is enabled"
     cd $CODE_REPO_PATH/tagger
     python3 ./tagger.py
     cd ../..
+else
+    echo "Tagger is disabled"
 fi
 
 # Data processing (ELT) again since out tags were changed
