@@ -3,7 +3,7 @@
 set -e
 
 sudo apt install python3
-sudo pip3 install "pillow!=8.3.0" tensorflow-cpu==2.6.5 matplotlib numpy tensorflow_hub pyyaml 
+sudo pip3 install "pillow!=8.3.0" tensorflow-cpu==2.8.0 matplotlib numpy tensorflow_hub pyyaml 
 
 export INPUT_DATA_PATH=${INPUT_DATA_PATH:="$(pwd)/data-repo"}
 export CODE_REPO_PATH=${CODE_REPO_PATH:="$(pwd)/code-repo"}
