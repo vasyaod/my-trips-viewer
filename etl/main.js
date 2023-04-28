@@ -253,7 +253,7 @@ const processTrip = async tripId => {
 
   await Promise.all([
     imagePromises,
-    videoPromises,
+//    videoPromises,
     writeFile(`${tripOutputPath}/objects.json`, JSON.stringify(desc, null, 2), 'utf8'),
     writeFile(`${tripOutputPath}/trip.json`, JSON.stringify(desc, null, 2), 'utf8'),
     exec(`cp ${tripPath}/*.gpx ${tripOutputPath}/`),
