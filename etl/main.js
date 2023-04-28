@@ -53,22 +53,22 @@ const processVideo = async (tripId, meta, metaName) => {
   const dir = `${outputPath}/images/${tripId}-${meta.name}`;
 
   // Process video if it doesn't exists and is not processed
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+  // if (!fs.existsSync(dir)) {
+  //   fs.mkdirSync(dir);
  
-    await exec(`./youtube-dl -o ${dir}/original.jpg --write-thumbnail --skip-download https://youtu.be/${meta.youtubeId}`)
-    console.log(`Video preview has been downloaded ${dir}/original.jpg`)
+  //   await exec(`./youtube-dl -o ${dir}/original.jpg --write-thumbnail --skip-download https://youtu.be/${meta.youtubeId}`)
+  //   console.log(`Video preview has been downloaded ${dir}/original.jpg`)
 
-    if (fs.existsSync(`${dir}/original.jpg.webp`)) {
-      await exec(`convert ${dir}/original.jpg.webp ${dir}/original.jpg`)
-    }
+  //   if (fs.existsSync(`${dir}/original.jpg.webp`)) {
+  //     await exec(`convert ${dir}/original.jpg.webp ${dir}/original.jpg`)
+  //   }
 
-    if (fs.existsSync(`${dir}/original.jpg`)) {
-      await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
-      console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
-    }
+  //   if (fs.existsSync(`${dir}/original.jpg`)) {
+  //     await exec(`./circle-thumb.sh ${dir}/original.jpg ${dir}/circle-thumb-32.png`)
+  //     console.log(`Video ${tripId}-${meta.name}/${meta.youtubeId} has been processed`)
+  //   }
 
-  }
+  // }
 }
 
 const processTrip = async tripId => {
