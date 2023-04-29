@@ -44,6 +44,7 @@ const processTrip = async (browser, tripId) => {
 
   // If preview doesn't exist we create a new one.
   if (sha1(tripData) != previewHash){
+    console.log("Hash doesn't matches for the trip", tripId, "Preview update!")
     const page = await browser.newPage();
     page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
@@ -55,6 +56,8 @@ const processTrip = async (browser, tripId) => {
     
     // save hash of current data
     fs.writeFileSync(previewHashFile, sha1(tripData));
+  } else {
+    console.log("Hash matches for the trip", tripId)
   }
 }
 
