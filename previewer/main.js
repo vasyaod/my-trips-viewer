@@ -38,7 +38,7 @@ const processTrip = async (browser, tripId) => {
   if (!fs.existsSync(previewHashFile)) {
     fs.writeFileSync(previewHashFile, sha1(""));
   }
-  
+
   var tripData = fs.readFileSync(tripFile, 'utf8').toString();
   var previewHash = fs.readFileSync(previewHashFile, 'utf8').toString();
 
@@ -49,10 +49,12 @@ const processTrip = async (browser, tripId) => {
     page.on('console', msg => console.log('CONSOLE LOG:', msg.text()));
     page.on('requestfailed', msg => console.log('REQUEST FAILED LOG:', msg.text()));
     
+    console.log("- 1")
     await page.goto(`http://localhost:3000/previews/${tripId}.html`);
     await sleep(4000)
     await page.screenshot({path: out});
     await page.close()
+    console.log("- 2")
     
     // save hash of current data
     fs.writeFileSync(previewHashFile, sha1(tripData));
