@@ -61,8 +61,10 @@ genereteStaticPages () {
     cd ../..
 
     cp -R $CODE_REPO_PATH/viewer-2/out/* $OUTPUT_DATA_PATH
-    touch $OUTPUT_DATA_PATH/_next/.nojekyll
+    touch c.nojekyll
 }
+
+rm -R $OUTPUT_DATA_PATH/_next
 
 # Generate static pages with default setting for cretion of previews
 genereteStaticPages
