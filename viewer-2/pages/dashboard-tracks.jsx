@@ -8,7 +8,6 @@ import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css'
 
 const IndexPage = ({index, heatmap}) => {
-  console.log(heatmap)
   return (
     <div style={{width: "100%", height: "100%", paddingTop: "3%"}}>
       <div style={{width: "100%", height: "50%", display: "flex", alignItems: "center", marginTop: "1%"}}>
