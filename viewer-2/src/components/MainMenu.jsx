@@ -29,6 +29,16 @@ export const MainMenu = ({currentPage, zeroPadding}) => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <Dropdown item text='Other'>
+            <Dropdown.Menu>
+              <Dropdown.Item href={`${nextConfig.basePath}/dashboard-tracks`}>
+                Dashboard Page (Tracks)
+              </Dropdown.Item>
+              <Dropdown.Item href={`${nextConfig.basePath}/dashboard-stats`}>
+                Dashboard Page (Stats)
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </Menu>
   )
