@@ -4,6 +4,52 @@ import * as nextConfig from '../next.config'
 import * as fs from 'fs'
 import { Image, Container, Card, Statistic} from 'semantic-ui-react'
 
+function toStr(date) {
+  const y = date.substring(0,4)
+  const m = date.substring(5,7)
+  let x
+  switch (m) {
+    case '01':
+      x = "Jan"
+      break;
+    case '02':
+      x = "Feb"
+      break;
+    case '03':
+      x = "Mar"
+      break;
+    case '04':
+      x = "Apr"
+      break;
+    case '05':
+      x = "May"
+      break;
+    case '06':
+      x = "Jun"
+      break;
+    case '07':
+      x = "Jul"
+      break;
+    case '08':
+      x = "Aug"
+      break;
+    case '09':
+      x = "Sep"
+      break;
+    case '10':
+      x = "Oct"
+      break;
+    case '11':
+      x = "Nov"
+      break;
+    case '12':
+      x = "Dec"
+      break;
+  }
+  
+  return `${x}, ${y}`
+}
+
 const IndexPage = ({yearStats, monthStats}) => {
   
   return (
@@ -14,8 +60,12 @@ const IndexPage = ({yearStats, monthStats}) => {
             yearStats.map(row =>
               <Card key={row.date} >
                 <Card.Content>
-                  <Card.Header style={{textAlign: "center", fontSize:"3em"}}>
-                    Year {row.date}
+                  <Card.Header style={{textAlign: "center"}}>
+                    <Statistic style={{width: "100%"}}>
+                        <Statistic.Value>{row.date}</Statistic.Value>
+                        <Statistic.Label>Year stats</Statistic.Label>
+                    </Statistic>
+
                   </Card.Header>
                   <Card.Description style={{padding: "2em"}}>
                     <div>
@@ -45,8 +95,11 @@ const IndexPage = ({yearStats, monthStats}) => {
             monthStats.map(row =>
               <Card key={row.date} >
                 <Card.Content>
-                  <Card.Header style={{textAlign: "center", fontSize:"3em"}}>
-                    Month {row.date}
+                  <Card.Header style={{textAlign: "center"}}>
+                    <Statistic style={{width: "100%"}}>
+                        <Statistic.Value>{toStr(row.date)}</Statistic.Value>
+                        <Statistic.Label>Month stats</Statistic.Label>
+                    </Statistic>
                   </Card.Header>
                   <Card.Description style={{padding: "2em"}}>
                     <div>
