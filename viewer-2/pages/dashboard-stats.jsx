@@ -14,7 +14,9 @@ const IndexPage = ({yearStats, monthStats}) => {
             yearStats.map(row =>
               <Card key={row.date} >
                 <Card.Content>
-                  <Card.Header style={{textAlign: "center", fontSize:"2em"}}>Year {row.date}</Card.Header>
+                  <Card.Header style={{textAlign: "center", fontSize:"3em"}}>
+                    Year {row.date}
+                  </Card.Header>
                   <Card.Description style={{padding: "2em"}}>
                     <div>
                       <Statistic style={{width: "100%"}}>
@@ -43,7 +45,9 @@ const IndexPage = ({yearStats, monthStats}) => {
             monthStats.map(row =>
               <Card key={row.date} >
                 <Card.Content>
-                  <Card.Header style={{textAlign: "center", fontSize:"2em"}}>Month {row.date}</Card.Header>
+                  <Card.Header style={{textAlign: "center", fontSize:"3em"}}>
+                    Month {row.date}
+                  </Card.Header>
                   <Card.Description style={{padding: "2em"}}>
                     <div>
                       <Statistic style={{width: "100%"}}>
