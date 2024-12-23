@@ -15,8 +15,8 @@ mkdir $OUTPUT_DATA_PATH || true
 # Data processing
 cd $CODE_REPO_PATH/etl
 #curl -L https://yt-dl.org/downloads/latest/youtube-dl -o youtube-dl
-curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux -o youtube-dl
-chmod +x youtube-dl
+#curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux -o youtube-dl
+#chmod +x youtube-dl
 npm install
 npm run lets-do-this
 cd ../..
